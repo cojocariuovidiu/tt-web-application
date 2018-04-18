@@ -1,0 +1,32 @@
+<div class="flex-container mat-elevation-z10" fxLayout="column" fxLayoutAlign="center center" >
+<mat-card class="login-card" fxFlex>
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title><h2 align="center">LOGIN</h2></mat-card-title> 
+    </mat-card-header>
+    
+     <form fxLayout="column" fxLayoutAlign="start"> 
+       <mat-form-field floatLabel="auto">
+    <input matInput placeholder="  Phone Number" required>
+    <mat-icon matPrefix>smartphone</mat-icon>
+     </mat-form-field>
+  <mat-form-field>
+      <mat-icon matPrefix>lock</mat-icon>
+    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+      
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </mat-form-field>
+    <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-raised-button class="loginbtn" color="primary">Login</button>
+    </div>
+</form>
+<div class="divider">
+    <span>
+      OR <!--Padding is optional-->
+    </span>
+  </div>
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="center center">
+      <button mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
+      <button mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
+    </mat-card-actions>
+  </mat-card>
+  </div>

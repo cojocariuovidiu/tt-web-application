@@ -1,1 +1,67 @@
-<router-outlet></router-outlet>
+<section class=" my-theme app flex-container" fxLayout="column" fxLayoutAlign="center stretch">
+    <mat-toolbar class="nav-bar mat-elevation-z10"  color="primary" >
+      <mat-toolbar-row>
+              <div fxShow="true" fxHide.gt-sm="true">
+                  <button mat-button id="navbutton" (click)="sidenav.toggle()"><i class="material-icons">view_headline</i></button>
+              </div>
+          <button mat-button id="navbutton" routerLink= "/home" routerLinkActive="active" > <strong>Teachers Time</strong></button>
+            <div fxShow="true" fxHide.lt-md="true">
+              <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+              <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active" > <i class="material-icons">home</i><span class="icon-text">Home</span> </button>
+              <button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button>
+              <button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button>
+            </div>
+          <span class="fill-remaining-space" fxShow="true" fxHide.lt-md="true" ></span>
+          <span class="right-nav" fxShow="true" fxHide.lt-md="true">
+              <button mat-button id="navbutton" routerLink= "/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
+              <button mat-button  id="navbutton" routerLink= "/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
+              <button mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
+              <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+   <mat-sidenav-container fxFlex>
+     <mat-sidenav #sidenav class="mat-elevation-z6" mode="side" align="start" c ngStyle.xs="width:50vw;">
+     </mat-sidenav>
+     <mat-sidenav-content><router-outlet></router-outlet>
+      <div class="bounds" color="primary">
+      
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill >
+             
+            <div fxFlex="40" class="sec1" fxFlex.xs="50" ngStyle.xs="text-align:center" >
+                <h3 >Teachers Time</h3>
+                <p text-align="left">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.
+            </p>
+            </div>
+            <div fxFlex="30" class="sec2" fxFlex.xs="50" ngStyle.xs="text-align:center" >
+                <h3><strong>Useful Links</strong></h3> 
+              <ul class="contactus">
+                    <li> <a mat-button   href="#"> <mat-icon  > info</mat-icon><span class="icon-text">About</span></a></li>
+                    <li> <a mat-button   href="#"> <mat-icon > description</mat-icon> <span class="icon-text">Terms Of use</span></a> </li>
+                    <li> <a mat-button   href="#"> <mat-icon  > security</mat-icon><span class="icon-text">Privacy Policy</span> </a> </li>
+                    <li> <a mat-button   href="#"> <mat-icon > contact_mail</mat-icon><span class="icon-text">Contact</span></a></li>
+            </ul>
+                   
+            </div>
+            <div fxFlex="30" class="sec3" fxFlex.xs="50" ngStyle.xs="text-align:center">
+                <h3><strong>Contact Us</strong></h3> 
+                <ul class="contactus" color="primary">
+                      <li>  <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p></li>
+                      <li> <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p></li>
+                      <li> <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p> </li>
+                      <li class="social-icons icon-circle icon-zoom list-unstyled list-inline"> <a><i class="fa fa-facebook"></i></a> <a><i class="fa fa-youtube"></i></a> <a><i class="fa fa-google-plus"></i></a> <a><i class="fa fa-instagram"></i></a></li>
+                </ul>
+                                     
+          </div>
+            
+        </div>
+        
+      </div>  
+    </mat-sidenav-content>
+   </mat-sidenav-container>
+  </section>
+  
+  

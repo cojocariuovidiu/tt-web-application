@@ -12,13 +12,13 @@ const APP_ROUTES: Routes = [
         path: 'home', component: HomeComponent
     },
     {
-        path: 'auth', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
+        path: 'login', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
     },
     {
-        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#AuthorizationModule'
+        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule'
     },
     {
-        path: 'course', loadChildren: 'app/modules/course/course.module#AuthorizationModule'
+        path: 'course', loadChildren: 'app/modules/course/course.module#CourseModule'
     },
     {
         path: '**', component: NotfoundComponent
