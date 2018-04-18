@@ -1,0 +1,62 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/inline.318b50c57b4eba3d437b.bundle.js",
+        "/main.4e5b0a2c1d802085839e.bundle.js",
+        "/polyfills.35d395590c0a06fb7afd.bundle.js",
+        "/scripts.75b6e7d11b6e6f881a29.bundle.js",
+        "/styles.a434834bee3952a837d2.bundle.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/img/al.jpg",
+        "/assets/img/bluemountains.svg",
+        "/assets/img/img.jpg",
+        "/assets/img/owb.jpg",
+        "/assets/img/sohagvai.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-storage",
+      "patterns": [
+        "\\/api\\/users",
+        "\\/api\\/courses"
+      ],
+      "strategy": "freshness",
+      "maxSize": 20,
+      "maxAge": 3600000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/inline.318b50c57b4eba3d437b.bundle.js": "998c6060446975e566fd17509558ddc68d72eec3",
+    "/assets/img/al.jpg": "a837e1ec28c09ce59fd5a2ccc3ab72629208ba5f",
+    "/main.4e5b0a2c1d802085839e.bundle.js": "b75cde29f755c1510c3fcb5ff5657d15ef8e2d14",
+    "/assets/img/bluemountains.svg": "98f76e1126dd3e528f33db47a87053eefa9a9db2",
+    "/polyfills.35d395590c0a06fb7afd.bundle.js": "035ab6b153536dc257cae49009b0c1dc118bc075",
+    "/assets/img/img.jpg": "bd99d7cbb82dc1b5de28c8c072a1efd599dd78a8",
+    "/scripts.75b6e7d11b6e6f881a29.bundle.js": "861818e0c5163a47574896851ca411387cd25ab9",
+    "/assets/img/owb.jpg": "f16c5caafefe7901f9b4112a12244cfd420ca5cd",
+    "/styles.a434834bee3952a837d2.bundle.css": "ac806152f49973e279822ebf584b057f707d782d",
+    "/assets/img/sohagvai.jpg": "3a2fb637a8308052b13d4cb5dfd26afdf476f515",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "a1f3d62f9920baa154572ad37d745943d06bcbf1"
+  }
+}

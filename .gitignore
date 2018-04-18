@@ -1,0 +1,62 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/ttime-front/dist
+/ttime-front/dist-server
+/ttime-front/tmp
+/ttime-front/out-tsc
+
+# dependencies
+/ttime-front/node_modules
+
+# IDEs and editors
+/ttime-front/.idea
+/ttime-front/.project
+/ttime-front/.classpath
+/ttime-front/.c9/
+/ttime-front/*.launch
+/ttime-front/.settings/
+/ttime-front/*.sublime-workspace
+
+# IDE - VSCode
+/ttime-front/.vscode/*
+/ttime-front/!.vscode/settings.json
+/ttime-front/!.vscode/tasks.json
+/ttime-front/!.vscode/launch.json
+/ttime-front/!.vscode/extensions.json
+
+# misc
+/ttime-front/.sass-cache
+/ttime-front/connect.lock
+/ttime-front/coverage
+/ttime-front/libpeerconnection.log
+/ttime-frontn/npm-debug.log
+/ttime-front/yarn-error.log
+/ttime-front/testem.log
+/ttime-front/typings
+
+# e2e
+/ttime-front/e2e/*.js
+/ttime-front/e2e/*.map
+
+# System Files
+/ttime-front/.DS_Store
+/ttime-front/Thumbs.db
+
+# package json lock
+package-lock.json
+/ttime-front/package-lock.json
+/ttime-front/.editorconfig
+
+# environment vars
+/ttime-front/src/app/config/config.ts
+
+# node modules
+/node_modules
+
+# pems
+*.pem
+
+# config
+/config/email.js
+/config/database.js
