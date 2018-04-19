@@ -11,7 +11,6 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { HttpModule } from '@angular/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,8 +26,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    ReactiveFormsModule,
-    FormsModule,
     MaterialModule,
     FlexLayoutModule,
     AuthorizationModule,
@@ -36,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DashboardModule,
     AdminModule,
     TransactionModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

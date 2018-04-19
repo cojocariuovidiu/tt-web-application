@@ -1,3 +1,9 @@
+.useful-link{
+    padding-left: 16px; 
+}
+.contact-us{
+    padding-right: 1px; 
+}
 mat-toolbar{
     z-index: 10;
 }
@@ -7,6 +13,7 @@ mat-sidenav{
 .app #navbutton{
     display: inline-flex;
     vertical-align: middle;
+    font-size: 15px;
 }
 .app .fill-remaining-space {
     flex: 1 1 auto;
@@ -15,6 +22,9 @@ mat-sidenav{
     padding-top: 5px;
     padding-left: 5px;
 }
+.icon-text-terms{
+    padding-left: 1px;
+}
 .bounds {
     max-height : 600px;
   }
@@ -22,8 +32,9 @@ mat-sidenav{
   
 .sec1, .sec2, .sec3 {
     padding-top:20px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     padding-left: 10px;
+    padding-right: 10px;
     text-align:left;
     background:#1A237E;
     color:white;
@@ -45,7 +56,7 @@ mat-sidenav{
   }
 
   .contactus mat-icon{
-    padding-right: 15px;   
+     padding-right: 15px;   
   }
 
   .contactus mat-list{
@@ -53,6 +64,7 @@ mat-sidenav{
 
   }
  #ab {
+      vertical-align: -20%; 
       font-size: 20px;
       margin: 0;
       padding:0; 
@@ -62,6 +74,9 @@ mat-sidenav{
   }
   .social-icons .fa {
 	font-size: 1.8em;
+}
+#account{
+    font-size: 36px;
 }
 /*Change icons circle size and color here*/
 .social-icons .fa {

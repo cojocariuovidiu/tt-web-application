@@ -6,19 +6,19 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 
 const APP_ROUTES: Routes = [
     {
-        path: '', redirectTo: '/home', pathMatch: 'full'
-    },
-    {
         path: 'home', component: HomeComponent
     },
     {
-        path: 'login', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
+        path: 'auth', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
     },
     {
         path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule'
     },
     {
-        path: 'course', loadChildren: 'app/modules/course/course.module#CourseModule'
+        path: 'courses', loadChildren: 'app/modules/course/course.module#CourseModule'
+    },
+    {
+        path: '', redirectTo: '/home', pathMatch: 'full'
     },
     {
         path: '**', component: NotfoundComponent

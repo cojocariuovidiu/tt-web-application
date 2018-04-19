@@ -1,6 +1,9 @@
 @import 'fontawesome';
 @import '~font-awesome/scss/font-awesome';
 @import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -13,7 +16,6 @@
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
 $my-theme-primary: mat-palette($mat-indigo);
 $my-theme-accent:  mat-palette($mat-blue);
-
 // The warn palette is optional (defaults to red).
 $my-theme-warn:    mat-palette($mat-red);
 $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
@@ -25,6 +27,7 @@ body{
     background: #FDF8F8 ;
     background-size: cover;
     margin: 0;
-    padding-bottom: 0;
-    font-family: 'Oxygen', sans-serif;
+    padding: 0;
+    max-height: 100vh;
+    font-family: 'Roboto', sans-serif;
 }

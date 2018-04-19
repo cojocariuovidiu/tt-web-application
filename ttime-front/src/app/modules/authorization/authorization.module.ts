@@ -8,6 +8,26 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from "angular5-social-login";
+import { GOOGLE_APP_ID, FACEBOOK_APP_ID } from '../../config/config';
+import { AuthorizationService } from './services/authorization.service';
+import { AuthorizationComponent } from './authorization.component';
+
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+	      provider: new FacebookLoginProvider(FACEBOOK_APP_ID)
+        },
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+	      provider: new GoogleLoginProvider(GOOGLE_APP_ID)
+        },
+      ]
+  );
+  return config;
+}
 
 @NgModule({
   imports: [
@@ -17,9 +37,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     MaterialModule,
     FlexLayoutModule,
+    SocialLoginModule,
     AuthorizationRoutingModule
   ],
+  providers:[
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    },
+    AuthorizationService
+  ],
   declarations: [
+    AuthorizationComponent,
     LoginComponent,
     RegistrationComponent
   ]

@@ -1,4 +1,6 @@
-
+mat-form-field.ng-invalid{
+	border-color: red;
+}
 .login-card {
   margin-top:2em; 
   margin-bottom: 5em ; 
@@ -32,4 +34,7 @@ margin-top: 2em;
 .mat-raised-button span 
 {
 padding-left:20px    
+}
+.mat-icon{
+  vertical-align: -20%;
 }
