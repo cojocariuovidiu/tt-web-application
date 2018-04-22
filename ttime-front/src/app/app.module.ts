@@ -5,15 +5,11 @@ import { AppComponent } from './app.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { AuthorizationModule } from './modules/authorization/authorization.module';
-import { CourseModule } from './modules/course/course.module';
-import { DashboardModule } from './modules/dashboard/dashboard.module';
-import { AdminModule } from './modules/admin/admin.module';
-import { TransactionModule } from './modules/transaction/transaction.module';
 import { HttpModule } from '@angular/http';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -27,12 +23,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     HttpModule,
     MaterialModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCZyphuuCSwPu-avgG883zlvRmwS8XKHLQ'
+    }),
     FlexLayoutModule,
-    AuthorizationModule,
-    CourseModule,
-    DashboardModule,
-    AdminModule,
-    TransactionModule,
     AppRoutingModule
   ],
   providers: [],

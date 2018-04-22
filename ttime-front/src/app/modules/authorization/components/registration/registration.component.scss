@@ -23,12 +23,11 @@
   background-color: #ffffff; 
   padding: 0 10px;
 }
-.slabel2{
-  margin-left: 20px;
-}
 .slabel{
   margin-right: 20px;
-  padding-top: 4px;
+}
+.slabel2{
+  padding-top: 20px;
 }
 .loginbtn{
 max-width: 20vw;;
@@ -45,4 +44,7 @@ padding-left:20px
 }
 .mat-icon{
   vertical-align: -20%;
+}
+mat-form-field{
+  padding-bottom: 15px;
 }

@@ -7,11 +7,11 @@ import { MaterialModule } from '../../material.module';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from "angular5-social-login";
 import { GOOGLE_APP_ID, FACEBOOK_APP_ID } from '../../config/config';
 import { AuthorizationService } from './services/authorization.service';
 import { AuthorizationComponent } from './authorization.component';
+import { MatchpasswordDirective } from './components/registration/matchpassword.directive';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
@@ -50,7 +50,8 @@ export function getAuthServiceConfigs() {
   declarations: [
     AuthorizationComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    MatchpasswordDirective
   ]
 })
 export class AuthorizationModule { }

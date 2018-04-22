@@ -1,0 +1,42 @@
+
+<mat-grid-list cols="2" rowHeight="600px" gutterSize="10px">
+  <mat-grid-tile>
+   <div class="gmap">
+      <agm-map [zoom]="amount" [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+      </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="contact-card" fxFlex>
+      <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+            <mat-card-title><h2 align="center">Contact Us</h2></mat-card-title>
+       </mat-card-header>
+      <form fxLayout="column" fxLayoutAlign="start">      
+        
+        <mat-form-field>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput placeholder="Your Name">
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-icon matPrefix>subject</mat-icon>
+          <input matInput placeholder="Subject">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput placeholder="Your Email">
+          </mat-form-field>
+      
+        <mat-form-field>
+          <mat-icon matPrefix>message</mat-icon>
+          <textarea matInput placeholder="Message"></textarea>
+        </mat-form-field>
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <button mat-raised-button type="submit" class="contact-btn" color="primary">Send <mat-icon class="send">send</mat-icon></button>
+          </div>
+      </form>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 
 
+
 const APP_ROUTES: Routes = [
     {
         path: 'home', component: HomeComponent
@@ -16,6 +17,9 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'courses', loadChildren: 'app/modules/course/course.module#CourseModule'
+    },
+    {
+        path: 'us', loadChildren: 'app/modules/contact/contact.module#ContactModule'
     },
     {
         path: '', redirectTo: '/home', pathMatch: 'full'
