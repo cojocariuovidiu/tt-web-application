@@ -6,12 +6,13 @@ webpackJsonp(["course.module"],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Course; });
 var Course = /** @class */ (function () {
-    function Course(courseID, courseTitle, courseDetail, courseScope, coursePrice) {
+    function Course(courseID, courseTitle, courseDetail, courseScope, coursePrice, courseLectures) {
         this.courseID = courseID;
         this.courseTitle = courseTitle;
         this.courseDetail = courseDetail;
         this.courseScope = courseScope;
         this.coursePrice = coursePrice;
+        this.courseLectures = courseLectures;
     }
     return Course;
 }());
@@ -23,7 +24,7 @@ var Course = /** @class */ (function () {
 /***/ "./src/app/modules/course/components/coursedetail/coursedetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  coursedetail works!\n</p>\n"
+module.exports = "<div>\n  <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\" >\n    <mat-grid-tile *ngFor=\"let course of courses\" rowspan=\"4\">\n          <div style=\"height: 100%\">\n          <mat-vertical-stepper>\n            <mat-step *ngFor = \"let lecture of course.courseLectures\">\n             \n                <ng-template matStepLabel>  <a routerLink= \"/login\" routerLinkActive=\"active\" ><span class=\"icon-text\">{{lecture.lectureTitle}}</span></a></ng-template> \n              \n            </mat-step>\n          </mat-vertical-stepper>\n        </div>\n        </mat-grid-tile>                \n</mat-grid-list>\n</div>"
 
 /***/ }),
 
@@ -40,6 +41,10 @@ module.exports = ""
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoursedetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_course_service__ = __webpack_require__("./src/app/modules/course/services/course.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -50,10 +55,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var CoursedetailComponent = /** @class */ (function () {
-    function CoursedetailComponent() {
+    function CoursedetailComponent(courseService, observableMedia) {
+        this.courseService = courseService;
+        this.observableMedia = observableMedia;
+        this.courses = [];
     }
     CoursedetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.courseService.getCourses().subscribe(function (courses) {
+            _this.courses = courses;
+            console.log(_this.courses);
+        });
+        this.gridMap();
+    };
+    CoursedetailComponent.prototype.gridMap = function () {
+        var _this = this;
+        var cols_map = new Map([
+            ['xs', 1],
+            ['sm', 1],
+            ['md', 2],
+            ['lg', 3],
+            ['xl', 3]
+        ]);
+        var start_cols;
+        cols_map.forEach(function (cols, mqAlias) {
+            if (_this.observableMedia.isActive(mqAlias)) {
+                start_cols = cols;
+            }
+        });
+        this.cols = this.observableMedia.asObservable()
+            .map(function (change) {
+            return cols_map.get(change.mqAlias);
+        }).startWith(start_cols);
     };
     CoursedetailComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -61,7 +99,7 @@ var CoursedetailComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/course/components/coursedetail/coursedetail.component.html"),
             styles: [__webpack_require__("./src/app/modules/course/components/coursedetail/coursedetail.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_course_service__["a" /* CourseService */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
     ], CoursedetailComponent);
     return CoursedetailComponent;
 }());
@@ -307,12 +345,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_courselist_coursefilter_pipe__ = __webpack_require__("./src/app/modules/course/components/courselist/coursefilter.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_course_service__ = __webpack_require__("./src/app/modules/course/services/course.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -343,10 +383,77 @@ var CourseModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_4__components_courselist_courselist_component__["a" /* CourselistComponent */],
                 __WEBPACK_IMPORTED_MODULE_5__components_coursedetail_coursedetail_component__["a" /* CoursedetailComponent */],
                 __WEBPACK_IMPORTED_MODULE_10__components_courselist_coursefilter_pipe__["a" /* CourseFilterPipe */]
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_11__services_course_service__["a" /* CourseService */]
             ]
         })
     ], CourseModule);
     return CourseModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/modules/course/services/course.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourseService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_course_model__ = __webpack_require__("./src/app/model/course.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var CourseService = /** @class */ (function () {
+    function CourseService(http) {
+        this.http = http;
+        this.courses = [];
+    }
+    CourseService.prototype.getCourses = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        var url = "" + "api/courses/all";
+        headers.append('Content-Type', 'application/json');
+        return this.http.get(url, { headers: headers })
+            .map(function (response) {
+            var courses = response.json().course;
+            //console.log(courses);
+            var transformedCourses = [];
+            for (var _i = 0, courses_1 = courses; _i < courses_1.length; _i++) {
+                var course = courses_1[_i];
+                transformedCourses.push(new __WEBPACK_IMPORTED_MODULE_2__model_course_model__["a" /* Course */](course._id, course.title, course.details, course.scope, course.price, course.lectures));
+            }
+            _this.courses = transformedCourses;
+            //console.log(this.courses);
+            return transformedCourses;
+        })
+            .catch(function (error) {
+            //this.errorService.showMsg(error.json());
+            return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].throw(error.json());
+        });
+    };
+    CourseService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    ], CourseService);
+    return CourseService;
 }());
 
 

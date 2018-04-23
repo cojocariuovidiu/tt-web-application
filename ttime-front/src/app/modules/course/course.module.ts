@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CourseFilterPipe } from './components/courselist/coursefilter.pipe';
+import { CourseService } from './services/course.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,9 @@ import { CourseFilterPipe } from './components/courselist/coursefilter.pipe';
     CourselistComponent, 
     CoursedetailComponent,
     CourseFilterPipe
+  ],
+  providers:[
+    CourseService
   ]
 })
 export class CourseModule { }

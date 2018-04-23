@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const Course = require('../models/course');
 const Comments = require('../models/comment');
-const Lectures = require('../models/lecture');
+//const Lectures = require('../models/lecture');
 const Evaluate = require('../models/evaluate');
 const AWS = require('aws-sdk');
 const cfsign = require('aws-cloudfront-sign');
@@ -221,7 +221,7 @@ router.get('/all/courses', passport.authenticate([Strings.strategy.adminStrategy
     });
 });
 
-//Post Lecture Courses Admin by Course ID
+/*//Post Lecture Courses Admin by Course ID
 router.post('/add/new/lecture/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
     let newLecture = new Lectures({
         lectureTitle: req.body.lectureTitle,
@@ -330,7 +330,7 @@ router.get('/all/evaluation/:id', passport.authenticate([Strings.strategy.adminS
             res.status(200).json({success: true, data: eval});
         }
     });
-});
+});*/
 
 router.get('/list/videos', (req, res, next) => {
     const dir = 'Courses/TestCourse/';

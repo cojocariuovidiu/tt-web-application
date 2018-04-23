@@ -7,12 +7,22 @@ const Course = require('../models/course');
 const User = require('../models/user');
 const SocialUser = require('../models/socialuser');
 const Comments = require('../models/comment');
-const Lectures = require('../models/lecture');
 const Strings = require('../config/strings');
 const Evaluate = require('../models/evaluate');
 const AWS = require('aws-sdk');
 const cfsign = require('aws-cloudfront-sign');
 const emoji = require('node-emoji');
+
+router.get('/public/all', (req, res, next) => {
+    Course.find({}).select('title details price scope')
+        .exec((err, course) => {
+        if(err){
+            res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
+        }else{
+            res.status(200).json({success: true, course: course});
+        }
+   });
+});
 
 router.get('/all', (req, res, next) => {
     Course.find({})
@@ -24,6 +34,7 @@ router.get('/all', (req, res, next) => {
         }
    });
 });
+
 
 router.get('/all/teacher', (req, res, next) => {
     Course.find({scope: 'teacher'}).select('title details')
@@ -97,6 +108,15 @@ router.put('/enroll/course/:uid', passport.authenticate(Strings.strategy.localSt
 });
 
 router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+    User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
+        res.status(200).json({success: true, courses:data});
+    }).catch(err =>{
+        console.log(err);
+        res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
+    });
+});
+
+router.get('/all/enrolled/public/:id', (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
         res.status(200).json({success: true, courses:data});
     }).catch(err =>{
@@ -197,7 +217,7 @@ router.get('/comment/:id', (req, res, next) => {
         });
 });
 
-//Get Lectures by Course ID
+/*//Get Lectures by Course ID
 router.get('/lectures/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     User.findOne({courses: req.params.id}).then(course => {
         if(course){
@@ -256,6 +276,7 @@ router.get('/evalutaion/lecture/:id', passport.authenticate(Strings.strategy.loc
             }
         });
 });
+*/
 
 //GET VIDEO URL
 router.get('/object/video/url', (req, res, next) => {
@@ -273,6 +294,7 @@ router.get('/object/video/url', (req, res, next) => {
     res.status(200).json({success: true, signedUrl: signedUrl});
     console.log(signedUrl);
 });
+
   
 module.exports = router;
 

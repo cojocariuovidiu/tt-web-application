@@ -34,10 +34,11 @@ const UserSchema = mongoose.Schema({
     required: true,
     default: 'false'
   },
-  courses: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Course'
-  }]
+  courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Course'
+    }]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

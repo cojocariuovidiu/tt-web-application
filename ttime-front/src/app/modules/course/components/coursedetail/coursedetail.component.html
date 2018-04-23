@@ -1,3 +1,15 @@
-<p>
-  coursedetail works!
-</p>
+<div>
+  <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px" >
+    <mat-grid-tile *ngFor="let course of courses" rowspan="4">
+          <div style="height: 100%">
+          <mat-vertical-stepper>
+            <mat-step *ngFor = "let lecture of course.courseLectures">
+             
+                <ng-template matStepLabel>  <a routerLink= "/login" routerLinkActive="active" ><span class="icon-text">{{lecture.lectureTitle}}</span></a></ng-template> 
+              
+            </mat-step>
+          </mat-vertical-stepper>
+        </div>
+        </mat-grid-tile>                
+</mat-grid-list>
+</div>
