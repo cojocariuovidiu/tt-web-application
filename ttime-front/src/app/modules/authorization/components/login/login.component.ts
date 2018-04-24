@@ -38,6 +38,13 @@ export class LoginComponent implements OnInit {
 
   sendLoginForm(){
     console.log(this.loginForm.value);
+    const logincred = {
+      mobile: this.loginMobile.value,
+      password: this.loginPassword.value
+    }
+    this.authorizationService.loginUser(logincred).subscribe(data => {
+      //console.log(data);
+    })
   }
 
   resetLoginForm(){

@@ -784,6 +784,13 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.sendLoginForm = function () {
         console.log(this.loginForm.value);
+        var logincred = {
+            mobile: this.loginMobile.value,
+            password: this.loginPassword.value
+        };
+        this.authorizationService.loginUser(logincred).subscribe(function (data) {
+            //console.log(data);
+        });
     };
     LoginComponent.prototype.resetLoginForm = function () {
         this.loginForm.reset();
@@ -1160,6 +1167,7 @@ function existingMobileNumberValidator(userService) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_error_service__ = __webpack_require__("./src/app/services/error.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1173,12 +1181,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//import { ErrorService } from './error.service';
+
 var AuthorizationService = /** @class */ (function () {
-    function AuthorizationService(http) {
+    function AuthorizationService(http, errorService) {
         this.http = http;
+        this.errorService = errorService;
     }
     AuthorizationService.prototype.registerUser = function (user) {
+        var _this = this;
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         //const url = `${"http://localhost:8080/api/users/register"}`;
         var url = "" + "/api/users/register";
@@ -1196,11 +1206,12 @@ var AuthorizationService = /** @class */ (function () {
         return this.http.post(url, body, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
-            //this.errorService.showMsg(error.json());
+            _this.errorService.handleError(error.json());
             return __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].throw(error.json());
         });
     };
     AuthorizationService.prototype.loginUser = function (logincred) {
+        var _this = this;
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         //const url = `${"http://localhost:8080/api/users/authenticate"}`;
         var url = "" + "/api/users/authenticate";
@@ -1208,7 +1219,7 @@ var AuthorizationService = /** @class */ (function () {
         return this.http.post(url, logincred, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
-            //this.errorService.showMsg(error.json());
+            _this.errorService.handleError(error.json());
             return __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].throw(error.json());
         });
     };
@@ -1229,7 +1240,7 @@ var AuthorizationService = /** @class */ (function () {
     };
     AuthorizationService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__services_error_service__["a" /* ErrorService */]])
     ], AuthorizationService);
     return AuthorizationService;
 }());

@@ -24,7 +24,7 @@ var Course = /** @class */ (function () {
 /***/ "./src/app/modules/course/components/coursedetail/coursedetail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\" >\n    <mat-grid-tile *ngFor=\"let course of courses\" rowspan=\"4\">\n          <div style=\"height: 100%\">\n          <mat-vertical-stepper>\n            <mat-step *ngFor = \"let lecture of course.courseLectures\">\n             \n                <ng-template matStepLabel>  <a routerLink= \"/login\" routerLinkActive=\"active\" ><span class=\"icon-text\">{{lecture.lectureTitle}}</span></a></ng-template> \n              \n            </mat-step>\n          </mat-vertical-stepper>\n        </div>\n        </mat-grid-tile>                \n</mat-grid-list>\n</div>"
+module.exports = "<div>\n  <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\" >\n    <mat-grid-tile *ngFor=\"let course of courses\" rowspan=\"4\">\n          <div style=\"height: 100%\">\n            <p>{{course.courseDetail}}</p>\n          <mat-vertical-stepper>\n            <mat-step *ngFor = \"let lecture of course.courseLectures\">\n             \n                <ng-template matStepLabel>  <a routerLink= \"/login\" routerLinkActive=\"active\" ><span class=\"icon-text\">{{lecture.lectureTitle}}</span></a></ng-template> \n              \n            </mat-step>\n          </mat-vertical-stepper>\n        </div>\n        </mat-grid-tile>                \n</mat-grid-list>\n</div>"
 
 /***/ }),
 

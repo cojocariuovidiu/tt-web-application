@@ -3,12 +3,12 @@ import { Http, Headers, Response } from '@angular/http';
 import { User } from '../../../model/user.model';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
-//import { ErrorService } from './error.service';
+import { ErrorService } from '../../../services/error.service';
 
 @Injectable()
 export class AuthorizationService {
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private errorService: ErrorService) {
 
   }
 
@@ -30,7 +30,7 @@ export class AuthorizationService {
     return this.http.post(url, body, {headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => {
-        //this.errorService.showMsg(error.json());
+        this.errorService.handleError(error.json());
         return Observable.throw(error.json());
       });
   }
@@ -43,7 +43,7 @@ export class AuthorizationService {
     return this.http.post(url, logincred, {headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => {
-        //this.errorService.showMsg(error.json());
+        this.errorService.handleError(error.json());
         return Observable.throw(error.json());
       });
   }

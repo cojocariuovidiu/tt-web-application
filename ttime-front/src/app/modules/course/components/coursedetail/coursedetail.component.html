@@ -2,6 +2,7 @@
   <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px" >
     <mat-grid-tile *ngFor="let course of courses" rowspan="4">
           <div style="height: 100%">
+            <p>{{course.courseDetail}}</p>
           <mat-vertical-stepper>
             <mat-step *ngFor = "let lecture of course.courseLectures">
              
