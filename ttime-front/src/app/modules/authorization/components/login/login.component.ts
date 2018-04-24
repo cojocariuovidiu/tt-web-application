@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, Patte
 import { AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular5-social-login';
 import { AuthorizationService } from '../../services/authorization.service';
 import { existingMobileNumberValidator } from './validatelogin';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -13,13 +14,15 @@ import { existingMobileNumberValidator } from './validatelogin';
 export class LoginComponent implements OnInit {
   hide = true;
   mobilePattern: RegExp = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/;//'[0-9]*.{11}';
-  public loginForm : FormGroup
+  public loginForm : FormGroup;
+  title: string = "Login - Teachers Time";
   
-  constructor(private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
     this.createLoginForm();
   }
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
   }
 
   createLoginForm(){

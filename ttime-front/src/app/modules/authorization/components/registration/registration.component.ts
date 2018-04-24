@@ -4,6 +4,7 @@ import { AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular5
 import { AuthorizationService } from '../../services/authorization.service';
 import { existingMobileNumberValidator } from './validateregister';
 import { User } from '../../../../model/user.model';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-registration',
@@ -25,13 +26,15 @@ export class RegistrationComponent implements OnInit {
   typeParent = 'parent';
   typeBoth = 'both';
   selected = this.selected;
-  registerForm: FormGroup
+  registerForm: FormGroup;
+  title: string = "Register - Teachers Time";
 
-  constructor(private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
     this.createRegisterForm();
   }
   
   ngOnInit() {
+    this.titleService.setTitle(this.title);
   }
 
   createRegisterForm(){

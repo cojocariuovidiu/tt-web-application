@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contactus',
@@ -11,10 +12,12 @@ export class ContactusComponent implements OnInit {
   lat: number = 23.745531; 
   lng: number = 90.370628;
   amount: number = 20;
+  pageTitle: string = "Contact - Teachers Time";
 
-  constructor() { }
+  constructor(private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle(this.pageTitle);
   }
 
 }

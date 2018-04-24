@@ -70,6 +70,7 @@ module.exports = "agm-map {\n  width: 40vw;\n  height: 40vw; }\n\n.gmap {\n  pad
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactusComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -80,14 +81,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ContactusComponent = /** @class */ (function () {
-    function ContactusComponent() {
+    function ContactusComponent(titleService) {
+        this.titleService = titleService;
         this.title = 'We are Here:';
         this.lat = 23.745531;
         this.lng = 90.370628;
         this.amount = 20;
+        this.pageTitle = "Contact - Teachers Time";
     }
     ContactusComponent.prototype.ngOnInit = function () {
+        this.titleService.setTitle(this.pageTitle);
     };
     ContactusComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -95,7 +100,7 @@ var ContactusComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/contact/components/contactus/contactus.component.html"),
             styles: [__webpack_require__("./src/app/modules/contact/components/contactus/contactus.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
     ], ContactusComponent);
     return ContactusComponent;
 }());
@@ -263,8 +268,8 @@ var ContactRoutingModule = /** @class */ (function () {
     }
     ContactRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(CONTACT_ROUTES)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]]
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */].forChild(CONTACT_ROUTES)],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */]]
         })
     ], ContactRoutingModule);
     return ContactRoutingModule;
@@ -294,6 +299,7 @@ module.exports = ""
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -304,8 +310,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ContactComponent = /** @class */ (function () {
-    function ContactComponent() {
+    function ContactComponent(titleService) {
+        this.titleService = titleService;
+        this.title = "Contact - Teachers Time";
     }
     ContactComponent.prototype.ngOnInit = function () {
     };
@@ -315,7 +324,7 @@ var ContactComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/contact/contact.component.html"),
             styles: [__webpack_require__("./src/app/modules/contact/contact.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
     ], ContactComponent);
     return ContactComponent;
 }());

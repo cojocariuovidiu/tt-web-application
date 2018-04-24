@@ -45,6 +45,8 @@ module.exports = ""
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,10 +61,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var CoursedetailComponent = /** @class */ (function () {
-    function CoursedetailComponent(courseService, observableMedia) {
+    function CoursedetailComponent(activatedRoute, titleService, courseService, observableMedia) {
+        this.activatedRoute = activatedRoute;
+        this.titleService = titleService;
         this.courseService = courseService;
         this.observableMedia = observableMedia;
+        this.title = "Course Name - Teachers Time";
         this.courses = [];
     }
     CoursedetailComponent.prototype.ngOnInit = function () {
@@ -72,6 +79,10 @@ var CoursedetailComponent = /** @class */ (function () {
             console.log(_this.courses);
         });
         this.gridMap();
+        this.titleService.setTitle(this.title);
+        this.routerParams = this.activatedRoute.params.subscribe(function (params) {
+            _this.paramID = params['id'];
+        });
     };
     CoursedetailComponent.prototype.gridMap = function () {
         var _this = this;
@@ -99,7 +110,7 @@ var CoursedetailComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/course/components/coursedetail/coursedetail.component.html"),
             styles: [__webpack_require__("./src/app/modules/course/components/coursedetail/coursedetail.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_course_service__["a" /* CourseService */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_1__services_course_service__["a" /* CourseService */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
     ], CoursedetailComponent);
     return CoursedetailComponent;
 }());
@@ -183,6 +194,7 @@ module.exports = ""
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CourselistComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_course_model__ = __webpack_require__("./src/app/model/course.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -194,12 +206,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var CourselistComponent = /** @class */ (function () {
-    function CourselistComponent() {
+    function CourselistComponent(titleService) {
+        this.titleService = titleService;
         this.filter = new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */](null, null, null, null, null);
         this.courses = [];
+        this.title = "Courses - Teachers Time";
     }
     CourselistComponent.prototype.ngOnInit = function () {
+        this.titleService.setTitle(this.title);
         this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "Java", "javadetail", null, null));
         this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "C sharp", "javadetail", null, null));
         this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "Script", "javadetail", null, null));
@@ -211,7 +227,7 @@ var CourselistComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/course/components/courselist/courselist.component.html"),
             styles: [__webpack_require__("./src/app/modules/course/components/courselist/courselist.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["f" /* Title */]])
     ], CourselistComponent);
     return CourselistComponent;
 }());
@@ -256,7 +272,7 @@ var COURSE_ROUTES = [
                 component: __WEBPACK_IMPORTED_MODULE_3__components_courselist_courselist_component__["a" /* CourselistComponent */]
             },
             {
-                path: 'details',
+                path: 'index/:id',
                 component: __WEBPACK_IMPORTED_MODULE_4__components_coursedetail_coursedetail_component__["a" /* CoursedetailComponent */]
             }
         ]
@@ -267,8 +283,8 @@ var CourseRoutingModule = /** @class */ (function () {
     }
     CourseRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(COURSE_ROUTES)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]]
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */].forChild(COURSE_ROUTES)],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */]]
         })
     ], CourseRoutingModule);
     return CourseRoutingModule;

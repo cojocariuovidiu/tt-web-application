@@ -5,6 +5,8 @@ import { ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Course } from '../../../../model/course.model';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-coursedetail',
@@ -13,9 +15,12 @@ import { Course } from '../../../../model/course.model';
 })
 export class CoursedetailComponent implements OnInit {
 
+  routerParams: any;
+  paramID: string;
+  title: string = "Course Name - Teachers Time";
   cols: Observable<number>;
   courses: Course [] = [];
-  constructor(private courseService: CourseService, private observableMedia: ObservableMedia ) { }
+  constructor(private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { }
 
   ngOnInit() {
     this.courseService.getCourses().subscribe((courses: Course[]) => {
@@ -23,6 +28,10 @@ export class CoursedetailComponent implements OnInit {
       console.log(this.courses);
     })
     this.gridMap();
+    this.titleService.setTitle(this.title);
+    this.routerParams = this.activatedRoute.params.subscribe(params => {
+      this.paramID = params['id'];
+   });
   }
 
   gridMap(){

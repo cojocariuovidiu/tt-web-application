@@ -566,8 +566,8 @@ var AuthorizationRoutingModule = /** @class */ (function () {
     }
     AuthorizationRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */].forChild(AUHTORIZATION_ROUTES)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["e" /* RouterModule */]]
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */].forChild(AUHTORIZATION_ROUTES)],
+            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["f" /* RouterModule */]]
         })
     ], AuthorizationRoutingModule);
     return AuthorizationRoutingModule;
@@ -597,6 +597,7 @@ module.exports = ""
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthorizationComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -607,8 +608,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AuthorizationComponent = /** @class */ (function () {
-    function AuthorizationComponent() {
+    function AuthorizationComponent(titleService) {
+        this.titleService = titleService;
     }
     AuthorizationComponent.prototype.ngOnInit = function () {
     };
@@ -618,7 +621,7 @@ var AuthorizationComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/authorization/authorization.component.html"),
             styles: [__webpack_require__("./src/app/modules/authorization/authorization.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
     ], AuthorizationComponent);
     return AuthorizationComponent;
 }());
@@ -649,12 +652,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_authorization_service__ = __webpack_require__("./src/app/modules/authorization/services/authorization.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__authorization_component__ = __webpack_require__("./src/app/modules/authorization/authorization.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_registration_matchpassword_directive__ = __webpack_require__("./src/app/modules/authorization/components/registration/matchpassword.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -702,13 +707,14 @@ var AuthorizationModule = /** @class */ (function () {
                     provide: __WEBPACK_IMPORTED_MODULE_9_angular5_social_login__["AuthServiceConfig"],
                     useFactory: getAuthServiceConfigs
                 },
-                __WEBPACK_IMPORTED_MODULE_11__services_authorization_service__["a" /* AuthorizationService */]
+                __WEBPACK_IMPORTED_MODULE_11__services_authorization_service__["a" /* AuthorizationService */],
+                __WEBPACK_IMPORTED_MODULE_14__angular_platform_browser__["f" /* Title */]
             ],
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_12__authorization_component__["a" /* AuthorizationComponent */],
                 __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */],
                 __WEBPACK_IMPORTED_MODULE_4__components_registration_registration_component__["a" /* RegistrationComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_registration_matchpassword_directive__["a" /* MatchpasswordDirective */]
+                __WEBPACK_IMPORTED_MODULE_13__components_registration_matchpassword_directive__["a" /* MatchpasswordDirective */],
             ]
         })
     ], AuthorizationModule);
@@ -744,6 +750,7 @@ module.exports = "mat-form-field.ng-invalid {\n  border-color: red; }\n\n.login-
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular5_social_login___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular5_social_login__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__ = __webpack_require__("./src/app/modules/authorization/services/authorization.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validatelogin__ = __webpack_require__("./src/app/modules/authorization/components/login/validatelogin.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -758,16 +765,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(authorizationService, socialAuthService, formBuilder) {
+    function LoginComponent(titleService, authorizationService, socialAuthService, formBuilder) {
+        this.titleService = titleService;
         this.authorizationService = authorizationService;
         this.socialAuthService = socialAuthService;
         this.formBuilder = formBuilder;
         this.hide = true;
         this.mobilePattern = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/; //'[0-9]*.{11}';
+        this.title = "Login - Teachers Time";
         this.createLoginForm();
     }
     LoginComponent.prototype.ngOnInit = function () {
+        this.titleService.setTitle(this.title);
     };
     LoginComponent.prototype.createLoginForm = function () {
         this.loginForm = this.formBuilder.group({
@@ -828,7 +839,7 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/authorization/components/login/login.component.html"),
             styles: [__webpack_require__("./src/app/modules/authorization/components/login/login.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -960,6 +971,7 @@ module.exports = ".reg-card {\n  margin-top: 2em;\n  margin-bottom: 5em;\n  max-
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__ = __webpack_require__("./src/app/modules/authorization/services/authorization.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validateregister__ = __webpack_require__("./src/app/modules/authorization/components/registration/validateregister.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -975,8 +987,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegistrationComponent = /** @class */ (function () {
-    function RegistrationComponent(authorizationService, socialAuthService, formBuilder) {
+    function RegistrationComponent(titleService, authorizationService, socialAuthService, formBuilder) {
+        this.titleService = titleService;
         this.authorizationService = authorizationService;
         this.socialAuthService = socialAuthService;
         this.formBuilder = formBuilder;
@@ -993,9 +1007,11 @@ var RegistrationComponent = /** @class */ (function () {
         this.typeParent = 'parent';
         this.typeBoth = 'both';
         this.selected = this.selected;
+        this.title = "Register - Teachers Time";
         this.createRegisterForm();
     }
     RegistrationComponent.prototype.ngOnInit = function () {
+        this.titleService.setTitle(this.title);
     };
     RegistrationComponent.prototype.createRegisterForm = function () {
         this.registerForm = this.formBuilder.group({
@@ -1130,7 +1146,7 @@ var RegistrationComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/authorization/components/registration/registration.component.html"),
             styles: [__webpack_require__("./src/app/modules/authorization/components/registration/registration.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], RegistrationComponent);
     return RegistrationComponent;
 }());

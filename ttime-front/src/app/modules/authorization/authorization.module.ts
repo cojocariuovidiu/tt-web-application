@@ -12,6 +12,7 @@ import { GOOGLE_APP_ID, FACEBOOK_APP_ID } from '../../config/config';
 import { AuthorizationService } from './services/authorization.service';
 import { AuthorizationComponent } from './authorization.component';
 import { MatchpasswordDirective } from './components/registration/matchpassword.directive';
+import { Title } from '@angular/platform-browser';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
@@ -45,13 +46,14 @@ export function getAuthServiceConfigs() {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
-    AuthorizationService
+    AuthorizationService,
+    Title
   ],
   declarations: [
     AuthorizationComponent,
     LoginComponent,
     RegistrationComponent,
-    MatchpasswordDirective
+    MatchpasswordDirective,
   ]
 })
 export class AuthorizationModule { }

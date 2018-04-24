@@ -19,7 +19,7 @@ const COURSE_ROUTES: Routes = [
         component: CourselistComponent
       },
       {
-        path: 'details',
+        path: 'index/:id',
         component: CoursedetailComponent
       }
     ]
