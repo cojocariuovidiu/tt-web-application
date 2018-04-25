@@ -307,7 +307,7 @@ var ContactRoutingModule = /** @class */ (function () {
 /***/ "./src/app/modules/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div style=\"margin-top: 64px;\">\r\n    <router-outlet></router-outlet>\r\n</div>"
+module.exports = "\n<div style=\"margin-top: 64px;\">\n    <router-outlet></router-outlet>\n</div>"
 
 /***/ }),
 

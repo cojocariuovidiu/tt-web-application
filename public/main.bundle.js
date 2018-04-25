@@ -210,12 +210,14 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_error_service__ = __webpack_require__("./src/app/services/error.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__config_config__ = __webpack_require__("./src/app/config/config.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -246,7 +248,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_7__angular_http__["c" /* HttpModule */],
                 __WEBPACK_IMPORTED_MODULE_8__material_module__["a" /* MaterialModule */],
                 __WEBPACK_IMPORTED_MODULE_11__agm_core__["a" /* AgmCoreModule */].forRoot({
-                    apiKey: 'AIzaSyCZyphuuCSwPu-avgG883zlvRmwS8XKHLQ'
+                    apiKey: __WEBPACK_IMPORTED_MODULE_13__config_config__["c" /* GOOGLE_MAP_API_KEY */]
                 }),
                 __WEBPACK_IMPORTED_MODULE_9__angular_flex_layout__["a" /* FlexLayoutModule */],
                 __WEBPACK_IMPORTED_MODULE_2__app_routing_module__["a" /* AppRoutingModule */]
@@ -265,7 +267,7 @@ var AppModule = /** @class */ (function () {
 /***/ "./src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" my-theme flex-container\" fxLayout=\"column wrap\" fxLayoutGap=\"20px\"  fxFill>\r\n    <div>\r\n       <mat-grid-list class=\"hintro\" [cols]=\"introcols | async\" rowHeight=\"36em\" gutterSize=\"0px\"  >\r\n           <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\r\n             <div fxLayout=\"row wrap\"  fxLayout.xs=\"column wrap\" fxLayoutAlign=\"start center\" fxLayoutAlign.lt-md=\"center center\" fxFlex>\r\n             <div class=\"tintro\" fxLayout=\"row wrap\" fxLayout.lt-md=\"column wrap\" fxFlex  fxLayoutAlign=\"start center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  >  \r\n                 <h1>WELCOME TO TEACHERS TIME </h1> \r\n                 <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>\r\n                 <div fxLayout=\"row wrap\" fxlayout.lt-sm=\"column wrap\" fxLayoutAlign=\"start start\" fxLayoutAlign.lt-md=\"center center\" fxLayoutWrap >\r\n                 <button mat-raised-button color=\"primary\"routerLink= \"/login\" routerLinkActive=\"active\">Start Here</button>\r\n                  \r\n                </div>\r\n               </div>\r\n               </div>\r\n             </mat-grid-tile>\r\n               <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\r\n                   <div fxLayout=\"row wrap\"  fxLayout.lt-sm=\"column wrap\" fxLayoutAlign=\"end center\" fxLayoutAlign.lt-md=\"center center\" fxFill>\r\n               <div class=\"tintrovid\"  fxLayout.lt-sm=\"column wrap\" fxFlex  fxLayoutAlign=\"end center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  fxFlexAlign.lt-md=\"center\">\r\n                <div>\r\n                 <iframe ngStyle.sm=\"width:90vw;height=240px;\" ngStyle.xs=\"width:300px;height=240px;\" width=\"640px  \" height=\"360px\" src=\"https://www.youtube.com/embed/btIkUKoVbfY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>\r\n                 </iframe>\r\n               </div>\r\n               </div>\r\n               </div>\r\n            \r\n            \r\n             </mat-grid-tile>                \r\n    </mat-grid-list>\r\n   </div>\r\n <div style=\"padding-left:2%; padding-right:2%; \">\r\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"  >\r\n       <mat-grid-tile\r\n      *ngFor=\"let course of courses\"\r\n       [rowspan]=\"rowspan | async\" style=\"background: black;\">\r\n  \r\n     \r\n      <mat-card class=\"example-card\"  style=\"background:indigo;  width:100%; height:calc(100%-10px); max-height:100%; min-height:calc(100%-10px);   max-width: 100vw;\">\r\n           <mat-card-header><mat-card-title><h3 class=\"text-white\">{{course.name}}</h3></mat-card-title></mat-card-header>\r\n           <img matCardImage src=\"../../../assets/img/python.jpg\">\r\n           <mat-card-content >\r\n           <p align=\"justify\">\r\n              {{course.details}}\r\n             \r\n           </p>\r\n           </mat-card-content>\r\n           <mat-card-actions>\r\n             <button align=\"justify\" mat-raised-button color=\"primary\" >More Details</button>\r\n           </mat-card-actions>\r\n         </mat-card>\r\n        \r\n   </mat-grid-tile>\r\n </mat-grid-list>\r\n </div>\r\n </div>\r\n "
+module.exports = "<div class=\" my-theme flex-container\" fxLayout=\"column wrap\" fxLayoutGap=\"20px\"  fxFill>\n    <div>\n       <mat-grid-list class=\"hintro\" [cols]=\"introcols | async\" rowHeight=\"36em\" gutterSize=\"0px\"  >\n           <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n             <div fxLayout=\"row wrap\"  fxLayout.xs=\"column wrap\" fxLayoutAlign=\"start center\" fxLayoutAlign.lt-md=\"center center\" fxFlex>\n             <div class=\"tintro\" fxLayout=\"row wrap\" fxLayout.lt-md=\"column wrap\" fxFlex  fxLayoutAlign=\"start center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  >  \n                 <h1>WELCOME TO TEACHERS TIME </h1> \n                 <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>\n                 <div fxLayout=\"row wrap\" fxlayout.lt-sm=\"column wrap\" fxLayoutAlign=\"start start\" fxLayoutAlign.lt-md=\"center center\" fxLayoutWrap >\n                 <button mat-raised-button color=\"primary\"routerLink= \"/login\" routerLinkActive=\"active\">Start Here</button>\n                  \n                </div>\n               </div>\n               </div>\n             </mat-grid-tile>\n               <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n                   <div fxLayout=\"row wrap\"  fxLayout.lt-sm=\"column wrap\" fxLayoutAlign=\"end center\" fxLayoutAlign.lt-md=\"center center\" fxFill>\n               <div class=\"tintrovid\"  fxLayout.lt-sm=\"column wrap\" fxFlex  fxLayoutAlign=\"end center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  fxFlexAlign.lt-md=\"center\">\n                <div>\n                 <iframe ngStyle.sm=\"width:90vw;height=240px;\" ngStyle.xs=\"width:300px;height=240px;\" width=\"640px  \" height=\"360px\" src=\"https://www.youtube.com/embed/btIkUKoVbfY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>\n                 </iframe>\n               </div>\n               </div>\n               </div>\n            \n            \n             </mat-grid-tile>                \n    </mat-grid-list>\n   </div>\n <div style=\"padding-left:2%; padding-right:2%; \">\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"  >\n       <mat-grid-tile\n      *ngFor=\"let course of courses\"\n       [rowspan]=\"rowspan | async\" style=\"background: black;\">\n  \n     \n      <mat-card class=\"example-card\"  style=\"background:indigo;  width:100%; height:calc(100%-10px); max-height:100%; min-height:calc(100%-10px);   max-width: 100vw;\">\n           <mat-card-header><mat-card-title><h3 class=\"text-white\">{{course.name}}</h3></mat-card-title></mat-card-header>\n           <img matCardImage src=\"../../../assets/img/python.jpg\">\n           <mat-card-content >\n           <p align=\"justify\">\n              {{course.details}}\n             \n           </p>\n           </mat-card-content>\n           <mat-card-actions>\n             <button align=\"justify\" mat-raised-button color=\"primary\" >More Details</button>\n           </mat-card-actions>\n         </mat-card>\n        \n   </mat-grid-tile>\n </mat-grid-list>\n </div>\n </div>\n "
 
 /***/ }),
 
@@ -495,6 +497,20 @@ var NotfoundComponent = /** @class */ (function () {
     return NotfoundComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/config/config.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FACEBOOK_APP_ID; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return GOOGLE_APP_ID; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return GOOGLE_MAP_API_KEY; });
+var FACEBOOK_APP_ID = "1711489872207276";
+var GOOGLE_APP_ID = "247013322175-g9dv3lf3pj6tdomt6stt5impg5vi311p.apps.googleusercontent.com";
+var GOOGLE_MAP_API_KEY = "AIzaSyCZyphuuCSwPu-avgG883zlvRmwS8XKHLQ";
 
 
 /***/ }),
