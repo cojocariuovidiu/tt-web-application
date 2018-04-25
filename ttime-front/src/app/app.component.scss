@@ -1,19 +1,13 @@
-.useful-link{
-    padding-left: 16px; 
-}
-.contact-us{
-    padding-right: 1px; 
-}
 mat-toolbar{
     z-index: 10;
 }
-mat-sidenav{
-    width: 20vw;
+.app .nav-bar{
+    position: fixed;
+    
 }
 .app #navbutton{
     display: inline-flex;
     vertical-align: middle;
-    font-size: 15px;
 }
 .app .fill-remaining-space {
     flex: 1 1 auto;
@@ -22,61 +16,28 @@ mat-sidenav{
     padding-top: 5px;
     padding-left: 5px;
 }
-.icon-text-terms{
-    padding-left: 1px;
+mat-sidenav-container{
+    min-height: 80vh;
+	margin-bottom: 1.3em;
+
 }
-.bounds {
-    max-height : 600px;
-  }
-  
-  
-.sec1, .sec2, .sec3 {
-    padding-top:20px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align:left;
-    background:#1A237E;
-    color:white;
-  }
-  
-  .content {
-    min-width: 300px;
-    max-height: 600px;
-    bottom: 0;
-  }
-  .contactus{
-      list-style-type: none ;
-      margin: 0;
-      padding: 0;
-      display:inline;
-      color:white;
-      vertical-align: middle;
-      
-  }
-
-  .contactus mat-icon{
-     padding-right: 15px;   
-  }
-
-  .contactus mat-list{
-    color: white;   
-
-  }
- #ab {
-      vertical-align: -20%; 
-      font-size: 20px;
-      margin: 0;
-      padding:0; 
-      color:white;
-      
-
-  }
-  .social-icons .fa {
+.contactus{
+	list-style-type: none ;
+	margin: 0;
+	padding: 0;
+	display:inline;
+	color:white;
+	
+}
+.social-icons .fa {
 	font-size: 1.8em;
 }
-#account{
-    font-size: 36px;
+#ab {
+	font-size: 20px;
+	vertical-align: -22%;
+	margin: 0;
+	padding:0; 
+	color:white;
 }
 /*Change icons circle size and color here*/
 .social-icons .fa {
@@ -128,8 +89,5 @@ mat-sidenav{
 
 .social-icons .fa-youtube,.social-icons .fa-youtube-play,.social-icons .fa-youtube-square{background-color:#C52F30;}
 
-.container{
-    font-size: 30px;
-    margin-top: 20%;
-    margin-left: 45%;
-}
+  
+  

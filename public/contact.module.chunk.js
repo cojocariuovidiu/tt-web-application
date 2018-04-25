@@ -53,7 +53,7 @@ var AboutComponent = /** @class */ (function () {
 /***/ "./src/app/modules/contact/components/contactus/contactus.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<mat-grid-list cols=\"2\" rowHeight=\"600px\" gutterSize=\"10px\">\n  <mat-grid-tile>\n   <div class=\"gmap\">\n      <agm-map [zoom]=\"amount\" [latitude]=\"lat\" [longitude]=\"lng\">\n        <agm-marker [latitude]=\"lat\" [longitude]=\"lng\"></agm-marker>\n      </agm-map>\n      </div>\n  </mat-grid-tile>\n  <mat-grid-tile>\n    <mat-card class=\"contact-card\" fxFlex>\n      <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n            <mat-card-title><h2 align=\"center\">Contact Us</h2></mat-card-title>\n       </mat-card-header>\n      <form fxLayout=\"column\" fxLayoutAlign=\"start\">      \n        \n        <mat-form-field>\n          <mat-icon matPrefix>person</mat-icon>\n          <input matInput placeholder=\"Your Name\">\n        </mat-form-field>\n        \n        <mat-form-field>\n          <mat-icon matPrefix>subject</mat-icon>\n          <input matInput placeholder=\"Subject\">\n        </mat-form-field>\n\n        <mat-form-field>\n            <mat-icon matPrefix>email</mat-icon>\n            <input matInput placeholder=\"Your Email\">\n          </mat-form-field>\n      \n        <mat-form-field>\n          <mat-icon matPrefix>message</mat-icon>\n          <textarea matInput placeholder=\"Message\"></textarea>\n        </mat-form-field>\n        <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n            <button mat-raised-button type=\"submit\" class=\"contact-btn\" color=\"primary\">Send <mat-icon class=\"send\">send</mat-icon></button>\n          </div>\n      </form>\n    </mat-card>\n  </mat-grid-tile>\n</mat-grid-list>"
+module.exports = "<div class=\"flex-container\" style=\"margin-top: 64px;\">\n<mat-grid-list [cols]=\"cols | async\" rowHeight=\"600px\" gutterSize=\"10px\">\n  <mat-grid-tile colspan=\"1\">\n   <div class=\"gmap\">\n      <agm-map [zoom]=\"amount\" [latitude]=\"lat\" [longitude]=\"lng\">\n        <agm-marker [latitude]=\"lat\" [longitude]=\"lng\"></agm-marker>\n      </agm-map>\n      </div>\n  </mat-grid-tile>\n  <mat-grid-tile colspan=\"1\">\n    <mat-card class=\"contact-card\">\n      <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n            <mat-card-title><h2 align=\"center\">Contact Us</h2></mat-card-title>\n       </mat-card-header>\n      <form fxLayout=\"column\" fxLayoutAlign=\"start\">      \n        \n        <mat-form-field>\n          <mat-icon matPrefix>person</mat-icon>\n          <input matInput placeholder=\"Your Name\">\n        </mat-form-field>\n        \n        <mat-form-field>\n          <mat-icon matPrefix>subject</mat-icon>\n          <input matInput placeholder=\"Subject\">\n        </mat-form-field>\n\n        <mat-form-field>\n            <mat-icon matPrefix>email</mat-icon>\n            <input matInput placeholder=\"Your Email\">\n          </mat-form-field>\n      \n        <mat-form-field>\n          <mat-icon matPrefix>message</mat-icon>\n          <textarea matInput placeholder=\"Message\"></textarea>\n        </mat-form-field>\n        <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n            <button mat-raised-button type=\"submit\" class=\"contact-btn\" color=\"primary\">Send <mat-icon class=\"send\">send</mat-icon></button>\n          </div>\n      </form>\n    </mat-card>\n  </mat-grid-tile>\n</mat-grid-list>\n</div>"
 
 /***/ }),
 
@@ -71,6 +71,9 @@ module.exports = "agm-map {\n  width: 40vw;\n  height: 40vw; }\n\n.gmap {\n  pad
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactusComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -82,9 +85,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 var ContactusComponent = /** @class */ (function () {
-    function ContactusComponent(titleService) {
+    function ContactusComponent(titleService, observableMedia) {
         this.titleService = titleService;
+        this.observableMedia = observableMedia;
         this.title = 'We are Here:';
         this.lat = 23.745531;
         this.lng = 90.370628;
@@ -92,7 +99,25 @@ var ContactusComponent = /** @class */ (function () {
         this.pageTitle = "Contact - Teachers Time";
     }
     ContactusComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.titleService.setTitle(this.pageTitle);
+        var cols_map = new Map([
+            ['xs', 1],
+            ['sm', 1],
+            ['md', 2],
+            ['lg', 2],
+            ['xl', 2]
+        ]);
+        var start_cols;
+        cols_map.forEach(function (cols, mqAlias) {
+            if (_this.observableMedia.isActive(mqAlias)) {
+                start_cols = cols;
+            }
+        });
+        this.cols = this.observableMedia.asObservable()
+            .map(function (change) {
+            return cols_map.get(change.mqAlias);
+        }).startWith(start_cols);
     };
     ContactusComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -100,7 +125,7 @@ var ContactusComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/contact/components/contactus/contactus.component.html"),
             styles: [__webpack_require__("./src/app/modules/contact/components/contactus/contactus.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
     ], ContactusComponent);
     return ContactusComponent;
 }());
@@ -282,7 +307,7 @@ var ContactRoutingModule = /** @class */ (function () {
 /***/ "./src/app/modules/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>"
+module.exports = "\r\n<div style=\"margin-top: 64px;\">\r\n    <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 

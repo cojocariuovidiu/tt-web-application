@@ -1,33 +1,56 @@
 @import 'fontawesome';
+@import "~bootstrap/scss/bootstrap";
 @import '~font-awesome/scss/font-awesome';
-@import '~@angular/material/theming';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Oxygen:300,400,700');
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family: 'Oxygen, sans-serif'
+);
+@include mat-core($custom-typography);
 
+// Define a custom typography config that overrides the font-family as well as the
+// `headlines` and `body-1` levels.;
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://www.google.com/design/spec/style/color.html
-$my-theme-primary: mat-palette($mat-indigo);
-$my-theme-accent:  mat-palette($mat-blue);
+
+.my-theme{
+    $my-theme-primary: mat-palette($mat-indigo);
+    $my-theme-accent:  mat-palette($mat-blue);
+
 // The warn palette is optional (defaults to red).
-$my-theme-warn:    mat-palette($mat-red);
-$my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
-.my-theme {
+    $my-theme-warn:    mat-palette($mat-red);
+    $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     @include angular-material-theme($my-theme);
 }
 
+.my-second-theme {
+  
+    $my-second-theme-primary: mat-palette($mat-indigo,900);
+    $my-second-theme-accent:  mat-palette($mat-blue);
+
+// The warn palette is optional (defaults to red).
+   $my-second-theme-warn:    mat-palette($mat-red);
+   $my-second-theme: mat-light-theme($my-second-theme-primary, $my-second-theme-accent, $my-second-theme-warn);
+   @include angular-material-theme($my-second-theme);
+}
+html{
+    height: 100%;
+}
+
 body{       
-    background: #FDF8F8 ;
-    background-size: cover;
+
     margin: 0;
     padding: 0;
-    max-height: 100vh;
-    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    font-family: 'Oxygen', sans-serif;
+       
 }

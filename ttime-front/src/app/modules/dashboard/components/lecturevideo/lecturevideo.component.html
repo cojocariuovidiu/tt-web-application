@@ -1,3 +1,92 @@
-<p>
-  lecturevideo works! {{paramIDCourse}} {{paramIDVideo}}
-</p>
+
+<div class="flex-container" style="margin-top:64px;" ngStyle.lt-sm="margin-top:57px;"fxFlex fxFill>
+    <mat-grid-list   [cols]="cols | async" rowHeight="40px"    gutterSize="2px"  >
+   
+    <mat-grid-tile colspan="11" rowspan="10" fxFlex fxFill>
+     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"/>
+       <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"/>
+       <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg"/>
+       <track kind="captions" src="../shared/example-captions.vtt" srclang="en" label="English"/>
+       <!-- Tracks need an ending tag thanks to IE9 -->
+       <track kind="subtitles" src="../shared/example-captions.vtt" srclang="en" label="English"/>
+       <!-- Tracks need an ending tag thanks to IE9 -->
+       <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+     </video>
+   
+    </mat-grid-tile> 
+    <mat-grid-tile  [colspan]="colspan | async" rowspan="14"   >
+      
+   <mat-list>
+           <mat-list-item *ngFor="let message of messages">
+             <img matListAvatar src="../../../assets/img/in.svg" alt="...">
+             <h3 matLine> {{message.name}} </h3>
+             <p matLine>
+               <span> {{message.details}} </span>
+             </p>
+           </mat-list-item>
+         </mat-list>
+   
+    </mat-grid-tile> 
+    <mat-grid-tile colspan="9" rowspan="6" mat-elevation-z10> 
+              
+        <mat-grid-tile-header><div fxLayout="column wrap" fxLayoutAlign="start stretch"><div fxFlex fxAlign="start"> <h4 class="text-black">Lecture Description:</h4></div></div></mat-grid-tile-header>
+        <div > 
+            <mat-card>      
+                <mat-card-content>     
+                <p class="text-black">Want to develop Android apps, but don’t know where to start? In this Nanodegree program, we’ll show you the way. We developed this curriculum with Google for true beginners interested in developing apps for the next billion Android users!</p>
+                </mat-card-content> 
+              </mat-card>
+                </div>
+       </mat-grid-tile>
+   
+   </mat-grid-list>
+      <div style="margin-top:1em;">
+       <mat-grid-list   cols="13" rowHeight="40px"    gutterSize="10px" >
+       <mat-grid-tile colspan="13" rowspan="6">
+           <mat-card  style="background: white">           
+             <h4 class="text-black">Comments:</h4>
+              
+   
+               <div fxLayout="column wrap" fxLayoutAlign="start stretch" fxFlex >
+                   <div><form  style="width: 100%;">            
+                       <mat-form-field class="example-full-width" style="width:90vw">
+                           <mat-icon matPrefix>message</mat-icon>
+                           <textarea matInput placeholder="Message" tyle="width:90vw">
+                             
+                           </textarea>
+                         </mat-form-field>
+                        
+         
+                   </form>
+                 </div>
+                 </div>
+             
+     
+               </mat-card>
+             
+           </mat-grid-tile> 
+           <mat-grid-tile colspan="13" rowspan="18" style="background: black;">
+               <mat-accordion style="min-width:100vw ;min-height:100%;">
+                   <mat-expansion-panel>
+                     <mat-expansion-panel-header>
+                       <mat-panel-title>
+                         Comments
+                       </mat-panel-title>
+                     </mat-expansion-panel-header>
+                 
+                     <mat-card *ngFor="let message of messages"> 
+                       <mat-card-actions>   <button mat-mini-fab>Edit</button> </mat-card-actions> 
+                       <mat-card-title style="font-size:1em "> {{message.name}}</mat-card-title>        
+                         <p class="text-black"> {{message.details}}</p>
+                     </mat-card>
+                   </mat-expansion-panel>
+                 </mat-accordion>
+                 
+               </mat-grid-tile>
+       </mat-grid-list>
+         
+          </div>
+   
+   
+   </div>

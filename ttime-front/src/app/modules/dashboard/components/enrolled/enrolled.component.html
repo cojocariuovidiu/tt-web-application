@@ -1,3 +1,25 @@
-<p>
-  enrolled works!
-</p>
+<div class="flex-container">
+      <div>
+        <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"   >
+            <mat-grid-tile
+           *ngFor="let course of courses"
+            [rowspan]="rowspan | async">
+       
+       
+           <mat-card class="example-card"  style="  width:100%; height:calc(100%-10px);  max-width: 95vw;" >
+                <mat-card-header><mat-card-title><h3>{{course.name}}</h3></mat-card-title></mat-card-header>
+                <mat-card-content  [style.z-index]="'-3'">
+                <p align="justify">
+                   {{course.details}}
+               </p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-raised-button color="primary" >Start</button>
+                </mat-card-actions>
+              </mat-card>
+             
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    
+    </div>

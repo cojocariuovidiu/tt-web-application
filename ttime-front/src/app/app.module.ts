@@ -11,7 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { ErrorService } from './services/error.service';
-
+import { GOOGLE_MAP_API_KEY } from './config/config';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { ErrorService } from './services/error.service';
     HttpModule,
     MaterialModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCZyphuuCSwPu-avgG883zlvRmwS8XKHLQ'
+      apiKey: GOOGLE_MAP_API_KEY
     }),
     FlexLayoutModule,
     AppRoutingModule

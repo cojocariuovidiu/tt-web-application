@@ -176,7 +176,7 @@ var CourseFilterPipe = /** @class */ (function () {
 /***/ "./src/app/modules/course/components/courselist/courselist.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<input [(ngModel)]=\"filter.courseTitle\" placeholder=\"search text goes here\">\n<div *ngFor=\"let course of courses | coursefilter : filter\">\n<mat-card class=\"example-card\">\n    <mat-card-header >\n      \n      <mat-card-title>{{course.courseTitle}}</mat-card-title>\n      \n    </mat-card-header>\n    \n    <mat-card-content>\n      <p>\n        {{course.courseDetail}}\n      </p>\n    </mat-card-content>\n   \n</mat-card>\n</div>"
+module.exports = "<!--<input [(ngModel)]=\"filter.courseTitle\" placeholder=\"search text goes here\">\n<div *ngFor=\"let course of courses | coursefilter : filter\">\n<mat-card class=\"example-card\">\n    <mat-card-header >\n      \n      <mat-card-title>{{course.courseTitle}}</mat-card-title>\n      \n    </mat-card-header>\n    \n    <mat-card-content>\n      <p>\n        {{course.courseDetail}}\n      </p>\n    </mat-card-content>\n   \n</mat-card>\n</div>\n-->\n<div class=\" my-theme flex-container\">\n  <mat-grid-list cols=\"1\" rowHeight=\"56\" style=\"margin-top :5em;\"> \n      \n  <mat-grid-tile >\n  <div fxLayout=\"column wrap\" fxLayoutAlign=\"start stretch\" fxFlex >\n      <div style=\"width: 100%;\">          \n          <mat-form-field class=\"example-full-width\" style=\"width:90vw\">\n              <input matInput [(ngModel)]=\"filter.courseTitle\"  placeholder=\"Search\"  style=\"width: 90vw;\">\n              <mat-icon matSuffix >search</mat-icon>\n            </mat-form-field>\n    </div>\n    </div>\n    </mat-grid-tile>\n  </mat-grid-list>\n<mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"  gutterSize.lt-sm=\"0\"   >\n  <div *ngFor=\"let course of courses | coursefilter : filter\">\n  <mat-grid-tile [rowspan]=\"rowspan | async\">\n <mat-card class=\"example-card\"  style=\"  width:100%; height:calc(100%-10px);  max-width: 95vw;\" >\n    <mat-card-header ><mat-card-title><h3>{{course.courseTitle}}</h3></mat-card-title> </mat-card-header>\n      <img matCardImage src=\"../../../../../assets/img/python.jpg\">\n      <p align=\"justify\">\n        <!-- {{course.courseDetail}}-->\n     </p>\n      <mat-card-actions>\n        <button mat-raised-button color=\"primary\" >Start</button>\n      </mat-card-actions>\n    </mat-card>\n</mat-grid-tile>\n</div>\n</mat-grid-list>\n</div>\n"
 
 /***/ }),
 
@@ -195,6 +195,9 @@ module.exports = ""
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__model_course_model__ = __webpack_require__("./src/app/model/course.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -207,19 +210,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var CourselistComponent = /** @class */ (function () {
-    function CourselistComponent(titleService) {
+    function CourselistComponent(titleService, observableMedia) {
         this.titleService = titleService;
+        this.observableMedia = observableMedia;
         this.filter = new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */](null, null, null, null, null);
         this.courses = [];
-        this.title = "Courses - Teachers Time";
+        this.title = 'Courses - Teachers Time';
     }
     CourselistComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.titleService.setTitle(this.title);
-        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "Java", "javadetail", null, null));
-        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "C sharp", "javadetail", null, null));
-        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "Script", "javadetail", null, null));
-        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]("1", "Python", "javadetail", null, null));
+        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]('1', 'Java', 'javadetail', null, null));
+        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]('1', 'C sharp', 'javadetail', null, null));
+        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]('1', 'Script', 'javadetail', null, null));
+        this.courses.push(new __WEBPACK_IMPORTED_MODULE_1__model_course_model__["a" /* Course */]('1', 'Python', 'javadetail', null, null));
+        var cols_map = new Map([
+            ['xs', 1],
+            ['sm', 1],
+            ['md', 2],
+            ['lg', 3],
+            ['xl', 3]
+        ]);
+        var rowspan_map = new Map([
+            ['xs', 13],
+            ['sm', 10],
+            ['md', 10],
+            ['lg', 11],
+            ['xl', 9]
+        ]);
+        var start_cols;
+        var row_span;
+        cols_map.forEach(function (cols, mqAlias) {
+            if (_this.observableMedia.isActive(mqAlias)) {
+                start_cols = cols;
+            }
+        });
+        this.cols = this.observableMedia.asObservable()
+            .map(function (change) {
+            return cols_map.get(change.mqAlias);
+        }).startWith(start_cols);
+        rowspan_map.forEach(function (rowspan, mqAlias) {
+            if (_this.observableMedia.isActive(mqAlias)) {
+                row_span = rowspan;
+            }
+        });
+        this.rowspan = this.observableMedia.asObservable()
+            .map(function (change) {
+            return rowspan_map.get(change.mqAlias);
+        }).startWith(row_span);
     };
     CourselistComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -227,7 +269,7 @@ var CourselistComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/course/components/courselist/courselist.component.html"),
             styles: [__webpack_require__("./src/app/modules/course/components/courselist/courselist.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["f" /* Title */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["b" /* ObservableMedia */]])
     ], CourselistComponent);
     return CourselistComponent;
 }());

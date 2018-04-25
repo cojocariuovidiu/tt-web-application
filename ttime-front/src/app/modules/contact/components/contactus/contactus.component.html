@@ -1,14 +1,14 @@
-
-<mat-grid-list cols="2" rowHeight="600px" gutterSize="10px">
-  <mat-grid-tile>
+<div class="flex-container" style="margin-top: 64px;">
+<mat-grid-list [cols]="cols | async" rowHeight="600px" gutterSize="10px">
+  <mat-grid-tile colspan="1">
    <div class="gmap">
       <agm-map [zoom]="amount" [latitude]="lat" [longitude]="lng">
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
       </agm-map>
       </div>
   </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-card class="contact-card" fxFlex>
+  <mat-grid-tile colspan="1">
+    <mat-card class="contact-card">
       <mat-card-header fxLayout="column" fxLayoutAlign="center center">
             <mat-card-title><h2 align="center">Contact Us</h2></mat-card-title>
        </mat-card-header>
@@ -40,3 +40,4 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+</div>

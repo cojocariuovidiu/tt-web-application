@@ -1,4 +1,4 @@
-<input [(ngModel)]="filter.courseTitle" placeholder="search text goes here">
+<!--<input [(ngModel)]="filter.courseTitle" placeholder="search text goes here">
 <div *ngFor="let course of courses | coursefilter : filter">
 <mat-card class="example-card">
     <mat-card-header >
@@ -14,4 +14,36 @@
     </mat-card-content>
    
 </mat-card>
+</div>
+-->
+<div class=" my-theme flex-container">
+  <mat-grid-list cols="1" rowHeight="56" style="margin-top :5em;"> 
+      
+  <mat-grid-tile >
+  <div fxLayout="column wrap" fxLayoutAlign="start stretch" fxFlex >
+      <div style="width: 100%;">          
+          <mat-form-field class="example-full-width" style="width:90vw">
+              <input matInput [(ngModel)]="filter.courseTitle"  placeholder="Search"  style="width: 90vw;">
+              <mat-icon matSuffix >search</mat-icon>
+            </mat-form-field>
+    </div>
+    </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+<mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  gutterSize.lt-sm="0"   >
+  <div *ngFor="let course of courses | coursefilter : filter">
+  <mat-grid-tile [rowspan]="rowspan | async">
+ <mat-card class="example-card"  style="  width:100%; height:calc(100%-10px);  max-width: 95vw;" >
+    <mat-card-header ><mat-card-title><h3>{{course.courseTitle}}</h3></mat-card-title> </mat-card-header>
+      <img matCardImage src="../../../../../assets/img/python.jpg">
+      <p align="justify">
+        <!-- {{course.courseDetail}}-->
+     </p>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" >Start</button>
+      </mat-card-actions>
+    </mat-card>
+</mat-grid-tile>
+</div>
+</mat-grid-list>
 </div>

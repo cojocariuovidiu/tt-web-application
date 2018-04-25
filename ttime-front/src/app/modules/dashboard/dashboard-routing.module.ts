@@ -9,7 +9,7 @@ import { LecturevideoComponent } from './components/lecturevideo/lecturevideo.co
 
 const DASHBOARD_ROUTES: Routes = [
   {
-    path: '', 
+    path: '',
     component: DashboardComponent,
     children: [
       {

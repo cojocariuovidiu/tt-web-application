@@ -2,7 +2,7 @@
 .reg-card {
   margin-top:2em; 
   margin-bottom: 5em ; 
-  max-width: 25vw;  
+  max-width: 30vmax;  
   min-width: 80vmin ;
   min-height: 400px;
   max-height: 1000px;
@@ -23,11 +23,8 @@
   background-color: #ffffff; 
   padding: 0 10px;
 }
-.slabel{
-  margin-right: 20px;
-}
-.slabel2{
-  padding-top: 20px;
+.checkbox span{
+  margin-left: 20px;
 }
 .loginbtn{
 max-width: 20vw;;
@@ -38,13 +35,4 @@ margin-bottom: 2em;
 .mat-raised-button span 
 {
 padding-left:20px    
-}
-.submit-div{
-  padding-top: 10px;
-}
-.mat-icon{
-  vertical-align: -20%;
-}
-mat-form-field{
-  padding-bottom: 15px;
 }

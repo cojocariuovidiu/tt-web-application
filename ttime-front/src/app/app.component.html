@@ -5,7 +5,7 @@
 </div>
  
 <div [hidden]="loading" class="router-output">
-<section class="my-theme app flex-container" fxLayout="column" fxLayoutAlign="center stretch">
+<div class="my-theme app">
     <mat-toolbar class="nav-bar mat-elevation-z10"  color="primary" >
       <mat-toolbar-row>
               <div fxShow="true" fxHide.gt-sm="true">
@@ -31,49 +31,65 @@
           </span>
       </mat-toolbar-row>
     </mat-toolbar>
-   <mat-sidenav-container fxFlex>
-     <mat-sidenav #sidenav class="mat-elevation-z6" mode="side" align="start" c ngStyle.xs="width:50vw;">
-     </mat-sidenav>
+    </div>
+ <div>
+    <mat-sidenav-container class="my-second-theme">
+     <mat-sidenav #sidenav class="mat-elevation-z6" mode="over" align="start"  ngStyle.xs="width:50vw;" align="width:start" fxHide.gt-md="true"ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
+      <div class="sidenavbar text-white" fxLayout="column wrap"fxLayoutGap="20px">
+       
+        <div> <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>
+         <div><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
+         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
+          <div> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
+          <div><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
+           <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
+          <div> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
+            
+         <div><button mat-button id="navbutton" routerLink= "/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
+         <div><button mat-button id="navbutton" routerLink= "/registration" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
+         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Settings</span></button></div>
+         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Logout</span></button></div>
+       </div>
+    </mat-sidenav>
+
      <mat-sidenav-content>
     
-      <router-outlet></router-outlet>
+      <div class="routing " style="margin-top: 65px;" ngStyle.lt-sm="margin-top: 0px;"><router-outlet></router-outlet></div>
     
-      <div class="bounds" color="primary">
-      
-        <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill >
-             
-            <div fxFlex="40" class="sec1" fxFlex.xs="50" ngStyle.xs="text-align:center" >
-                <h3 >Teachers Time</h3>
-                <p text-align="left">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.
-            </p>
-            </div>
-            <div fxFlex="30" class="sec2" fxFlex.xs="50" ngStyle.xs="text-align:center" >
-                <h3 class="useful-link"><strong>Useful Links</strong></h3> 
-              <ul class="contactus">
-                    <li> <a mat-button routerLink= "/us/about" routerLinkActive="active"> <mat-icon> info</mat-icon><span class="icon-text">About</span></a></li>
-                    <li> <a mat-button routerLink= "/us/terms" routerLinkActive="active"> <mat-icon> description</mat-icon> <span class="icon-text-terms">Terms of Service</span></a> </li>
-                    <li> <a mat-button routerLink= "/us/privacy" routerLinkActive="active"> <mat-icon> security</mat-icon><span class="icon-text">Privacy Policy</span> </a> </li>
-                    <li> <a mat-button routerLink= "/dashboard/lecturevideo/20" [queryParams]="{ videoLink: '/Courses/Course1/Lecture1.mp4'}" routerLinkActive="active"> <mat-icon> contact_mail</mat-icon><span class="icon-text">Contact</span></a></li>
-            </ul>
-                   
-            </div>
-            <div fxFlex="30" class="sec3" fxFlex.xs="50" ngStyle.xs="text-align:center">
-                <h3 class="contact-us"><strong>Contact Us</strong></h3> 
-                <ul class="contactus" color="primary">
-                      <li>  <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p></li>
-                      <li> <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p></li>
-                      <li> <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p> </li>
-                      <li class="social-icons icon-circle icon-zoom list-unstyled list-inline"> <span><i class="fa fa-facebook"></i></span> <span><i class="fa fa-youtube"></i></span> <span><i class="fa fa-google-plus"></i></span> <span><i class="fa fa-instagram"></i></span></li>
-                </ul>
-                                     
-          </div>
-            
-        </div>
-        
-      </div>  
     </mat-sidenav-content>
    </mat-sidenav-container>
-  </section>
+  </div>
+   <div class=" my-second-theme nav-bar mat-elevation-z10 text-white"  color="primary" >
+    <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="0px"   >
+        <mat-grid-tile rowspan="7" style="background: #1A237E;">
+          <div fxLayout="column wrap"  style="padding-left: 30px">
+            <h5 class="title">Teachers Time</h5>
+            <p align="left">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>
+          </div>
+          </mat-grid-tile>
+        <mat-grid-tile rowspan="7" style="background:#1A237E;">
+            <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="15px" style="padding-left: 30px">
+                <h5><strong>Useful Links</strong></h5> 
+                <a class="text-white" routerLink="/login"  style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
+                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">description</mat-icon>Terms of use</a>
+                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">security</mat-icon>Privacy Policy</a>
+                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">contact_mail</mat-icon>Contact</a>
+                
+             </div>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="7" style="background:#1A237E;">
+            <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="5px" style="padding-left: 30px ; padding-top:30px;">
+            <h5> <strong>Contact Us</strong> </h5> 
+            <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden dshdh, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>
+            <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p>
+            <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p>
+            <p class="social-icons icon-circle icon-zoom list-inline"> <a><i class="fa fa-facebook"></i></a> <a><i class="fa fa-youtube"></i></a> <a><i class="fa fa-google-plus"></i></a> <a><i class="fa fa-instagram"></i></a><p>
+                
+            </div>
+        </mat-grid-tile>
+ 
+  </mat-grid-list>
+  </div>
 </div>
 <app-message></app-message>
   
