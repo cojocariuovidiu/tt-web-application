@@ -483,18 +483,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 /***/ }),
 
-/***/ "./src/app/config/config.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FACEBOOK_APP_ID; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return GOOGLE_APP_ID; });
-var FACEBOOK_APP_ID = "1711489872207276";
-var GOOGLE_APP_ID = "247013322175-g9dv3lf3pj6tdomt6stt5impg5vi311p.apps.googleusercontent.com";
-
-
-/***/ }),
-
 /***/ "./src/app/model/user.model.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

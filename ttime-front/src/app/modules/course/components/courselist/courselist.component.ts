@@ -21,10 +21,10 @@ export class CourselistComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    this.courses.push(new Course('1', 'Java', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'C sharp', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'Script', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'Python', 'javadetail', null, null));
+    this.courses.push(new Course('1', 'Java', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
+    this.courses.push(new Course('1', 'C sharp', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
+    this.courses.push(new Course('1', 'Script', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
+    this.courses.push(new Course('1', 'Python', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
 
     const cols_map = new Map([
       ['xs', 1],
