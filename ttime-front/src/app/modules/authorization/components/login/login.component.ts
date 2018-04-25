@@ -4,7 +4,8 @@ import { AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular5
 import { AuthorizationService } from '../../services/authorization.service';
 import { existingMobileNumberValidator } from './validatelogin';
 import { Title } from '@angular/platform-browser';
-
+import { Router } from '@angular/router';
+import { User } from '../../../../model/user.model';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,13 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  socialTag = "social";
   hide = true;
   mobilePattern: RegExp = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/;//'[0-9]*.{11}';
   public loginForm : FormGroup;
   title: string = "Login - Teachers Time";
   
-  constructor(private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
     this.createLoginForm();
   }
 
@@ -40,14 +42,21 @@ export class LoginComponent implements OnInit {
   }
 
   sendLoginForm(){
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     const logincred = {
       mobile: this.loginMobile.value,
       password: this.loginPassword.value
     }
     this.authorizationService.loginUser(logincred).subscribe(data => {
       //console.log(data);
-    })
+      if(data.success){
+        this.authorizationService.storeUserData(data.token, data.user);
+        this.router.navigate(['/dashboard']);
+      }
+      else{
+        this.resetLoginForm();
+      }
+    });
   }
 
   resetLoginForm(){
@@ -72,7 +81,18 @@ export class LoginComponent implements OnInit {
 
     this.socialAuthService.signIn(socialPlatformProvider)
       .then((userData) => {
-        console.log(socialPlatform+" sign in data : " , userData);
+        //console.log(socialPlatform+" sign in data : " , userData);
+        const user = new User(userData.name, userData.email, this.socialTag, null, null, null , null, userData.id, 'true');
+        //console.log(user);
+        this.authorizationService.registerSocialUser(user).subscribe(data => {
+          if(data.success){
+            this.authorizationService.storeUserData(data.token, data.user);
+            this.router.navigate(['/dashboard']);
+          }
+          else{
+            console.log('error');
+          }
+        })
     });
   }
 

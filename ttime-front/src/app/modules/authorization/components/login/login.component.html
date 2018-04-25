@@ -43,25 +43,25 @@ fxLayout="column" >
       <mat-card-title><h2 align="center">LOGIN</h2></mat-card-title> 
     </mat-card-header>
     
-     <form fxLayout="column" fxLayoutAlign="start"  [formGroup]="loginForm" (ngSubmit)="sendLoginForm()"> 
+     <form fxLayout="column" fxLayoutAlign="start"  name="loginMobile" id="loginMobile" [formGroup]="loginForm" (ngSubmit)="sendLoginForm()"> 
        <mat-form-field floatLabel="auto">
     <input matInput placeholder="Your Mobile Number" formControlName="loginMobile" required>
     <mat-icon matPrefix>smartphone</mat-icon>
     <mat-error *ngIf="loginMobile.errors">
       <mat-error *ngIf="loginMobile.errors.required">Mobile Number Required</mat-error>
       <mat-error *ngIf="loginMobile.errors.pattern">Invalid Mobile Number</mat-error>
-      
+      <mat-error *ngIf="loginMobile.errors.mobNumExists">No User under this Mobile Number</mat-error>
     </mat-error>
      </mat-form-field>
   <mat-form-field>
       <mat-icon matPrefix>lock</mat-icon>
-    <input matInput placeholder="Your Password" [type]="hide ? 'password' : 'text'" formControlName="loginPassword" required>
+    <input matInput placeholder="Your Password" [type]="hide ? 'password' : 'text'" name="loginPassword" id="loginPassword" formControlName="loginPassword" required>
       
       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
       <mat-error *ngIf="loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)">Password Required</mat-error>
     </mat-form-field>
     <div fxLayout="column" fxLayoutAlign="center center">
-    <button type="submit" mat-raised-button class="loginbtn" color="primary">Login</button>
+    <button [disabled]="!loginForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Login</button>
     </div>
 </form>
 <div class="divider">
@@ -70,8 +70,8 @@ fxLayout="column" >
     </span>
   </div>
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="center center">
-      <button mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
-      <button mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
+      <button (click)="socialSignIn('google')" mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
+      <button (click)="socialSignIn('facebook')" mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
     </mat-card-actions>
   </mat-card>
 </mat-grid-tile>

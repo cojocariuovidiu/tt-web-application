@@ -58,7 +58,7 @@ var ChangepasswordComponent = /** @class */ (function () {
 /***/ "./src/app/modules/dashboard/components/enrolled/enrolled.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"flex-container\">\n      <div>\n        <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"   >\n            <mat-grid-tile\n           *ngFor=\"let course of courses\"\n            [rowspan]=\"rowspan | async\">\n       \n       \n           <mat-card class=\"example-card\"  style=\"  width:100%; height:calc(100%-10px);  max-width: 95vw;\" >\n                <mat-card-header><mat-card-title><h3>{{course.name}}</h3></mat-card-title></mat-card-header>\n                <mat-card-content  [style.z-index]=\"'-3'\">\n                <p align=\"justify\">\n                   {{course.details}}\n               </p>\n                </mat-card-content>\n                <mat-card-actions>\n                  <button mat-raised-button color=\"primary\" >Start</button>\n                </mat-card-actions>\n              </mat-card>\n             \n        </mat-grid-tile>\n      </mat-grid-list>\n    </div>\n    \n    </div>"
+module.exports = "<div class=\"flex-container\">\n      <div>\n        <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"   >\n            <mat-grid-tile\n           *ngFor=\"let course of courses\"\n            [rowspan]=\"rowspan | async\">\n       \n       \n           <mat-card class=\"example-card\"  style=\"  width:100%; height:calc(100%-10px);  max-width: 95vw;\" >\n                <mat-card-header><mat-card-title><h3>{{course.name}}</h3></mat-card-title></mat-card-header>\n                <mat-card-content  [style.z-index]=\"'-3'\">\n                <p align=\"justify\">\n                   {{course.details}}\n               </p>\n                </mat-card-content>\n                <mat-card-actions>\n                  <button mat-raised-button color=\"primary\" >Start</button>\n                </mat-card-actions>\n              </mat-card>\n             \n        </mat-grid-tile>\n      </mat-grid-list>\n    </div>\n    {{user.name}}\n    </div>"
 
 /***/ }),
 
@@ -79,6 +79,8 @@ module.exports = ""
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_dashboard_service__ = __webpack_require__("./src/app/modules/dashboard/services/dashboard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -93,10 +95,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var EnrolledComponent = /** @class */ (function () {
-    function EnrolledComponent(titleService, observableMedia) {
+    function EnrolledComponent(dashboardService, titleService, observableMedia) {
+        this.dashboardService = dashboardService;
         this.titleService = titleService;
         this.observableMedia = observableMedia;
+        this.user = new __WEBPACK_IMPORTED_MODULE_5__model_user_model__["a" /* User */]('', '', '');
         this.currentRate = 5;
         this.courses = [
             // tslint:disable-next-line:max-line-length
@@ -114,6 +120,11 @@ var EnrolledComponent = /** @class */ (function () {
     }
     EnrolledComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.getUser();
+        /*this.dashboardService.user.subscribe((user: User) => {
+          this.user = user;
+          console.log(this.user);
+        });*/
         this.titleService.setTitle(this.title);
         var cols_map = new Map([
             ['xs', 1],
@@ -150,13 +161,20 @@ var EnrolledComponent = /** @class */ (function () {
             return rowspan_map.get(change.mqAlias);
         }).startWith(row_span);
     };
+    EnrolledComponent.prototype.getUser = function () {
+        var _this = this;
+        var usercred = JSON.parse(localStorage.getItem('usercred'));
+        this.dashboardService.getProfile(usercred.tag).subscribe(function (profile) {
+            _this.user = profile;
+        });
+    };
     EnrolledComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-enrolled',
             template: __webpack_require__("./src/app/modules/dashboard/components/enrolled/enrolled.component.html"),
             styles: [__webpack_require__("./src/app/modules/dashboard/components/enrolled/enrolled.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__services_dashboard_service__["a" /* DashboardService */], __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
     ], EnrolledComponent);
     return EnrolledComponent;
 }());
@@ -352,7 +370,7 @@ var LecturevideoComponent = /** @class */ (function () {
 /***/ "./src/app/modules/dashboard/components/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  profile works!\n</p>\n"
+module.exports = "<p>\n  {{user.name}}\n  {{user.email}}\n  {{user.mobile}}\n<p>"
 
 /***/ }),
 
@@ -370,6 +388,8 @@ module.exports = ""
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_dashboard_service__ = __webpack_require__("./src/app/modules/dashboard/services/dashboard.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -381,13 +401,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var ProfileComponent = /** @class */ (function () {
-    function ProfileComponent(titleService) {
+    function ProfileComponent(dashboardService, titleService) {
+        this.dashboardService = dashboardService;
         this.titleService = titleService;
+        this.user = new __WEBPACK_IMPORTED_MODULE_3__model_user_model__["a" /* User */]('', '', '');
         this.title = "Profile - Teachers Time";
     }
     ProfileComponent.prototype.ngOnInit = function () {
         this.titleService.setTitle(this.title);
+        this.getUser();
+    };
+    ProfileComponent.prototype.getUser = function () {
+        var _this = this;
+        var usercred = JSON.parse(localStorage.getItem('usercred'));
+        this.dashboardService.getProfile(usercred.tag).subscribe(function (profile) {
+            _this.user = profile;
+        });
     };
     ProfileComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -395,7 +427,7 @@ var ProfileComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/dashboard/components/profile/profile.component.html"),
             styles: [__webpack_require__("./src/app/modules/dashboard/components/profile/profile.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_dashboard_service__["a" /* DashboardService */], __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */]])
     ], ProfileComponent);
     return ProfileComponent;
 }());
@@ -553,12 +585,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_enrolleddetail_enrolleddetail_component__ = __webpack_require__("./src/app/modules/dashboard/components/enrolleddetail/enrolleddetail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_changepassword_changepassword_component__ = __webpack_require__("./src/app/modules/dashboard/components/changepassword/changepassword.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lecturevideo_lecturevideo_component__ = __webpack_require__("./src/app/modules/dashboard/components/lecturevideo/lecturevideo.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_dashboard_service__ = __webpack_require__("./src/app/modules/dashboard/services/dashboard.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -586,10 +620,102 @@ var DashboardModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_5__angular_flex_layout__["a" /* FlexLayoutModule */],
                 __WEBPACK_IMPORTED_MODULE_6__dashboard_routing_module__["a" /* DashboardRoutingModule */]
             ],
-            declarations: [__WEBPACK_IMPORTED_MODULE_7__dashboard_component__["a" /* DashboardComponent */], __WEBPACK_IMPORTED_MODULE_8__components_profile_profile_component__["a" /* ProfileComponent */], __WEBPACK_IMPORTED_MODULE_9__components_enrolled_enrolled_component__["a" /* EnrolledComponent */], __WEBPACK_IMPORTED_MODULE_10__components_enrolleddetail_enrolleddetail_component__["a" /* EnrolleddetailComponent */], __WEBPACK_IMPORTED_MODULE_11__components_changepassword_changepassword_component__["a" /* ChangepasswordComponent */], __WEBPACK_IMPORTED_MODULE_12__components_lecturevideo_lecturevideo_component__["a" /* LecturevideoComponent */]]
+            declarations: [__WEBPACK_IMPORTED_MODULE_7__dashboard_component__["a" /* DashboardComponent */], __WEBPACK_IMPORTED_MODULE_8__components_profile_profile_component__["a" /* ProfileComponent */], __WEBPACK_IMPORTED_MODULE_9__components_enrolled_enrolled_component__["a" /* EnrolledComponent */], __WEBPACK_IMPORTED_MODULE_10__components_enrolleddetail_enrolleddetail_component__["a" /* EnrolleddetailComponent */], __WEBPACK_IMPORTED_MODULE_11__components_changepassword_changepassword_component__["a" /* ChangepasswordComponent */], __WEBPACK_IMPORTED_MODULE_12__components_lecturevideo_lecturevideo_component__["a" /* LecturevideoComponent */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_13__services_dashboard_service__["a" /* DashboardService */]]
         })
     ], DashboardModule);
     return DashboardModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/modules/dashboard/services/dashboard.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_error_service__ = __webpack_require__("./src/app/services/error.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var DashboardService = /** @class */ (function () {
+    function DashboardService(router, http, errorService) {
+        this.router = router;
+        this.http = http;
+        this.errorService = errorService;
+    }
+    DashboardService.prototype.getauthToken = function () {
+        var token = localStorage.getItem('id_token');
+        return token;
+    };
+    DashboardService.prototype.getProfile = function (tag) {
+        var _this = this;
+        if (tag == "local") {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            var url = "" + "api/users/profile";
+            var token = this.getauthToken();
+            headers.append('Authorization', token);
+            headers.append('Content-Type', 'application/json');
+            return this.http.get(url, { headers: headers })
+                .map(function (response) {
+                var user = response.json();
+                //console.log(user.user);
+                var profile = new __WEBPACK_IMPORTED_MODULE_2__model_user_model__["a" /* User */](user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified);
+                //console.log(profile);
+                return profile;
+            })
+                .catch(function (error) {
+                _this.errorService.handleError(error.json());
+                return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].throw(error.json());
+            });
+        }
+        else {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            var url = "" + "api/users/profile/social";
+            var token = this.getauthToken();
+            headers.append('Authorization', token);
+            headers.append('Content-Type', 'application/json');
+            return this.http.get(url, { headers: headers })
+                .map(function (response) {
+                var user = response.json();
+                //console.log(user.user);
+                var profile = new __WEBPACK_IMPORTED_MODULE_2__model_user_model__["a" /* User */](user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified);
+                //console.log(profile);
+                return profile;
+            })
+                .catch(function (error) {
+                _this.errorService.handleError(error.json());
+                return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].throw(error.json());
+            });
+        }
+    };
+    DashboardService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_5__services_error_service__["a" /* ErrorService */]])
+    ], DashboardService);
+    return DashboardService;
 }());
 
 

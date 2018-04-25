@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  
+  user: User;
   navLinks = [
     {label: 'Enrolled', path: '/dashboard/enrolled'},
     {label: 'Profile', path: '/dashboard/profile'}
@@ -14,5 +17,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  
 
 }

@@ -1,26 +1,5 @@
 webpackJsonp(["course.module"],{
 
-/***/ "./src/app/model/course.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Course; });
-var Course = /** @class */ (function () {
-    function Course(courseID, courseTitle, courseDetail, courseScope, coursePrice, courseLectures) {
-        this.courseID = courseID;
-        this.courseTitle = courseTitle;
-        this.courseDetail = courseDetail;
-        this.courseScope = courseScope;
-        this.coursePrice = coursePrice;
-        this.courseLectures = courseLectures;
-    }
-    return Course;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/modules/course/components/coursedetail/coursedetail.component.html":
 /***/ (function(module, exports) {
 

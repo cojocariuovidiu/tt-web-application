@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { User } from '../../../../model/user.model';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-enrolled',
@@ -11,6 +13,7 @@ import 'rxjs/add/operator/startWith';
   styleUrls: ['./enrolled.component.scss']
 })
 export class EnrolledComponent implements OnInit {
+  user = new User('','','');
   rowspan: Observable<number>;
    cols: Observable<number>;
   currentRate = 5;
@@ -29,9 +32,14 @@ export class EnrolledComponent implements OnInit {
   ];
 
   title: string = "Enrolled - Teachers Time";
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) {  }
+  constructor(private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
 
   ngOnInit() {
+    this.getUser();
+    /*this.dashboardService.user.subscribe((user: User) => {
+      this.user = user;
+      console.log(this.user);
+    });*/
     this.titleService.setTitle(this.title);
     const cols_map = new Map([
       ['xs', 1],
@@ -67,7 +75,13 @@ export class EnrolledComponent implements OnInit {
         .map(change => {
           return rowspan_map.get(change.mqAlias);
         }).startWith(row_span);
+  }
 
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
   }
 
 }

@@ -6,8 +6,8 @@ webpackJsonp(["main"],{
 var map = {
 	"app/modules/authorization/authorization.module": [
 		"./src/app/modules/authorization/authorization.module.ts",
-		"common",
-		"authorization.module"
+		"authorization.module",
+		"common"
 	],
 	"app/modules/contact/contact.module": [
 		"./src/app/modules/contact/contact.module.ts",
@@ -15,13 +15,12 @@ var map = {
 	],
 	"app/modules/course/course.module": [
 		"./src/app/modules/course/course.module.ts",
-		"common",
 		"course.module"
 	],
 	"app/modules/dashboard/dashboard.module": [
 		"./src/app/modules/dashboard/dashboard.module.ts",
-		"common",
-		"dashboard.module"
+		"dashboard.module",
+		"common"
 	]
 };
 function webpackAsyncContext(req) {
@@ -49,12 +48,14 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_home_home_component__ = __webpack_require__("./src/app/components/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_notfound_notfound_component__ = __webpack_require__("./src/app/components/notfound/notfound.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_core_service__ = __webpack_require__("./src/app/services/core.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -67,7 +68,7 @@ var APP_ROUTES = [
         path: 'auth', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
     },
     {
-        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule'
+        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule', canActivate: [__WEBPACK_IMPORTED_MODULE_4__services_core_service__["a" /* CoreService */]]
     },
     {
         path: 'courses', loadChildren: 'app/modules/course/course.module#CourseModule'
@@ -101,7 +102,7 @@ var AppRoutingModule = /** @class */ (function () {
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"!loading\" class=\"loader\" >\n  <div class=\"container\">    \n    <mat-spinner></mat-spinner>\n  </div>\n</div>\n \n<div [hidden]=\"loading\" class=\"router-output\">\n<div class=\"my-theme app\">\n    <mat-toolbar class=\"nav-bar mat-elevation-z10\"  color=\"primary\" >\n      <mat-toolbar-row>\n              <div fxShow=\"true\" fxHide.gt-sm=\"true\">\n                  <button mat-button id=\"navbutton\" (click)=\"sidenav.toggle()\"><i class=\"material-icons\">view_headline</i></button>\n              </div>\n          <button mat-button id=\"navbutton\" routerLink= \"/home\" routerLinkActive=\"active\" ><h2><strong>Teachers Time</strong></h2></button>\n            <div fxShow=\"true\" fxHide.lt-md=\"true\">\n              <!-- The following menu items will be hidden on both SM and XS screen sizes -->\n              <button mat-button id=\"navbutton\"  routerLink= \"/home\" routerLinkActive=\"active\" > <i class=\"material-icons\">home</i><span class=\"icon-text\">Home</span> </button>\n              <button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button>\n              <button mat-button id=\"navbutton\" routerLink= \"/us/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button>\n            </div>\n          <span class=\"fill-remaining-space\" fxShow=\"true\" fxHide.lt-md=\"true\" ></span>\n          <span class=\"right-nav\" fxShow=\"true\" fxHide.lt-md=\"true\">\n              <button mat-button id=\"navbutton\" routerLink= \"/auth/register\" routerLinkActive=\"active\" > <i class=\"material-icons\">person_add</i> <span class=\"icon-text\">Register</span></button>\n              <button mat-button  id=\"navbutton\" routerLink= \"/auth/login\" routerLinkActive=\"active\" ><i class=\"material-icons\">person</i> <span class=\"icon-text\">Login</span></button>\n              <button mat-icon-button [matMenuTriggerFor]=\"menu\"> <i class=\"material-icons\" id=\"account\">account_circle</i></button>\n              <mat-menu #menu=\"matMenu\" yPosition=\"below\" [overlapTrigger]=\"false\">\n              <button mat-menu-item><mat-icon>account_box</mat-icon>Dashboard</button>\n              <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>\n              <button mat-menu-item><mat-icon>power_settings_new</mat-icon>Logout</button>\n            </mat-menu>\n          </span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    </div>\n <div>\n    <mat-sidenav-container class=\"my-second-theme\">\n     <mat-sidenav #sidenav class=\"mat-elevation-z6\" mode=\"over\" align=\"start\"  ngStyle.xs=\"width:50vw;\" align=\"width:start\" fxHide.gt-md=\"true\"ngStyle.md=\"80vw;\" ngStyle.sm=\"width:80vw;\" ngStyle.xs=\"width:80vw;\" style=\"padding-top:64px; background: #1A237E;\">\n      <div class=\"sidenavbar text-white\" fxLayout=\"column wrap\"fxLayoutGap=\"20px\">\n       \n        <div> <button mat-button id=\"navbutton\"  routerLink= \"/home\" routerLinkActive=\"active\"  > <i class=\"material-icons\">home</i><span class=\"icon-text\">Home</span> </button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button></div> \n          <div> <hr style=\"background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;\"> </div>\n          <div><button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button></div>\n           <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button></div> \n          <div> <hr style=\"background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;\"> </div>\n            \n         <div><button mat-button id=\"navbutton\" routerLink= \"/login\" routerLinkActive=\"active\" > <i class=\"material-icons\">person</i><span class=\"icon-text\">Login</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/registration\" routerLinkActive=\"active\" > <i class=\"material-icons\">person_add</i><span class=\"icon-text\">Registration</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Settings</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Logout</span></button></div>\n       </div>\n    </mat-sidenav>\n\n     <mat-sidenav-content>\n    \n      <div class=\"routing \" style=\"margin-top: 65px;\" ngStyle.lt-sm=\"margin-top: 0px;\"><router-outlet></router-outlet></div>\n    \n    </mat-sidenav-content>\n   </mat-sidenav-container>\n  </div>\n   <div class=\" my-second-theme nav-bar mat-elevation-z10 text-white\"  color=\"primary\" >\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"0px\"   >\n        <mat-grid-tile rowspan=\"7\" style=\"background: #1A237E;\">\n          <div fxLayout=\"column wrap\"  style=\"padding-left: 30px\">\n            <h5 class=\"title\">Teachers Time</h5>\n            <p align=\"left\">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>\n          </div>\n          </mat-grid-tile>\n        <mat-grid-tile rowspan=\"7\" style=\"background:#1A237E;\">\n            <div fxLayout=\"column wrap\"  fXLayoutAlign=\"start start\" fxFlex fxLayoutGap=\"15px\" style=\"padding-left: 30px\">\n                <h5><strong>Useful Links</strong></h5> \n                <a class=\"text-white\" routerLink=\"/login\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">info</mat-icon>About</a> \n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">description</mat-icon>Terms of use</a>\n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">security</mat-icon>Privacy Policy</a>\n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">contact_mail</mat-icon>Contact</a>\n                \n             </div>\n        </mat-grid-tile>\n        <mat-grid-tile rowspan=\"7\" style=\"background:#1A237E;\">\n            <div fxLayout=\"column wrap\"  fXLayoutAlign=\"start start\" fxFlex fxLayoutGap=\"5px\" style=\"padding-left: 30px ; padding-top:30px;\">\n            <h5> <strong>Contact Us</strong> </h5> \n            <p> <mat-icon id=\"ab\">contact_phone</mat-icon> Rezina Garden dshdh, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>\n            <p> <mat-icon id=\"ab\">phone</mat-icon> +880 1777-800866 </p>\n            <p> <mat-icon id=\"ab\">email</mat-icon> Privacy Policy</p>\n            <p class=\"social-icons icon-circle icon-zoom list-inline\"> <a><i class=\"fa fa-facebook\"></i></a> <a><i class=\"fa fa-youtube\"></i></a> <a><i class=\"fa fa-google-plus\"></i></a> <a><i class=\"fa fa-instagram\"></i></a><p>\n                \n            </div>\n        </mat-grid-tile>\n \n  </mat-grid-list>\n  </div>\n</div>\n<app-message></app-message>\n  \n  "
+module.exports = "<div [hidden]=\"!loading\" class=\"loader\" >\n  <div class=\"container\">    \n    <mat-spinner></mat-spinner>\n  </div>\n</div>\n \n<div [hidden]=\"loading\" class=\"router-output\">\n<div class=\"my-theme app\">\n    <mat-toolbar class=\"nav-bar mat-elevation-z10\"  color=\"primary\" >\n      <mat-toolbar-row>\n              <div fxShow=\"true\" fxHide.gt-sm=\"true\">\n                  <button mat-button id=\"navbutton\" (click)=\"sidenav.toggle()\"><i class=\"material-icons\">view_headline</i></button>\n              </div>\n          <button mat-button id=\"navbutton\" routerLink= \"/home\" routerLinkActive=\"active\" ><h2><strong>Teachers Time</strong></h2></button>\n            <div fxShow=\"true\" fxHide.lt-md=\"true\">\n              <!-- The following menu items will be hidden on both SM and XS screen sizes -->\n              <button mat-button id=\"navbutton\"  routerLink= \"/home\" routerLinkActive=\"active\" > <i class=\"material-icons\">home</i><span class=\"icon-text\">Home</span> </button>\n              <button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button>\n              <button mat-button id=\"navbutton\" routerLink= \"/us/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button>\n            </div>\n          <span class=\"fill-remaining-space\" fxShow=\"true\" fxHide.lt-md=\"true\" ></span>\n          <span class=\"right-nav\" fxShow=\"true\" fxHide.lt-md=\"true\">\n              <button *ngIf=\"!hideLogin()\" mat-button id=\"navbutton\" routerLink= \"/auth/register\" routerLinkActive=\"active\" > <i class=\"material-icons\">person_add</i> <span class=\"icon-text\">Register</span></button>\n              <button *ngIf=\"!hideLogin()\" mat-button id=\"navbutton\" routerLink= \"/auth/login\" routerLinkActive=\"active\" ><i class=\"material-icons\">person</i> <span class=\"icon-text\">Login</span></button>\n              <button *ngIf=\"hideLogin()\" mat-icon-button [matMenuTriggerFor]=\"menu\"> <i class=\"material-icons\" id=\"account\">account_circle</i></button>\n              <mat-menu #menu=\"matMenu\" yPosition=\"below\" [overlapTrigger]=\"false\">\n              <button mat-menu-item><mat-icon>account_box</mat-icon>Dashboard</button>\n              <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>\n              <button mat-menu-item (click)=\"OnLogout()\"><mat-icon>power_settings_new</mat-icon>Logout</button>\n            </mat-menu>\n          </span>\n      </mat-toolbar-row>\n    </mat-toolbar>\n    </div>\n <div>\n    <mat-sidenav-container class=\"my-second-theme\">\n     <mat-sidenav #sidenav class=\"mat-elevation-z6\" mode=\"over\" align=\"start\"  ngStyle.xs=\"width:50vw;\" align=\"width:start\" fxHide.gt-md=\"true\"ngStyle.md=\"80vw;\" ngStyle.sm=\"width:80vw;\" ngStyle.xs=\"width:80vw;\" style=\"padding-top:64px; background: #1A237E;\">\n      <div class=\"sidenavbar text-white\" fxLayout=\"column wrap\"fxLayoutGap=\"20px\">\n       \n        <div> <button mat-button id=\"navbutton\"  routerLink= \"/home\" routerLinkActive=\"active\"  > <i class=\"material-icons\">home</i><span class=\"icon-text\">Home</span> </button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button></div> \n          <div> <hr style=\"background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;\"> </div>\n          <div><button mat-button id=\"navbutton\" routerLink= \"/courses\" routerLinkActive=\"active\" > <i class=\"material-icons\">import_contacts</i> <span class=\"icon-text\">Courses</span></button></div>\n           <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Contact</span></button></div> \n          <div> <hr style=\"background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;\"> </div>\n            \n         <div><button mat-button id=\"navbutton\" routerLink= \"/login\" routerLinkActive=\"active\" > <i class=\"material-icons\">person</i><span class=\"icon-text\">Login</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/registration\" routerLinkActive=\"active\" > <i class=\"material-icons\">person_add</i><span class=\"icon-text\">Registration</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Settings</span></button></div>\n         <div><button mat-button id=\"navbutton\" routerLink= \"/contact\" routerLinkActive=\"active\" > <i class=\"material-icons\">contact_mail</i><span class=\"icon-text\">Logout</span></button></div>\n       </div>\n    </mat-sidenav>\n\n     <mat-sidenav-content>\n    \n      <div class=\"routing \" style=\"margin-top: 65px;\" ngStyle.lt-sm=\"margin-top: 0px;\"><router-outlet></router-outlet></div>\n    \n    </mat-sidenav-content>\n   </mat-sidenav-container>\n  </div>\n   <div class=\" my-second-theme nav-bar mat-elevation-z10 text-white\"  color=\"primary\" >\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"0px\"   >\n        <mat-grid-tile rowspan=\"7\" style=\"background: #1A237E;\">\n          <div fxLayout=\"column wrap\"  style=\"padding-left: 30px\">\n            <h5 class=\"title\">Teachers Time</h5>\n            <p align=\"left\">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>\n          </div>\n          </mat-grid-tile>\n        <mat-grid-tile rowspan=\"7\" style=\"background:#1A237E;\">\n            <div fxLayout=\"column wrap\"  fXLayoutAlign=\"start start\" fxFlex fxLayoutGap=\"15px\" style=\"padding-left: 30px\">\n                <h5><strong>Useful Links</strong></h5> \n                <a class=\"text-white\" routerLink=\"/login\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">info</mat-icon>About</a> \n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">description</mat-icon>Terms of use</a>\n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">security</mat-icon>Privacy Policy</a>\n                <a class=\"text-white\" routerLink=\"/home\"  style=\"text-decoration: none;\"> <mat-icon id=\"ab\">contact_mail</mat-icon>Contact</a>\n                \n             </div>\n        </mat-grid-tile>\n        <mat-grid-tile rowspan=\"7\" style=\"background:#1A237E;\">\n            <div fxLayout=\"column wrap\"  fXLayoutAlign=\"start start\" fxFlex fxLayoutGap=\"5px\" style=\"padding-left: 30px ; padding-top:30px;\">\n            <h5> <strong>Contact Us</strong> </h5> \n            <p> <mat-icon id=\"ab\">contact_phone</mat-icon> Rezina Garden dshdh, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>\n            <p> <mat-icon id=\"ab\">phone</mat-icon> +880 1777-800866 </p>\n            <p> <mat-icon id=\"ab\">email</mat-icon> Privacy Policy</p>\n            <p class=\"social-icons icon-circle icon-zoom list-inline\"> <a><i class=\"fa fa-facebook\"></i></a> <a><i class=\"fa fa-youtube\"></i></a> <a><i class=\"fa fa-google-plus\"></i></a> <a><i class=\"fa fa-instagram\"></i></a><p>\n                \n            </div>\n        </mat-grid-tile>\n \n  </mat-grid-list>\n  </div>\n</div>\n<app-message></app-message>\n  \n  "
 
 /***/ }),
 
@@ -122,6 +123,7 @@ module.exports = "mat-toolbar {\n  z-index: 10; }\n\n.app .nav-bar {\n  position
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_core_service__ = __webpack_require__("./src/app/services/core.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -136,8 +138,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, observableMedia) {
+    function AppComponent(coreService, router, observableMedia) {
+        this.coreService = coreService;
         this.router = router;
         this.observableMedia = observableMedia;
         this.title = 'app';
@@ -145,6 +149,10 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.coreService.hideUser.subscribe(function (isuser) {
+            _this.hideLogin = isuser;
+            console.log(_this.hideLogin);
+        });
         var cols_map = new Map([
             ['xs', 1],
             ['sm', 1],
@@ -177,13 +185,32 @@ var AppComponent = /** @class */ (function () {
             }
         });
     };
+    AppComponent.prototype.hideLogin = function () {
+        this.getauthToken();
+        if (this.authtoken) {
+            //console.log('true');
+            return true;
+        }
+        else {
+            //console.log('false');
+            return false;
+        }
+    };
+    AppComponent.prototype.getauthToken = function () {
+        var token = localStorage.getItem('id_token');
+        this.authtoken = token;
+    };
+    AppComponent.prototype.OnLogout = function () {
+        this.authtoken = null;
+        this.coreService.Logout();
+    };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-root',
             template: __webpack_require__("./src/app/app.component.html"),
             styles: [__webpack_require__("./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_flex_layout__["b" /* ObservableMedia */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__services_core_service__["a" /* CoreService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_flex_layout__["b" /* ObservableMedia */]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -211,12 +238,14 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_error_service__ = __webpack_require__("./src/app/services/error.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__config_config__ = __webpack_require__("./src/app/config/config.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_core_service__ = __webpack_require__("./src/app/services/core.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -253,7 +282,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_9__angular_flex_layout__["a" /* FlexLayoutModule */],
                 __WEBPACK_IMPORTED_MODULE_2__app_routing_module__["a" /* AppRoutingModule */]
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_12__services_error_service__["a" /* ErrorService */]],
+            providers: [__WEBPACK_IMPORTED_MODULE_12__services_error_service__["a" /* ErrorService */], __WEBPACK_IMPORTED_MODULE_14__services_core_service__["a" /* CoreService */]],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
         })
     ], AppModule);
@@ -267,7 +296,7 @@ var AppModule = /** @class */ (function () {
 /***/ "./src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\" my-theme flex-container\" fxLayout=\"column wrap\" fxLayoutGap=\"20px\"  fxFill>\n    <div>\n       <mat-grid-list class=\"hintro\" [cols]=\"introcols | async\" rowHeight=\"36em\" gutterSize=\"0px\"  >\n           <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n             <div fxLayout=\"row wrap\"  fxLayout.xs=\"column wrap\" fxLayoutAlign=\"start center\" fxLayoutAlign.lt-md=\"center center\" fxFlex>\n             <div class=\"tintro\" fxLayout=\"row wrap\" fxLayout.lt-md=\"column wrap\" fxFlex  fxLayoutAlign=\"start center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  >  \n                 <h1>WELCOME TO TEACHERS TIME </h1> \n                 <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>\n                 <div fxLayout=\"row wrap\" fxlayout.lt-sm=\"column wrap\" fxLayoutAlign=\"start start\" fxLayoutAlign.lt-md=\"center center\" fxLayoutWrap >\n                 <button mat-raised-button color=\"primary\"routerLink= \"/login\" routerLinkActive=\"active\">Start Here</button>\n                  \n                </div>\n               </div>\n               </div>\n             </mat-grid-tile>\n               <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n                   <div fxLayout=\"row wrap\"  fxLayout.lt-sm=\"column wrap\" fxLayoutAlign=\"end center\" fxLayoutAlign.lt-md=\"center center\" fxFill>\n               <div class=\"tintrovid\"  fxLayout.lt-sm=\"column wrap\" fxFlex  fxLayoutAlign=\"end center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  fxFlexAlign.lt-md=\"center\">\n                <div>\n                 <iframe ngStyle.sm=\"width:90vw;height=240px;\" ngStyle.xs=\"width:300px;height=240px;\" width=\"640px  \" height=\"360px\" src=\"https://www.youtube.com/embed/btIkUKoVbfY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>\n                 </iframe>\n               </div>\n               </div>\n               </div>\n            \n            \n             </mat-grid-tile>                \n    </mat-grid-list>\n   </div>\n <div style=\"padding-left:2%; padding-right:2%; \">\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"  >\n       <mat-grid-tile\n      *ngFor=\"let course of courses\"\n       [rowspan]=\"rowspan | async\" style=\"background: black;\">\n  \n     \n      <mat-card class=\"example-card\"  style=\"background:indigo;  width:100%; height:calc(100%-10px); max-height:100%; min-height:calc(100%-10px);   max-width: 100vw;\">\n           <mat-card-header><mat-card-title><h3 class=\"text-white\">{{course.name}}</h3></mat-card-title></mat-card-header>\n           <img matCardImage src=\"../../../assets/img/python.jpg\">\n           <mat-card-content >\n           <p align=\"justify\">\n              {{course.details}}\n             \n           </p>\n           </mat-card-content>\n           <mat-card-actions>\n             <button align=\"justify\" mat-raised-button color=\"primary\" >More Details</button>\n           </mat-card-actions>\n         </mat-card>\n        \n   </mat-grid-tile>\n </mat-grid-list>\n </div>\n </div>\n "
+module.exports = "<div class=\" my-theme flex-container\" fxLayout=\"column wrap\" fxLayoutGap=\"20px\"  fxFill>\n    <div>\n       <mat-grid-list class=\"hintro\" [cols]=\"introcols | async\" rowHeight=\"36em\" gutterSize=\"0px\"  >\n           <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n             <div fxLayout=\"row wrap\"  fxLayout.xs=\"column wrap\" fxLayoutAlign=\"start center\" fxLayoutAlign.lt-md=\"center center\" fxFlex>\n             <div class=\"tintro\" fxLayout=\"row wrap\" fxLayout.lt-md=\"column wrap\" fxFlex  fxLayoutAlign=\"start center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  >  \n                 <h1>WELCOME TO TEACHERS TIME </h1> \n                 <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>\n                 <div fxLayout=\"row wrap\" fxlayout.lt-sm=\"column wrap\" fxLayoutAlign=\"start start\" fxLayoutAlign.lt-md=\"center center\" fxLayoutWrap >\n                 <button mat-raised-button color=\"primary\"routerLink= \"/login\" routerLinkActive=\"active\">Start Here</button>\n                  \n                </div>\n               </div>\n               </div>\n             </mat-grid-tile>\n               <mat-grid-tile class=\"intro\" colspan=\"1\" rowspan=\"1\">\n                   <div fxLayout=\"row wrap\"  fxLayout.lt-sm=\"column wrap\" fxLayoutAlign=\"end center\" fxLayoutAlign.lt-md=\"center center\" fxFill>\n               <div class=\"tintrovid\"  fxLayout.lt-sm=\"column wrap\" fxFlex  fxLayoutAlign=\"end center\"  fxLayoutAlign.lt-md=\"start center\"  fxFlex.lt-md  fxFlexAlign.lt-md=\"center\">\n                <div>\n                 <iframe ngStyle.sm=\"width:90vw;height=240px;\" ngStyle.xs=\"width:300px;height=240px;\" width=\"640px  \" height=\"360px\" src=\"https://www.youtube.com/embed/btIkUKoVbfY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen>\n                 </iframe>\n               </div>\n               </div>\n               </div>\n            \n            \n             </mat-grid-tile>                \n    </mat-grid-list>\n   </div>\n <div style=\"padding-left:2%; padding-right:2%; \">\n    <mat-grid-list  [cols]=\"cols | async\" rowHeight=\"40px\"   gutterSize=\"10px\"  >\n       <mat-grid-tile\n      *ngFor=\"let course of courses\"\n       [rowspan]=\"rowspan | async\" style=\"background: black;\">\n  \n     \n      <mat-card class=\"example-card\"  style=\"background:indigo;  width:100%; height:calc(100%-10px); max-height:100%; min-height:calc(100%-10px);   max-width: 100vw;\">\n           <mat-card-header><mat-card-title><h3 class=\"text-white\">{{course.courseTitle}}</h3></mat-card-title></mat-card-header>\n           <img matCardImage src=\"../../../assets/img/python.jpg\">\n           <mat-card-content >\n           <p align=\"justify\">\n              {{course.courseDetail}}\n             \n           </p>\n           </mat-card-content>\n           <mat-card-actions>\n             <button align=\"justify\" mat-raised-button color=\"primary\" >More Details</button>\n           </mat-card-actions>\n         </mat-card>\n        \n   </mat-grid-tile>\n </mat-grid-list>\n </div>\n </div>\n "
 
 /***/ }),
 
@@ -288,6 +317,7 @@ module.exports = ".hintro {\n  background: url(\"data:image/svg+xml,%3Csvg width
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_startWith__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/startWith.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_core_service__ = __webpack_require__("./src/app/services/core.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -302,21 +332,40 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(titleService, observableMedia) {
+    function HomeComponent(coreService, titleService, observableMedia) {
+        this.coreService = coreService;
         this.titleService = titleService;
         this.observableMedia = observableMedia;
         this.title = "Home - Teachers Time";
-        this.courses = [
-            { name: 'Classroom Managment', details: ' ' },
-            { name: 'Python', details: '' },
-            { name: 'Csharp', details: '' },
-            { name: 'Csharp', details: '' },
-            { name: 'Csharp', details: '' },
-            { name: 'Csharp', details: '' },
-        ];
+        /*courses = [
+          {name: 'Classroom Managment' , details: ' ' },
+      
+          {name: 'Python' , details: '' },
+      
+          {name: 'Csharp' ,  details: '' },
+      
+          {name: 'Csharp' ,  details: '' },
+      
+          {name: 'Csharp' ,  details: '' },
+      
+          {name: 'Csharp' ,  details: '' },
+        ];*/
+        this.courses = [];
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.setDisplay();
+        this.showCourses();
+    };
+    HomeComponent.prototype.showCourses = function () {
+        var _this = this;
+        this.coreService.getCourses().subscribe(function (courses) {
+            _this.courses = courses;
+            console.log(courses);
+        });
+    };
+    HomeComponent.prototype.setDisplay = function () {
         var _this = this;
         this.titleService.setTitle(this.title);
         var cols_map = new Map([
@@ -377,7 +426,7 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/components/home/home.component.html"),
             styles: [__webpack_require__("./src/app/components/home/home.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__services_core_service__["a" /* CoreService */], __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_2__angular_flex_layout__["b" /* ObservableMedia */]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -673,6 +722,129 @@ var MaterialModule = /** @class */ (function () {
         })
     ], MaterialModule);
     return MaterialModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/model/course.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Course; });
+var Course = /** @class */ (function () {
+    function Course(courseID, courseTitle, courseDetail, courseScope, coursePrice, courseLectures) {
+        this.courseID = courseID;
+        this.courseTitle = courseTitle;
+        this.courseDetail = courseDetail;
+        this.courseScope = courseScope;
+        this.coursePrice = coursePrice;
+        this.courseLectures = courseLectures;
+    }
+    return Course;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/core.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CoreService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__model_course_model__ = __webpack_require__("./src/app/model/course.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__error_service__ = __webpack_require__("./src/app/services/error.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var CoreService = /** @class */ (function () {
+    function CoreService(router, http, errorService) {
+        this.router = router;
+        this.http = http;
+        this.errorService = errorService;
+        this.hideUser = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.courses = [];
+    }
+    CoreService.prototype.getCourses = function () {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        var url = "" + "api/courses/all";
+        headers.append('Content-Type', 'application/json');
+        return this.http.get(url, { headers: headers })
+            .map(function (response) {
+            var courses = response.json().course;
+            //console.log(courses);
+            var transformedCourses = [];
+            for (var _i = 0, courses_1 = courses; _i < courses_1.length; _i++) {
+                var course = courses_1[_i];
+                transformedCourses.push(new __WEBPACK_IMPORTED_MODULE_2__model_course_model__["a" /* Course */](course._id, course.title, course.details, course.scope, course.price, course.lectures));
+            }
+            _this.courses = transformedCourses;
+            //console.log(this.courses);
+            return transformedCourses;
+        })
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
+            return __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"].throw(error.json());
+        });
+    };
+    CoreService.prototype.canActivate = function () {
+        if (this.checkLogin()) {
+            return true;
+        }
+        else {
+            this.router.navigate(['/auth/login']);
+            return false;
+        }
+    };
+    CoreService.prototype.checkLogin = function () {
+        this.getauthToken();
+        if (this.authtoken) {
+            //console.log('true');
+            return true;
+        }
+        else {
+            //console.log('false');  
+            return false;
+        }
+    };
+    CoreService.prototype.getauthToken = function () {
+        var token = localStorage.getItem('id_token');
+        this.authtoken = token;
+    };
+    CoreService.prototype.Logout = function () {
+        //this.socialauthService.signOut();
+        this.authtoken = null;
+        this.user = null;
+        localStorage.clear();
+        this.router.navigate(['/auth/login']);
+    };
+    CoreService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_5__error_service__["a" /* ErrorService */]])
+    ], CoreService);
+    return CoreService;
 }());
 
 

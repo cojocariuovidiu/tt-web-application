@@ -483,30 +483,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 /***/ }),
 
-/***/ "./src/app/model/user.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
-var User = /** @class */ (function () {
-    function User(name, mobile, email, password, type, tag, userID, socialID, verified) {
-        this.userID = userID;
-        this.socialID = socialID;
-        this.name = name;
-        this.mobile = mobile;
-        this.email = email;
-        this.password = password;
-        this.type = type;
-        this.tag = tag;
-        this.verified = verified;
-    }
-    return User;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/modules/authorization/authorization-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -716,7 +692,7 @@ var AuthorizationModule = /** @class */ (function () {
 /***/ "./src/app/modules/authorization/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"flex-container mat-elevation-z10\" fxLayout=\"column\" fxLayoutAlign=\"center center\" >\n  <mat-card class=\"login-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">LOGIN</h2></mat-card-title>\n    </mat-card-header>\n    <form fxLayout=\"column\" fxLayoutAlign=\"start\" [formGroup]=\"loginForm\" (ngSubmit)=\"sendLoginForm()\"> \n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Your Mobile Number\" name=\"loginMobile\" id=\"loginMobile\" class=\"form-control\" formControlName=\"loginMobile\" required>\n        <mat-icon matPrefix>smartphone</mat-icon>\n        <mat-error *ngIf=\"loginMobile.errors\">\n          <mat-error *ngIf=\"loginMobile.errors.required\">Mobile Number Required</mat-error>\n          <mat-error *ngIf=\"loginMobile.errors.pattern\">Invalid Mobile Number</mat-error>\n          <mat-error *ngIf=\"loginMobile.errors.mobNumExists\">No User under this Mobile Number</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"loginPassword\" id=\"loginPassword\" class=\"form-control\" formControlName=\"loginPassword\" required>\n        <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)\">Password Required</mat-error>\n      </mat-form-field>\n      <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n        <button [disabled]=\"!loginForm.valid\" mat-raised-button type=\"submit\" class=\"loginbtn\" color=\"primary\">Login</button>\n      </div>\n    </form>\n    <div class=\"divider\">\n      <span>\n        OR <!--Padding is optional\n      </span>\n    </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\" (click)=\"socialSignIn('google')\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\" (click)=\"socialSignIn('google')\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</div>-->\n<div class=\"flex-container mat-elevation-z10\" \nfxLayout=\"column\" >\n<mat-grid-list cols=\"1\" rowHeight=\"40em\" style=\"background: black\">\n<mat-grid-tile>\n<mat-card class=\"login-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">LOGIN</h2></mat-card-title> \n    </mat-card-header>\n    \n     <form fxLayout=\"column\" fxLayoutAlign=\"start\"  [formGroup]=\"loginForm\" (ngSubmit)=\"sendLoginForm()\"> \n       <mat-form-field floatLabel=\"auto\">\n    <input matInput placeholder=\"Your Mobile Number\" formControlName=\"loginMobile\" required>\n    <mat-icon matPrefix>smartphone</mat-icon>\n    <mat-error *ngIf=\"loginMobile.errors\">\n      <mat-error *ngIf=\"loginMobile.errors.required\">Mobile Number Required</mat-error>\n      <mat-error *ngIf=\"loginMobile.errors.pattern\">Invalid Mobile Number</mat-error>\n      \n    </mat-error>\n     </mat-form-field>\n  <mat-form-field>\n      <mat-icon matPrefix>lock</mat-icon>\n    <input matInput placeholder=\"Your Password\" [type]=\"hide ? 'password' : 'text'\" formControlName=\"loginPassword\" required>\n      \n      <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n      <mat-error *ngIf=\"loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)\">Password Required</mat-error>\n    </mat-form-field>\n    <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <button type=\"submit\" mat-raised-button class=\"loginbtn\" color=\"primary\">Login</button>\n    </div>\n</form>\n<div class=\"divider\">\n    <span>\n      OR <!--Padding is optional-->\n    </span>\n  </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</mat-grid-tile>\n</mat-grid-list>\n  </div>"
+module.exports = "<!--<div class=\"flex-container mat-elevation-z10\" fxLayout=\"column\" fxLayoutAlign=\"center center\" >\n  <mat-card class=\"login-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">LOGIN</h2></mat-card-title>\n    </mat-card-header>\n    <form fxLayout=\"column\" fxLayoutAlign=\"start\" [formGroup]=\"loginForm\" (ngSubmit)=\"sendLoginForm()\"> \n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Your Mobile Number\" name=\"loginMobile\" id=\"loginMobile\" class=\"form-control\" formControlName=\"loginMobile\" required>\n        <mat-icon matPrefix>smartphone</mat-icon>\n        <mat-error *ngIf=\"loginMobile.errors\">\n          <mat-error *ngIf=\"loginMobile.errors.required\">Mobile Number Required</mat-error>\n          <mat-error *ngIf=\"loginMobile.errors.pattern\">Invalid Mobile Number</mat-error>\n          <mat-error *ngIf=\"loginMobile.errors.mobNumExists\">No User under this Mobile Number</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"loginPassword\" id=\"loginPassword\" class=\"form-control\" formControlName=\"loginPassword\" required>\n        <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)\">Password Required</mat-error>\n      </mat-form-field>\n      <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n        <button [disabled]=\"!loginForm.valid\" mat-raised-button type=\"submit\" class=\"loginbtn\" color=\"primary\">Login</button>\n      </div>\n    </form>\n    <div class=\"divider\">\n      <span>\n        OR <!--Padding is optional\n      </span>\n    </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\" (click)=\"socialSignIn('google')\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\" (click)=\"socialSignIn('google')\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</div>-->\n<div class=\"flex-container mat-elevation-z10\" \nfxLayout=\"column\" >\n<mat-grid-list cols=\"1\" rowHeight=\"40em\" style=\"background: black\">\n<mat-grid-tile>\n<mat-card class=\"login-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">LOGIN</h2></mat-card-title> \n    </mat-card-header>\n    \n     <form fxLayout=\"column\" fxLayoutAlign=\"start\"  name=\"loginMobile\" id=\"loginMobile\" [formGroup]=\"loginForm\" (ngSubmit)=\"sendLoginForm()\"> \n       <mat-form-field floatLabel=\"auto\">\n    <input matInput placeholder=\"Your Mobile Number\" formControlName=\"loginMobile\" required>\n    <mat-icon matPrefix>smartphone</mat-icon>\n    <mat-error *ngIf=\"loginMobile.errors\">\n      <mat-error *ngIf=\"loginMobile.errors.required\">Mobile Number Required</mat-error>\n      <mat-error *ngIf=\"loginMobile.errors.pattern\">Invalid Mobile Number</mat-error>\n      <mat-error *ngIf=\"loginMobile.errors.mobNumExists\">No User under this Mobile Number</mat-error>\n    </mat-error>\n     </mat-form-field>\n  <mat-form-field>\n      <mat-icon matPrefix>lock</mat-icon>\n    <input matInput placeholder=\"Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"loginPassword\" id=\"loginPassword\" formControlName=\"loginPassword\" required>\n      \n      <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n      <mat-error *ngIf=\"loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)\">Password Required</mat-error>\n    </mat-form-field>\n    <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <button [disabled]=\"!loginForm.valid\" type=\"submit\" mat-raised-button class=\"loginbtn\" color=\"primary\">Login</button>\n    </div>\n</form>\n<div class=\"divider\">\n    <span>\n      OR <!--Padding is optional-->\n    </span>\n  </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button (click)=\"socialSignIn('google')\" mat-raised-button color=\"warn\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button (click)=\"socialSignIn('facebook')\" mat-raised-button color=\"primary\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</mat-grid-tile>\n</mat-grid-list>\n  </div>"
 
 /***/ }),
 
@@ -739,6 +715,8 @@ module.exports = ".login-card {\n  margin-top: 2em;\n  margin-bottom: 5em;\n  ma
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__ = __webpack_require__("./src/app/modules/authorization/services/authorization.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validatelogin__ = __webpack_require__("./src/app/modules/authorization/components/login/validatelogin.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -754,12 +732,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(titleService, authorizationService, socialAuthService, formBuilder) {
+    function LoginComponent(router, titleService, authorizationService, socialAuthService, formBuilder) {
+        this.router = router;
         this.titleService = titleService;
         this.authorizationService = authorizationService;
         this.socialAuthService = socialAuthService;
         this.formBuilder = formBuilder;
+        this.socialTag = "social";
         this.hide = true;
         this.mobilePattern = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/; //'[0-9]*.{11}';
         this.title = "Login - Teachers Time";
@@ -782,13 +764,21 @@ var LoginComponent = /** @class */ (function () {
         });
     };
     LoginComponent.prototype.sendLoginForm = function () {
-        console.log(this.loginForm.value);
+        var _this = this;
+        //console.log(this.loginForm.value);
         var logincred = {
             mobile: this.loginMobile.value,
             password: this.loginPassword.value
         };
         this.authorizationService.loginUser(logincred).subscribe(function (data) {
             //console.log(data);
+            if (data.success) {
+                _this.authorizationService.storeUserData(data.token, data.user);
+                _this.router.navigate(['/dashboard']);
+            }
+            else {
+                _this.resetLoginForm();
+            }
         });
     };
     LoginComponent.prototype.resetLoginForm = function () {
@@ -809,6 +799,7 @@ var LoginComponent = /** @class */ (function () {
         configurable: true
     });
     LoginComponent.prototype.socialSignIn = function (socialPlatform) {
+        var _this = this;
         var socialPlatformProvider;
         if (socialPlatform == "facebook") {
             socialPlatformProvider = __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["FacebookLoginProvider"].PROVIDER_ID;
@@ -818,7 +809,18 @@ var LoginComponent = /** @class */ (function () {
         }
         this.socialAuthService.signIn(socialPlatformProvider)
             .then(function (userData) {
-            console.log(socialPlatform + " sign in data : ", userData);
+            //console.log(socialPlatform+" sign in data : " , userData);
+            var user = new __WEBPACK_IMPORTED_MODULE_7__model_user_model__["a" /* User */](userData.name, userData.email, _this.socialTag, null, null, null, null, userData.id, 'true');
+            //console.log(user);
+            _this.authorizationService.registerSocialUser(user).subscribe(function (data) {
+                if (data.success) {
+                    _this.authorizationService.storeUserData(data.token, data.user);
+                    _this.router.navigate(['/dashboard']);
+                }
+                else {
+                    console.log('error');
+                }
+            });
         });
     };
     LoginComponent = __decorate([
@@ -827,7 +829,7 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/authorization/components/login/login.component.html"),
             styles: [__webpack_require__("./src/app/modules/authorization/components/login/login.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -936,7 +938,7 @@ var MatchpasswordDirective = /** @class */ (function () {
 /***/ "./src/app/modules/authorization/components/registration/registration.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"flex-container mat-elevation-z10\" fxLayout=\"column\" fxLayoutAlign=\"center center\" >\n  <mat-card class=\"reg-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">SIGNUP</h2></mat-card-title> \n    </mat-card-header>\n    <form fxLayout=\"column\" fxLayoutAlign=\"start\" [formGroup]=\"registerForm\" (ngSubmit)=\"sendRegisterForm()\"> \n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Name\" name=\"Name\" id=\"Name\" class=\"form-control\" formControlName=\"Name\">\n        <mat-icon matPrefix>person</mat-icon>\n        <mat-error *ngIf=\"Name.errors\">\n          <mat-error *ngIf=\"Name.errors.required\">Name Required</mat-error>\n          <mat-error *ngIf=\"Name.errors.pattern\">Invalid Name</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Mobile Number\" name=\"Mobile\" id=\"Mobile\" class=\"form-control\" formControlName=\"Mobile\">\n        <mat-icon matPrefix>smartphone</mat-icon>\n        <mat-error *ngIf=\"Mobile.errors\">\n          <mat-error *ngIf=\"Mobile.errors.required\">Mobile Number Required</mat-error>\n          <mat-error *ngIf=\"Mobile.errors.pattern\">Invalid Mobile Number</mat-error>\n          <mat-error *ngIf=\"Mobile.errors.mobNumExists\">Mobile Number Already Registered</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Email\" name=\"Email\" id=\"Email\" class=\"form-control\" formControlName=\"Email\">\n        <mat-icon matPrefix>email</mat-icon>\n        <mat-error *ngIf=\"Email.errors\">\n          <mat-error *ngIf=\"Email.errors.required\">Email Required</mat-error>\n          <mat-error *ngIf=\"Email.errors.email || Email.errors.pattern\">Invalid Email</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Enter Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"Password\" id=\"Password\" class=\"form-control\" formControlName=\"Password\" matchPassword=\"Password2\" reverse=\"true\">\n        <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"Password.errors\">\n          <mat-error *ngIf=\"Password.errors.required\">Password Required</mat-error>\n          <mat-error *ngIf=\"Password.errors.pattern\">Password must be 8 characters with 1 uppercase 1 lowercase 1 number and 1 symbol</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Confirm Password\" [type]=\"hide2 ? 'password' : 'text'\" name=\"Password2\" id=\"Password2\" class=\"form-control\" formControlName=\"Password2\" matchPassword=\"Password\">\n        <mat-icon matSuffix (click)=\"hide2 = !hide2\">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"Password2.errors\">\n          <mat-error *ngIf=\"Password2.errors.required\">Password Required</mat-error>\n          <mat-error *ngIf=\"!Password2.errors.matchPassword\">Passwords donot Match</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-radio-group class=\"radio-group\" name=\"Scope\" id=\"Scope\" formControlName=\"Scope\" class=\"form-control\" fxLayoutAlign=\"start\">\n        <mat-radio-button  [value]=\"typeParent\">Parent</mat-radio-button>\n        <span class=\"slabel\"></span>\n        <mat-radio-button [value]=\"typeTeacher\">Teacher</mat-radio-button>\n      </mat-radio-group>\n      <div fxLayout=\"column\" fxLayoutAlign=\"center center\" class=\"submit-div\">\n        <button [disabled]=\"!registerForm.valid\" type=\"submit\" mat-raised-button class=\"loginbtn\" color=\"primary\">Register</button>\n      </div>\n    </form>\n    <div class=\"divider\">\n      <span>\n        OR \n      </span>\n    </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\" (click)=\"socialSignIn('google')\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\" (click)=\"socialSignIn('facebook')\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</div> Padding is optional-->\n<div class=\"flex-container mat-elevation-z10\">\n  <mat-grid-list cols=\"1\" rowHeight=\"50em\">\n    <mat-grid-tile ngStyle.lt-md=\"padding-top:15em;\">\n  <mat-card class=\"reg-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">SIGNUP</h2></mat-card-title> \n    </mat-card-header>\n    \n    <form fxLayout=\"column\" fxLayoutAlign=\"start\"> \n        <mat-form-field floatLabel=\"auto\">\n            <input matInput placeholder=\"Name\" required>\n            <mat-icon matPrefix>smartphone</mat-icon>\n        </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n                <input matInput placeholder=\"  Phone Number\" required>\n                <mat-icon matPrefix>smartphone</mat-icon>\n        </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n    <input matInput placeholder=\"Email\" required>\n    <mat-icon matPrefix>smartphone</mat-icon>\n    </mat-form-field>\n  <mat-form-field>\n      <mat-icon matPrefix>lock</mat-icon>\n    <input matInput placeholder=\"Enter your password\" [type]=\"hide ? 'password' : 'text'\">\n      \n    <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n    </mat-form-field>\n    <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n      <input matInput placeholder=\"Confirm password\" [type]=\"hide ? 'password' : 'text'\">\n        \n      <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n      </mat-form-field>\n    \n\n    <div class=\"checkbox\" fxLayoutAlign=\"start\">\n            <label>Are You</label>  \n            <span></span>\n            <mat-checkbox class=\"example-margin\" >Teacher</mat-checkbox>\n            <span></span>\n            <mat-checkbox class=\"example-margin\">Parent</mat-checkbox>\n          </div>\n\n    <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <button mat-raised-button class=\"loginbtn\" color=\"primary\">Login</button>\n    </div>\n</form>\n<div class=\"divider\">\n    <span>\n      OR <!--Padding is optional-->\n    </span>\n  </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n    </mat-card>\n</mat-grid-tile>\n</mat-grid-list> \n</div>\n"
+module.exports = "<!--<div class=\"flex-container mat-elevation-z10\" fxLayout=\"column\" fxLayoutAlign=\"center center\" >\n  <mat-card class=\"reg-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">SIGNUP</h2></mat-card-title> \n    </mat-card-header>\n    <form fxLayout=\"column\" fxLayoutAlign=\"start\" [formGroup]=\"registerForm\" (ngSubmit)=\"sendRegisterForm()\"> \n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Name\" name=\"Name\" id=\"Name\" class=\"form-control\" formControlName=\"Name\">\n        <mat-icon matPrefix>person</mat-icon>\n        <mat-error *ngIf=\"Name.errors\">\n          <mat-error *ngIf=\"Name.errors.required\">Name Required</mat-error>\n          <mat-error *ngIf=\"Name.errors.pattern\">Invalid Name</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Mobile Number\" name=\"Mobile\" id=\"Mobile\" class=\"form-control\" formControlName=\"Mobile\">\n        <mat-icon matPrefix>smartphone</mat-icon>\n        <mat-error *ngIf=\"Mobile.errors\">\n          <mat-error *ngIf=\"Mobile.errors.required\">Mobile Number Required</mat-error>\n          <mat-error *ngIf=\"Mobile.errors.pattern\">Invalid Mobile Number</mat-error>\n          <mat-error *ngIf=\"Mobile.errors.mobNumExists\">Mobile Number Already Registered</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n        <input matInput placeholder=\"Enter Your Email\" name=\"Email\" id=\"Email\" class=\"form-control\" formControlName=\"Email\">\n        <mat-icon matPrefix>email</mat-icon>\n        <mat-error *ngIf=\"Email.errors\">\n          <mat-error *ngIf=\"Email.errors.required\">Email Required</mat-error>\n          <mat-error *ngIf=\"Email.errors.email || Email.errors.pattern\">Invalid Email</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Enter Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"Password\" id=\"Password\" class=\"form-control\" formControlName=\"Password\" matchPassword=\"Password2\" reverse=\"true\">\n        <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"Password.errors\">\n          <mat-error *ngIf=\"Password.errors.required\">Password Required</mat-error>\n          <mat-error *ngIf=\"Password.errors.pattern\">Password must be 8 characters with 1 uppercase 1 lowercase 1 number and 1 symbol</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n        <input matInput placeholder=\"Confirm Password\" [type]=\"hide2 ? 'password' : 'text'\" name=\"Password2\" id=\"Password2\" class=\"form-control\" formControlName=\"Password2\" matchPassword=\"Password\">\n        <mat-icon matSuffix (click)=\"hide2 = !hide2\">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>\n        <mat-error *ngIf=\"Password2.errors\">\n          <mat-error *ngIf=\"Password2.errors.required\">Password Required</mat-error>\n          <mat-error *ngIf=\"!Password2.errors.matchPassword\">Passwords donot Match</mat-error>\n        </mat-error>\n      </mat-form-field>\n      <mat-radio-group class=\"radio-group\" name=\"Scope\" id=\"Scope\" formControlName=\"Scope\" class=\"form-control\" fxLayoutAlign=\"start\">\n        <mat-radio-button  [value]=\"typeParent\">Parent</mat-radio-button>\n        <span class=\"slabel\"></span>\n        <mat-radio-button [value]=\"typeTeacher\">Teacher</mat-radio-button>\n      </mat-radio-group>\n      <div fxLayout=\"column\" fxLayoutAlign=\"center center\" class=\"submit-div\">\n        <button [disabled]=\"!registerForm.valid\" type=\"submit\" mat-raised-button class=\"loginbtn\" color=\"primary\">Register</button>\n      </div>\n    </form>\n    <div class=\"divider\">\n      <span>\n        OR \n      </span>\n    </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button mat-raised-button color=\"warn\" (click)=\"socialSignIn('google')\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button mat-raised-button color=\"primary\" (click)=\"socialSignIn('facebook')\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n  </mat-card>\n</div> Padding is optional-->\n<div class=\"flex-container mat-elevation-z10\">\n  <mat-grid-list cols=\"1\" rowHeight=\"50em\">\n    <mat-grid-tile ngStyle.lt-md=\"padding-top:15em;\">\n  <mat-card class=\"reg-card\" fxFlex>\n    <mat-card-header fxLayout=\"column\" fxLayoutAlign=\"center center\">\n      <mat-card-title><h2 align=\"center\">SIGNUP</h2></mat-card-title> \n    </mat-card-header>\n    \n    <form fxLayout=\"column\" fxLayoutAlign=\"start\" [formGroup]=\"registerForm\" (ngSubmit)=\"sendRegisterForm()\"> \n        <mat-form-field floatLabel=\"auto\">\n            <input matInput placeholder=\"Enter Your Name\" name=\"Name\" id=\"Name\" formControlName=\"Name\" required>\n            <mat-icon matPrefix>person</mat-icon>\n            <mat-error *ngIf=\"Name.errors\">\n              <mat-error *ngIf=\"Name.errors.required\">Name Required</mat-error>\n              <mat-error *ngIf=\"Name.errors.pattern\">Invalid Name</mat-error>\n            </mat-error>\n        </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n          <input matInput placeholder=\"Enter Your Mobile Number\" name=\"Mobile\" id=\"Mobile\" formControlName=\"Mobile\" required>\n          <mat-icon matPrefix>smartphone</mat-icon>\n          <mat-error *ngIf=\"Mobile.errors\">\n            <mat-error *ngIf=\"Mobile.errors.required\">Mobile Number Required</mat-error>\n            <mat-error *ngIf=\"Mobile.errors.pattern\">Invalid Mobile Number</mat-error>\n            <mat-error *ngIf=\"Mobile.errors.mobNumExists\">Mobile Number Already Registered</mat-error>\n          </mat-error>\n        </mat-form-field>\n      <mat-form-field floatLabel=\"auto\">\n        <input matInput  placeholder=\"Enter Your Email\" name=\"Email\" id=\"Email\" formControlName=\"Email\" required>\n        <mat-icon matPrefix>email</mat-icon>\n        <mat-error *ngIf=\"Email.errors\">\n          <mat-error *ngIf=\"Email.errors.required\">Email Required</mat-error>\n          <mat-error *ngIf=\"Email.errors.email || Email.errors.pattern\">Invalid Email</mat-error>\n        </mat-error>\n    </mat-form-field>\n  <mat-form-field>\n      <mat-icon matPrefix>lock</mat-icon>\n    <input matInput placeholder=\"Enter Your Password\" [type]=\"hide ? 'password' : 'text'\" name=\"Password\" id=\"Password\" formControlName=\"Password\" matchPassword=\"Password2\" reverse=\"true\" required>\n      <mat-icon matSuffix (click)=\"hide = !hide\">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>\n      <mat-error *ngIf=\"Password.errors\">\n        <mat-error *ngIf=\"Password.errors.required\">Password Required</mat-error>\n        <mat-error *ngIf=\"Password.errors.pattern\">Password must be 8 characters with 1 uppercase 1 lowercase 1 number and 1 symbol</mat-error>\n      </mat-error>\n    </mat-form-field>\n    <mat-form-field>\n        <mat-icon matPrefix>lock</mat-icon>\n      <input matInput placeholder=\"Confirm Password\" [type]=\"hide2 ? 'password' : 'text'\" name=\"Password2\" id=\"Password2\" formControlName=\"Password2\" matchPassword=\"Password\" required>\n        \n      <mat-icon matSuffix (click)=\"hide2 = !hide2\">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>\n      <mat-error *ngIf=\"Password2.errors\">\n        <mat-error *ngIf=\"Password2.errors.required\">Password Required</mat-error>\n        <mat-error *ngIf=\"!Password2.errors.matchPassword\">Passwords donot Match</mat-error>\n      </mat-error>\n      </mat-form-field>\n    \n\n      <mat-radio-group class=\"radio-group\" name=\"Scope\" id=\"Scope\" formControlName=\"Scope\" fxLayoutAlign=\"start\">\n        <mat-radio-button  [value]=\"typeParent\">Parent</mat-radio-button>\n        <span class=\"slabel\"></span>\n        <mat-radio-button [value]=\"typeTeacher\">Teacher</mat-radio-button>\n      </mat-radio-group>\n    <div fxLayout=\"column\" fxLayoutAlign=\"center center\">\n    <button [disabled]=\"!registerForm.valid\" type=\"submit\" mat-raised-button class=\"loginbtn\" color=\"primary\">Register</button>\n    </div>\n</form>\n<div class=\"divider\">\n    <span>\n      OR <!--Padding is optional-->\n    </span>\n  </div>\n    <mat-card-actions fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"center center\" fxLayoutAlign.xs=\"center center\">\n      <button (click)=\"socialSignIn('google')\" mat-raised-button color=\"warn\"><i id=\"g\" class=\"fa fa-google-plus\"></i><span>LOGIN WITH GOOGLE</span></button>\n      <button (click)=\"socialSignIn('facebook')\" mat-raised-button color=\"primary\"><i id=\"f\" class=\"fa fa-facebook\"></i><span>LOGIN WITH FACEBOOK</span></button>\n    </mat-card-actions>\n    </mat-card>\n</mat-grid-tile>\n</mat-grid-list> \n</div>\n"
 
 /***/ }),
 
@@ -960,6 +962,7 @@ module.exports = ".reg-card {\n  margin-top: 2em;\n  margin-bottom: 5em;\n  max-
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validateregister__ = __webpack_require__("./src/app/modules/authorization/components/registration/validateregister.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__model_user_model__ = __webpack_require__("./src/app/model/user.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -976,8 +979,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegistrationComponent = /** @class */ (function () {
-    function RegistrationComponent(titleService, authorizationService, socialAuthService, formBuilder) {
+    function RegistrationComponent(router, titleService, authorizationService, socialAuthService, formBuilder) {
+        this.router = router;
         this.titleService = titleService;
         this.authorizationService = authorizationService;
         this.socialAuthService = socialAuthService;
@@ -1025,55 +1030,23 @@ var RegistrationComponent = /** @class */ (function () {
         });
     };
     RegistrationComponent.prototype.sendRegisterForm = function () {
+        var _this = this;
         //console.log(this.registerForm.value);
-        var user = new __WEBPACK_IMPORTED_MODULE_5__model_user_model__["a" /* User */](this.Name.value, this.Mobile.value, this.Email.value, this.Password.value, this.Scope.value, this.localTag, null, null, 'true');
-        console.log(user);
-        /*if(this.registerForm.value.Scope){
-          user = new User(this.Name.value, this.Mobile.value, this.Email.value,
-            this.Password.value, this.typeTeacher, this.localTag, null, null, 'true');
-          //console.log(user);
-        }
-        else if(this.registerForm.value.Scope2){
-          user = new User(this.Name.value, this.Mobile.value, this.Email.value,
-            this.Password.value, this.typeParent, this.localTag, null, null, 'true');
-          //console.log(user);
-        }
-        else{
-          user = new User(this.Name.value, this.Mobile.value, this.Email.value,
-            this.Password.value, this.typeBoth, this.localTag, null, null, 'true');
-          //console.log(user);
-        }
-        console.log(user);
-        this.authorizationService.registerUser(user).subscribe(data => {
-          if(data.success){
-            console.log(data)
-          }
-          else{
-            console.log('error');
-          }
-        })*/
+        var user = new __WEBPACK_IMPORTED_MODULE_5__model_user_model__["a" /* User */](this.Name.value, this.Email.value, this.localTag, this.Mobile.value, this.Password.value, this.Scope.value, null, null, 'true');
+        this.authorizationService.registerUser(user).subscribe(function (data) {
+            if (data.success) {
+                //console.log(data);
+                _this.router.navigate(['/auth/login']);
+            }
+            else {
+                console.log('error');
+            }
+        });
     };
     RegistrationComponent.prototype.resetRegisterForm = function () {
         this.registerForm.reset();
     };
     Object.defineProperty(RegistrationComponent.prototype, "Name", {
-        /*disableScope2(){
-          if(this.registerForm == undefined){
-            console.log('undefined');
-            return false;
-          }
-          else{
-            var flag = this.Scope.value;
-            if(flag){
-              console.log('true');
-              return true;
-            }
-            else{
-              console.log('false');
-              return false;
-            }
-          }
-        }*/
         get: function () {
             return this.registerForm.get('Name');
         },
@@ -1116,6 +1089,7 @@ var RegistrationComponent = /** @class */ (function () {
         configurable: true
     });
     RegistrationComponent.prototype.socialSignIn = function (socialPlatform) {
+        var _this = this;
         var socialPlatformProvider;
         if (socialPlatform == "facebook") {
             socialPlatformProvider = __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["FacebookLoginProvider"].PROVIDER_ID;
@@ -1125,7 +1099,18 @@ var RegistrationComponent = /** @class */ (function () {
         }
         this.socialAuthService.signIn(socialPlatformProvider)
             .then(function (userData) {
-            console.log(socialPlatform + " sign in data : ", userData);
+            //console.log(socialPlatform+" sign in data : " , userData);
+            var user = new __WEBPACK_IMPORTED_MODULE_5__model_user_model__["a" /* User */](userData.name, userData.email, _this.socialTag, null, null, null, null, userData.id, 'true');
+            //console.log(user);
+            _this.authorizationService.registerSocialUser(user).subscribe(function (data) {
+                if (data.success) {
+                    _this.authorizationService.storeUserData(data.token, data.user);
+                    _this.router.navigate(['/dashboard/enrolled']);
+                }
+                else {
+                    console.log('error');
+                }
+            });
         });
     };
     RegistrationComponent = __decorate([
@@ -1134,7 +1119,7 @@ var RegistrationComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/authorization/components/registration/registration.component.html"),
             styles: [__webpack_require__("./src/app/modules/authorization/components/registration/registration.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_6__angular_platform_browser__["f" /* Title */], __WEBPACK_IMPORTED_MODULE_3__services_authorization_service__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_2_angular5_social_login__["AuthService"], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], RegistrationComponent);
     return RegistrationComponent;
 }());
@@ -1172,6 +1157,7 @@ function existingMobileNumberValidator(userService) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_error_service__ = __webpack_require__("./src/app/services/error.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1186,8 +1172,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AuthorizationService = /** @class */ (function () {
-    function AuthorizationService(http, errorService) {
+    function AuthorizationService(router, http, errorService) {
+        this.router = router;
         this.http = http;
         this.errorService = errorService;
     }
@@ -1196,16 +1184,8 @@ var AuthorizationService = /** @class */ (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         //const url = `${"http://localhost:8080/api/users/register"}`;
         var url = "" + "/api/users/register";
-        /*const body = {
-          name: user.name,
-          email: user.email,
-          type: user.type,
-          tag: user.tag,
-          mobile: user.mobile,
-          password: user.password
-        }*/
         var body = JSON.stringify(user);
-        console.log(body);
+        //console.log(body);
         headers.append('Content-Type', 'application/json');
         return this.http.post(url, body, { headers: headers })
             .map(function (response) { return response.json(); })
@@ -1238,13 +1218,36 @@ var AuthorizationService = /** @class */ (function () {
         return this.http.post(url, logincred, { headers: headers })
             .map(function (response) { return response.json(); })
             .catch(function (error) {
-            //this.errorService.showMsg(error.json());
+            //this.errorService.handleError(error.json());
+            return __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].throw(error.json());
+        });
+    };
+    AuthorizationService.prototype.storeUserData = function (token, user) {
+        localStorage.setItem('id_token', token);
+        var usercred = {
+            tag: user.tag,
+            verified: user.verified,
+            type: user.type
+        };
+        localStorage.setItem('usercred', JSON.stringify(usercred));
+    };
+    AuthorizationService.prototype.registerSocialUser = function (user) {
+        var _this = this;
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        var url = "" + "api/users/register/social";
+        headers.append('Content-Type', 'application/json');
+        var body = JSON.stringify(user);
+        //console.log(body);
+        return this.http.post(url, body, { headers: headers })
+            .map(function (response) { return response.json(); })
+            .catch(function (error) {
+            _this.errorService.handleError(error.json());
             return __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"].throw(error.json());
         });
     };
     AuthorizationService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__services_error_service__["a" /* ErrorService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__angular_router__["e" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__services_error_service__["a" /* ErrorService */]])
     ], AuthorizationService);
     return AuthorizationService;
 }());

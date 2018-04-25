@@ -13,6 +13,7 @@ import { EnrolledComponent } from './components/enrolled/enrolled.component';
 import { EnrolleddetailComponent } from './components/enrolleddetail/enrolleddetail.component';
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { LecturevideoComponent } from './components/lecturevideo/lecturevideo.component';
+import { DashboardService } from './services/dashboard.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { LecturevideoComponent } from './components/lecturevideo/lecturevideo.co
     FlexLayoutModule,
     DashboardRoutingModule
   ],
-  declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent]
+  declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent],
+  providers: [DashboardService]
 })
 export class DashboardModule { }

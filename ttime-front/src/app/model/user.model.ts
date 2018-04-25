@@ -2,19 +2,19 @@ export class User {
      userID?: string;
      socialID?: string;
      name: string;
-     mobile: string;
+     mobile?: string;
      email: string;
-     password: string;
-     type: string;
+     password?: string;
+     type?: string;
      tag: string;
-     verified?: string
+     verified?: string;
     constructor(
       name: string,
-      mobile: string,
       email: string,
-      password: string,
-      type: string,
       tag: string,
+      mobile?: string,
+      password?: string,
+      type?: string,
       userID?: string,
       socialID?: string,
       verified?: string

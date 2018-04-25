@@ -20,13 +20,13 @@
             </div>
           <span class="fill-remaining-space" fxShow="true" fxHide.lt-md="true" ></span>
           <span class="right-nav" fxShow="true" fxHide.lt-md="true">
-              <button mat-button id="navbutton" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
-              <button mat-button  id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
-              <button mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
+              <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
+              <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
+              <button *ngIf="hideLogin()" mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
               <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
               <button mat-menu-item><mat-icon>account_box</mat-icon>Dashboard</button>
               <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
-              <button mat-menu-item><mat-icon>power_settings_new</mat-icon>Logout</button>
+              <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
             </mat-menu>
           </span>
       </mat-toolbar-row>

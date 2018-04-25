@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { Course } from '../../model/course.model';
+import { CoreService } from '../../services/core.service';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class HomeComponent implements OnInit {
   rowspan: Observable<number>;
 
   introcols: Observable<number>;
-  courses = [
+  /*courses = [
     {name: 'Classroom Managment' , details: ' ' },
 
     {name: 'Python' , details: '' },
@@ -30,10 +32,23 @@ export class HomeComponent implements OnInit {
     {name: 'Csharp' ,  details: '' },
 
     {name: 'Csharp' ,  details: '' },
-  ];
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) { }
+  ];*/
+  courses: Course [] = [];
+  constructor(private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
+    this.setDisplay();
+    this.showCourses();
+  }
+
+  showCourses(){
+    this.coreService.getCourses().subscribe((courses: Course[]) => {
+      this.courses = courses;
+      console.log(courses);
+    });
+  }
+
+  setDisplay(){
     this.titleService.setTitle(this.title);
     const cols_map = new Map([
       ['xs', 1],
@@ -88,7 +103,6 @@ export class HomeComponent implements OnInit {
           .map(change => {
             return rowspan_map.get(change.mqAlias);
           }).startWith(row_span);
-
   }
 
 }

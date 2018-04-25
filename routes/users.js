@@ -28,10 +28,11 @@ router.post('/register', (req, res, next) => {
     email: req.body.email,
     type: req.body.type,
     tag: req.body.tag,
+    verified: req.body.verified,
     mobile: req.body.mobile,
     password: req.body.password
   });
-  console.log(newUser);
+  //console.log(newUser);
   User.getUserByMobile(req.body.mobile, (err, user) => {
     if(user){
       res.status(409).json({success: false, error: Strings.errors.duplicateUser, msg: Strings.message.userExists});
@@ -63,7 +64,8 @@ router.post('/register/social', (req, res, next) => {
     socialID: req.body.socialID,
     name: req.body.name,
     email: req.body.email,
-    tag: req.body.tag
+    tag: req.body.tag,
+    verified: req.body.verified
   });
 
   SocialUser.getSocialUserBySId(req.body.socialID, (err, user) => {
