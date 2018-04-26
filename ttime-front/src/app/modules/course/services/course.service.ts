@@ -39,7 +39,52 @@ export class CourseService {
     });
   }
 
+  getauthToken(){
+    const token = localStorage.getItem('id_token');
+    return token;
+  }
 
+  enrollCourse(tag, courseid){
+    if(tag == "social"){
+      var cid = {
+        courseid: courseid 
+      }
+      let headers = new Headers();
+      const url = `${"api/courses/enroll/course/social/"}${courseid}`;
+      //console.log(url);
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.put(url, cid, {headers: headers})
+        .map((response: Response) => {
+          return response.json();  
+        })
+        .catch((error: Response) => {
+          this.errorService.handleError(error.json());
+          return Observable.throw(error.json());
+      });
+    }
+    else{
+      var cid = {
+        courseid: courseid 
+      }
+      let headers = new Headers();
+      const url = `${"api/courses/enroll/course/"}${courseid}`;
+      const token = this.getauthToken();
+      //console.log(this.authtoken);
+      //console.log(JSON.stringify(cid), uid);
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.put(url, cid, {headers: headers})
+      .map((response: Response) => {
+        return response.json();  
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+  }
 
 
 }

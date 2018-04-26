@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { User } from '../../../../model/user.model';
 import { DashboardService } from '../../services/dashboard.service';
+import { Course } from '../../../../model/course.model';
 
 @Component({
   selector: 'app-enrolled',
@@ -15,9 +16,10 @@ import { DashboardService } from '../../services/dashboard.service';
 export class EnrolledComponent implements OnInit {
   user = new User('','','');
   rowspan: Observable<number>;
-   cols: Observable<number>;
+  cols: Observable<number>;
+  courses: Course [] = [];
 
-  courses = [
+  /*courses = [
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
 
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
@@ -29,17 +31,13 @@ export class EnrolledComponent implements OnInit {
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
 
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' }
-  ];
+  ];*/
 
   title: string = "Enrolled - Teachers Time";
   constructor(private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
 
   ngOnInit() {
     this.getUser();
-    /*this.dashboardService.user.subscribe((user: User) => {
-      this.user = user;
-      console.log(this.user);
-    });*/
     this.titleService.setTitle(this.title);
     const cols_map = new Map([
       ['xs', 1],
@@ -81,7 +79,15 @@ export class EnrolledComponent implements OnInit {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
       this.user = profile;
+      this.getEnrolled(profile.userID);
     });
+  }
+
+  getEnrolled(id){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getEnrolledCourses(id, usercred.tag).subscribe((courses: Course[]) => {
+      this.courses = courses;
+    })
   }
 
 }

@@ -24,7 +24,8 @@
               <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
               <button *ngIf="hideLogin()" mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
               <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
-              <button mat-menu-item><mat-icon>account_box</mat-icon>Dashboard</button>
+              <button mat-menu-item routerLink= "/dashboard/enrolled"><mat-icon>account_box</mat-icon>My Courses</button>
+              <button mat-menu-item routerLink= "/dashboard/profile"><mat-icon>account_box</mat-icon>Profile</button>
               <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
               <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
             </mat-menu>

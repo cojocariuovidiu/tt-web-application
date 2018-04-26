@@ -66,4 +66,18 @@ export class CourselistComponent implements OnInit {
     });
     //console.log(this.courses);
   }
+
+  onEnrollCourse(courseid){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    console.log(usercred.tag);
+    console.log(courseid);
+    this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
+      if(data.success){
+        console.log(data);
+      }
+      else{
+        console.log('error');
+      }
+    })
+  }
 }

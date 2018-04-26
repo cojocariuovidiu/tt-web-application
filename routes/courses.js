@@ -82,14 +82,17 @@ router.get('/byId/:id', (req, res, next) => {
     });
 });
 
-router.put('/enroll/course/social/:uid', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
-    SocialUser.findOne({_id: req.params.uid, courses: req.body.courseid}).then(courses => {
+router.put('/enroll/course/social/:courseid', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
+    SocialUser.findOne({_id: req.user._id, courses: req.body.courseid}).then((courses, err) => {
         if(courses)
         {
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseEnrollFailed});
+            res.status(500).json({success: false, error: "Duplicate", msg: Strings.message.courseEnrollFailed});
+        }
+        else if(err){
+            throw err;
         }
         else{
-            SocialUser.getSocialUserById(req.params.uid, (err, user) => {
+            SocialUser.getSocialUserById(req.user._id, (err, user) => {
                 user.courses.push(req.body.courseid);
                 user.save();
             });
@@ -100,14 +103,17 @@ router.put('/enroll/course/social/:uid', passport.authenticate(Strings.strategy.
         
 });
 
-router.put('/enroll/course/:uid', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-    User.findOne({_id: req.params.uid, courses: req.body.courseid}).then(courses => {
+router.put('/enroll/course/:courseid', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+    User.findOne({_id: req.user._id, courses: req.body.courseid}).then((courses, err) => {
         if(courses)
         {
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseEnrollFailed});
+            res.status(500).json({success: false, error: "Duplicate", msg: Strings.message.courseEnrollFailed});
+        }
+        else if(err){
+            throw err;
         }
         else{
-            User.getUserById(req.params.uid, (err, user) => {
+            User.getUserById(req.user._id, (err, user) => {
                 user.courses.push(req.body.courseid);
                 user.save();
             });
@@ -120,7 +126,7 @@ router.put('/enroll/course/:uid', passport.authenticate(Strings.strategy.localSt
 
 router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, courses:data});
+        res.status(200).json({success: true, course:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
@@ -137,8 +143,8 @@ router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStra
 });*/
 
 router.get('/all/enrolled/social/:id', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
-    SocialUser.findOne({socialID: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, courses:data});
+    SocialUser.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
+        res.status(200).json({success: true, course:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.enrolledListGetFailed});
