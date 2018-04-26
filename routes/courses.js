@@ -14,7 +14,7 @@ const cfsign = require('aws-cloudfront-sign');
 const emoji = require('node-emoji');
 
 router.get('/public/all', (req, res, next) => {
-    Course.find({}).select('title details price scope')
+    Course.find({}).select('title details price scope preview freevideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -24,7 +24,18 @@ router.get('/public/all', (req, res, next) => {
    });
 });
 
-router.get('/all', (req, res, next) => {
+router.get('/all/social', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
+    Course.find({})
+        .exec((err, course) => {
+        if(err){
+            res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
+        }else{
+            res.status(200).json({success: true, course: course});
+        }
+   });
+});
+
+router.get('/all/local', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     Course.find({})
         .exec((err, course) => {
         if(err){
@@ -36,8 +47,8 @@ router.get('/all', (req, res, next) => {
 });
 
 
-router.get('/all/teacher', (req, res, next) => {
-    Course.find({scope: 'teacher'}).select('title details')
+router.get('/public/all/teacher', (req, res, next) => {
+    Course.find({scope: 'teacher'}).select('title details price scope preview freevideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -47,8 +58,8 @@ router.get('/all/teacher', (req, res, next) => {
    });
 });
 
-router.get('/all/parent', (req, res, next) => {
-    Course.find({scope: 'parent'}).select('title details')
+router.get('/public/all/parent', (req, res, next) => {
+    Course.find({scope: 'parent'}).select('title details price scope preview freevideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -116,14 +127,14 @@ router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStra
     });
 });
 
-router.get('/all/enrolled/public/:id', (req, res, next) => {
+/*router.get('/all/enrolled/public/:id', (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
         res.status(200).json({success: true, courses:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
     });
-});
+});*/
 
 router.get('/all/enrolled/social/:id', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
     SocialUser.findOne({socialID: req.params.id}).select('courses').populate('courses').then(data =>{

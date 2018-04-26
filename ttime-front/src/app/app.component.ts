@@ -19,10 +19,6 @@ export class AppComponent implements OnInit {
     this.loading = true;
   }
   ngOnInit() {
-    this.coreService.hideUser.subscribe(isuser => {
-      this.hideLogin = isuser;
-      console.log(this.hideLogin);
-    });
     const cols_map = new Map([
       ['xs', 1],
       ['sm', 1],

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class CoreService {
 
-  hideUser = new EventEmitter<boolean>();
+  message = new EventEmitter<string>();
   authtoken:any;
   user: any;
   private courses: Course [] = [];
@@ -18,7 +18,7 @@ export class CoreService {
   
   getCourses(){
     let headers = new Headers();
-    const url = `${"api/courses/all"}`;
+    const url = `${"api/courses/public/all"}`;
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {headers: headers})
     .map((response: Response) => {
@@ -27,10 +27,11 @@ export class CoreService {
       let transformedCourses: Course[] = [];
       for (let course of courses) {
         transformedCourses.push(new Course(
-          course._id,
           course.title,
+          course.preview, 
           course.details,
-          course.scope, course.price, course.lectures
+          course.scope,
+          course.freevideo, null, course._id, course.price, null
         ));
       }
       this.courses = transformedCourses;
@@ -42,7 +43,7 @@ export class CoreService {
       return Observable.throw(error.json());
     });
   }
-
+  
   canActivate()
   {
     if(this.checkLogin()){
@@ -72,15 +73,19 @@ export class CoreService {
   getauthToken(){
     const token = localStorage.getItem('id_token');
     this.authtoken = token;
+    return token;
   }
   
   Logout()
   {
-    //this.socialauthService.signOut();
     this.authtoken = null;
     this.user = null;
     localStorage.clear();
     this.router.navigate(['/auth/login']);
+  }
+
+  showMessage(msg){
+    this.message.emit(msg);
   }
 
 }

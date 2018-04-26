@@ -134,23 +134,23 @@ router.post('/authenticate', (req, res, next) => {
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign({data: user}, config.secret, {
+        const newtoken = jwt.sign({data: user}, config.secret, {
           expiresIn: Strings.values.loginExpiration
         });
-          res.status(200).json({
-              success: true,
-              token: `Bearer ${token}`,
-              msg: Strings.message.loginSuccess,
-              user: {
-                id: user._id,
-                name: user.name,
-                mobile: user.mobile,
-                email: user.email,
-                type: user.type,
-                tag: user.tag,
-                verified: user.verified
-              }
-            });
+        res.status(200).json({
+          success: true,
+          token: `Bearer ${newtoken}`,
+          msg: Strings.message.loginSuccess,
+          user: {
+            id: user._id,
+            name: user.name,
+            mobile: user.mobile,
+            email: user.email,
+            type: user.type,
+            tag: user.tag,
+            verified: user.verified
+          }
+        });
       }
       else{
         return res.status(401).json({success: false, error: Strings.errors.notAuthorized, msg: Strings.message.wrongPassword});
@@ -159,6 +159,33 @@ router.post('/authenticate', (req, res, next) => {
   });
 });
 
+/*//Logout
+router.patch('/logout/local', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+  const userid = req.user._id;
+  console.log(userid);
+  User.getUserById(userid, (err, user) =>{
+    if(err) throw err;
+    if(!user){
+      return res.status(404).json({success: false, error: Strings.errors.notFound, msg: Strings.message.userNotFound});
+    }
+    user.token = Strings.strategy.tokenValue;
+    user.save((err, resultif(user.token == 'none'){
+          
+          user.token = newtoken;
+          user.save((err, result) => {
+            if(err) throw err;
+            
+          });
+        }
+        else{
+          res.status(200).json({
+            success: true,
+            token: `B) => {
+      if(err) throw err;
+      return res.status(200).json({success: true, msg: Strings.message.logoutSuccess});
+    });
+  });
+})*/
 /*// Authenticate
 router.post('/authenticate', (req, res, next) => {
   const mobile = req.body.mobile;

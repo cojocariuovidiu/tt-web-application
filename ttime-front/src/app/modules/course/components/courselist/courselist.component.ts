@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { CourseService } from '../../services/course.service';
 @Component({
   selector: 'app-courselist',
   templateUrl: './courselist.component.html',
@@ -17,14 +18,11 @@ export class CourselistComponent implements OnInit {
   title = 'Courses - Teachers Time';
   rowspan: Observable<number>;
   cols: Observable<number>;
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private titleService: Title, private observableMedia: ObservableMedia, private courseService: CourseService) { }
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    this.courses.push(new Course('1', 'Java', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'C sharp', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'Script', 'javadetail', null, null));
-    this.courses.push(new Course('1', 'Python', 'javadetail', null, null));
+    this.getCourse();
 
     const cols_map = new Map([
       ['xs', 1],
@@ -62,4 +60,10 @@ export class CourselistComponent implements OnInit {
         }).startWith(row_span);
   }
 
+  getCourse(){
+    this.courseService.getCourses().subscribe((courses: Course []) => {
+      this.courses = courses;
+    });
+    //console.log(this.courses);
+  }
 }
