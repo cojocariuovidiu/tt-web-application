@@ -37,14 +37,14 @@
     <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill    >
         <mat-card-header>
           <mat-card-title>
-          <h3 class="text-white">{{course.name}}</h3>
+          <h3 class="text-white">{{course.courseTitle}}</h3>
        </mat-card-title>
        </mat-card-header>
          <img matCardImage src="../../../assets/img/python.jpg">
          <mat-card-content  [style.height.px]="'250px'">
          
            <p  align="justify" class="text-white">
-            {{course.details}}
+            {{course.courseDetails}}
            
          </p>
          <button align="justify" mat-raised-button color="primary" >More Details</button>
