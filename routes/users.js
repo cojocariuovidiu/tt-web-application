@@ -120,6 +120,55 @@ router.post('/register/social', (req, res, next) => {
   });
 });
 
+/*// Authenticate
+router.patch('/authenticate', (req, res, next) => {
+  const mobile = req.body.mobile;
+  const password = req.body.password;
+
+  User.getUserByMobile(mobile, (err, user) => {
+    if(err) throw err;
+    if(!user){
+      return res.status(404).json({success: false, error: Strings.errors.notFound, msg: Strings.message.userNotFound});
+    }
+
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        user.token = "none";
+        user.save((err, user) => {
+          if(err) throw err;
+          else{
+            const newtoken = jwt.sign({data: user}, config.secret, {
+              expiresIn: Strings.values.loginExpiration
+            });
+            user.token = `Bearer ${newtoken}`;
+            user.save((err, user) =>{
+              res.status(200).json({
+                success: true,
+                token: `Bearer ${newtoken}`,
+                msg: Strings.message.loginSuccess,
+                user: {
+                  id: user._id,
+                  name: user.name,
+                  mobile: user.mobile,
+                  token: user.token,
+                  email: user.email,
+                  type: user.type,
+                  tag: user.tag,
+                  verified: user.verified
+                }
+              });
+            });
+          }
+        });
+      }
+      else{
+        return res.status(401).json({success: false, error: Strings.errors.notAuthorized, msg: Strings.message.wrongPassword});
+      }
+    });
+  });
+});*/
+
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
   const mobile = req.body.mobile;
@@ -160,77 +209,69 @@ router.post('/authenticate', (req, res, next) => {
 });
 
 /*//Logout
-router.patch('/logout/local', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-  const userid = req.user._id;
-  console.log(userid);
-  User.getUserById(userid, (err, user) =>{
+router.patch('/logout/:tag', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+  const editUser = {
+    tag: req.params.tag
+  }
+  User.getUserById(req.user._id, (err, user) => {
     if(err) throw err;
-    if(!user){
-      return res.status(404).json({success: false, error: Strings.errors.notFound, msg: Strings.message.userNotFound});
-    }
-    user.token = Strings.strategy.tokenValue;
-    user.save((err, resultif(user.token == 'none'){
-          
-          user.token = newtoken;
-          user.save((err, result) => {
-            if(err) throw err;
-            
-          });
-        }
-        else{
-          res.status(200).json({
-            success: true,
-            token: `B) => {
-      if(err) throw err;
-      return res.status(200).json({success: true, msg: Strings.message.logoutSuccess});
-    });
-  });
-})*/
-/*// Authenticate
-router.post('/authenticate', (req, res, next) => {
-  const mobile = req.body.mobile;
-  const password = req.body.password;
-
-  User.getUserByMobile(mobile, (err, user) => {
-    if(err) throw err;
-    if(!user){
-      return res.status(404).json({success: false, error: err, msg: Strings.message.userNotFound});
-    }
-
-    User.comparePassword(password, user.password, (err, isMatch) => {
-      if(err) throw err;
-      if(isMatch){
-        const token = jwt.sign({data: user}, config.secret, {
-          expiresIn: Strings.values.loginExpiration
-        });
-        user.token = token;
-        user.save((err, result)=>{
-          if(err){
-            return res.status(500).json({success: false, error: err, msg: Strings.message.somethingWentWrong})
-          }
-          else{
-            res.status(200).json({
-              success: true,
-              token: `Bearer ${token}`,
-              msg: Strings.message.loginSuccess,
-              user: {
-                id: user._id,
-                name: user.name,
-                mobile: user.mobile,
-                email: user.email,
-                type: user.type,
-                tag: user.tag,
-                verified: user.verified
-              }
-            });
+    user.token = "none";
+    user.save((err, result) => {
+      if(err)
+      {
+        res.status(500).json({success: false, error: err, msg: Strings.message.profileEditFailed});
+      }
+      else{
+        res.status(200).json({success: true, msg: Strings.message.profileEditSuccess,
+          user: {
+            name: result.name,
+            email: result.email,
+            type: result.type,
+            mobile: result.mobile,
+            token: result.token,
+            tag: result.tag,
+            user: result.verified
           }
         });
-      } else {
-        return res.status(401).json({success: false, error: err, msg: Strings.message.wrongPassword});
       }
     });
   });
 });*/
+
+
+/*router.post('/addlogin', (req, res, next) => {
+  let newCurrent = new Current ({
+    userid: req.body.userid,
+    token: req.body.token
+  });
+  Current.getCurrentByuserID(newCurrent.userid, (err, current) => {
+    if(err) throw err;
+    if(current){
+      return res.status(200).json({success: false, error: "duplicate", msg: "login exists", 
+        current: {
+          userid: current.userid,
+          token: current.token
+        }
+      });
+    }
+    else{
+      Current.addCurrent(newCurrent, (err, current) => {
+        if(err){
+          res.status(500).json({success: false, error: err, msg: "failed"});
+        }else{
+          res.status(201).json({success: true, msg: "login add success",
+            current: {
+              userid: current.userid,
+              token: current.token
+            }
+          });
+        }
+        
+      });
+    }
+  });
+}); */
+
 
 // Authenticate For Editing
 router.post('/authenticate/edit', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {

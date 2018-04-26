@@ -78,10 +78,12 @@ export class CoreService {
   
   Logout()
   {
+    //console.log(token);
+    //console.log(tag);
     this.authtoken = null;
     this.user = null;
     localStorage.clear();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth/login']);    
   }
 
   showMessage(msg){

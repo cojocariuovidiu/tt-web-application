@@ -17,6 +17,8 @@ module.exports = function(passport){
       }
 
       if(user){
+        //console.log(user.token);
+        //console.log(token);
         return done(null, user);
       } else {
         return done(null, false);
