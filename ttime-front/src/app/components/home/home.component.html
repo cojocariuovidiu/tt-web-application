@@ -1,55 +1,63 @@
 <div class=" my-theme flex-container" fxLayout="column wrap" fxLayoutGap="20px"  fxFill>
-    <div>
-       <mat-grid-list class="hintro" [cols]="introcols | async" rowHeight="36em" gutterSize="0px"  >
-           <mat-grid-tile class="intro" colspan="1" rowspan="1">
-             <div fxLayout="row wrap"  fxLayout.xs="column wrap" fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center" fxFlex>
-             <div class="tintro" fxLayout="row wrap" fxLayout.lt-md="column wrap" fxFlex  fxLayoutAlign="start center"  fxLayoutAlign.lt-md="start center"  fxFlex.lt-md  >  
-                 <h1>WELCOME TO TEACHERS TIME </h1> 
-                 <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>
-                 <div fxLayout="row wrap" fxlayout.lt-sm="column wrap" fxLayoutAlign="start start" fxLayoutAlign.lt-md="center center" fxLayoutWrap >
-                 <button mat-raised-button color="primary"routerLink= "/login" routerLinkActive="active">Start Here</button>
-                  
-                </div>
-               </div>
-               </div>
-             </mat-grid-tile>
-               <mat-grid-tile class="intro" colspan="1" rowspan="1">
-                   <div fxLayout="row wrap"  fxLayout.lt-sm="column wrap" fxLayoutAlign="end center" fxLayoutAlign.lt-md="center center" fxFill>
-               <div class="tintrovid"  fxLayout.lt-sm="column wrap" fxFlex  fxLayoutAlign="end center"  fxLayoutAlign.lt-md="start center"  fxFlex.lt-md  fxFlexAlign.lt-md="center">
-                <div>
-                 <iframe ngStyle.sm="width:90vw;height=240px;" ngStyle.xs="width:300px;height=240px;" width="640px  " height="360px" src="https://www.youtube.com/embed/btIkUKoVbfY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-                 </iframe>
-               </div>
-               </div>
-               </div>
-            
-            
-             </mat-grid-tile>                
-    </mat-grid-list>
-   </div>
- <div style="padding-left:2%; padding-right:2%; ">
-    <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
-       <mat-grid-tile
-      *ngFor="let course of courses"
-       [rowspan]="rowspan | async" style="background: black;">
-  
-     
-      <mat-card class="example-card"  style="background:indigo;  width:100%; height:calc(100%-10px); max-height:100%; min-height:calc(100%-10px);   max-width: 100vw;">
-           <mat-card-header><mat-card-title><h3 class="text-white">{{course.courseTitle}}</h3></mat-card-title></mat-card-header>
-           <img matCardImage src="../../../assets/img/python.jpg">
-           <mat-card-content >
-           <p align="justify">
-              {{course.courseDetail}}
+  <div>
+     <mat-grid-list class="hintro" [cols]="introcols | async" rowHeight="36em" gutterSize="0px"  >
+         <mat-grid-tile class="intro" colspan="1" rowspan="1">
+           <div fxLayout="row wrap"  fxLayout.xs="column wrap" fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center" fxFlex>
+           <div class="tintro" fxLayout="row wrap" fxLayout.lt-md="column wrap" fxFlex  fxLayoutAlign="start center"  fxLayoutAlign.lt-md="start center"  fxFlex.lt-md  >  
+               <h1>WELCOME TO TEACHERS TIME </h1> 
+               <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>
+               <div fxLayout="row wrap" fxlayout.lt-sm="column wrap" fxLayoutAlign="start start" fxLayoutAlign.lt-md="center center" fxLayoutWrap >
+               <button mat-raised-button color="primary"routerLink= "/login" routerLinkActive="active">Start Here</button>
+                
+              </div>
+             </div>
+             </div>
+           </mat-grid-tile>
+             <mat-grid-tile class="intro" colspan="1" rowspan="1">
+                 <div fxLayout="row wrap"  fxLayout.lt-sm="column wrap" fxLayoutAlign="end center" fxLayoutAlign.lt-md="center center" fxFill>
+             <div class="tintrovid"  fxLayout.lt-sm="column wrap" fxFlex  fxLayoutAlign="end center"  fxLayoutAlign.lt-md="center start"  fxFlex.lt-md >
+              <div>
+               <iframe ngStyle.sm="width:90vw;height=240px;" ngStyle.xs="width:300px;height=240px;" width="640px  " height="360px" src="https://www.youtube.com/embed/btIkUKoVbfY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+               </iframe>
+             </div>
+             </div>
+             </div>
+          
+          
+           </mat-grid-tile>                
+  </mat-grid-list>
+ </div>
+<div style="padding-left:2%; padding-right:2%; ">
+  <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
+     <mat-grid-tile
+    *ngFor="let course of courses" fxLayoutwrap
+     [rowspan]="rowspan | async"  style="background: black;">
+
+   
+    <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill    >
+        <mat-card-header>
+          <mat-card-title>
+          <h3 class="text-white">{{course.name}}</h3>
+       </mat-card-title>
+       </mat-card-header>
+         <img matCardImage src="../../../assets/img/python.jpg">
+         <mat-card-content  [style.height.px]="'250px'">
+         
+           <p  align="justify" class="text-white">
+            {{course.details}}
+           
+         </p>
+         <button align="justify" mat-raised-button color="primary" >More Details</button>
+         </mat-card-content>
+         <mat-card-actions>
              
-           </p>
-           </mat-card-content>
-           <mat-card-actions>
-             <button align="justify" mat-raised-button color="primary" >More Details</button>
-           </mat-card-actions>
-         </mat-card>
-        
-   </mat-grid-tile>
- </mat-grid-list>
- </div>
- </div>
- 
+         </mat-card-actions>
+       <mat-card-footer>
+
+       </mat-card-footer>
+       </mat-card>
+      
+ </mat-grid-tile>
+</mat-grid-list>
+</div>
+</div>

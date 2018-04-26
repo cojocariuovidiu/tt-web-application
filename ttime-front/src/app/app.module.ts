@@ -8,6 +8,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { HttpModule } from '@angular/http';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {OverlayContainer} from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { ErrorService } from './services/error.service';
@@ -34,4 +35,10 @@ import { CoreService } from './services/core.service';
   providers: [ErrorService, CoreService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(overlayContainer: OverlayContainer) {
+    overlayContainer.getContainerElement().classList.add('my-theme');
+    overlayContainer.getContainerElement().classList.add('my-second-theme');
+  }
+
+ }
