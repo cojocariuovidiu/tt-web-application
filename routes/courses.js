@@ -295,7 +295,7 @@ router.get('/evalutaion/lecture/:id', passport.authenticate(Strings.strategy.loc
 });
 */
 
-//GET VIDEO URL
+/*//GET VIDEO URL
 router.get('/object/video/url', (req, res, next) => {
     var expired = new Date();
     var time = expired.getTime() + (60 * 1000);
@@ -310,8 +310,64 @@ router.get('/object/video/url', (req, res, next) => {
     //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
     res.status(200).json({success: true, signedUrl: signedUrl});
     console.log(signedUrl);
+});*/
+
+//GET VIDEO URL
+router.post('/object/video/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.videoLink;
+    var expired = new Date();
+    var time = expired.getTime() + (60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
 });
 
+//GET IMAGE URL
+router.post('/object/image/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.imageLink;
+    var expired = new Date();
+    var time = expired.getTime() + (1440 * 60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
+});
+
+
+
+//GET VIDEO URL
+router.post('/object/video/url/social', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.videoLink;
+    var expired = new Date();
+    var time = expired.getTime() + (60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
+});
+  
   
 module.exports = router;
 

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       password: this.loginPassword.value
     }
     this.authorizationService.loginUser(logincred).subscribe(data => {
-      console.log(data);
+      //console.log(data);
       if(data.success){
         this.authorizationService.storeUserData(data.token, data.user);
         this.router.navigate(['/dashboard']);

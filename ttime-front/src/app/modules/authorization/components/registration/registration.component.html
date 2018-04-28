@@ -67,7 +67,7 @@
     </mat-card-actions>
   </mat-card>
 </div> Padding is optional-->
-<div class="flex-container mat-elevation-z10">
+<div class="my-theme flex-container">
   <mat-grid-list cols="1" rowHeight="50em">
     <mat-grid-tile ngStyle.lt-md="padding-top:15em;">
   <mat-card class="reg-card" fxFlex>
@@ -128,7 +128,7 @@
         <mat-radio-button [value]="typeTeacher">Teacher</mat-radio-button>
       </mat-radio-group>
     <div fxLayout="column" fxLayoutAlign="center center">
-    <button [disabled]="!registerForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Register</button>
+    <button [disabled]="!registerForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Register <mat-icon class="send">send</mat-icon></button>
     </div>
 </form>
 <div class="divider">

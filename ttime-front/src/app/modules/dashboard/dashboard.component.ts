@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../model/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +14,23 @@ export class DashboardComponent implements OnInit {
     {label: 'Enrolled', path: '/dashboard/enrolled'},
     {label: 'Profile', path: '/dashboard/profile'}
   ];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+    console.log(this.router.url);
   }
 
-  
+  hideTab(){
+    if(this.router.url == "/dashboard/enrolled")
+    {
+      return true;
+    }
+    else if(this.router.url == "/dashboard/profile"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
 }

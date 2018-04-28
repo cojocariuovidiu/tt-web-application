@@ -34,9 +34,9 @@
     </mat-card-actions>
   </mat-card>
 </div>-->
-<div class="flex-container mat-elevation-z10" 
+<div class="my-theme flex-container" 
 fxLayout="column" >
-<mat-grid-list cols="1" rowHeight="40em" style="background: black">
+<mat-grid-list cols="1" rowHeight="40em">
 <mat-grid-tile>
 <mat-card class="login-card" fxFlex>
     <mat-card-header fxLayout="column" fxLayoutAlign="center center">
@@ -61,7 +61,7 @@ fxLayout="column" >
       <mat-error *ngIf="loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)">Password Required</mat-error>
     </mat-form-field>
     <div fxLayout="column" fxLayoutAlign="center center">
-    <button [disabled]="!loginForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Login</button>
+    <button [disabled]="!loginForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Login <mat-icon class="send">send</mat-icon></button>
     </div>
 </form>
 <div class="divider">

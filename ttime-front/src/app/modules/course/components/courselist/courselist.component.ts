@@ -80,4 +80,23 @@ export class CourselistComponent implements OnInit {
       }
     })
   }
+  hideLogin()
+  {
+    const token = this.getauthToken();
+    if(token)
+    {
+      //console.log('true');
+      return true;
+    }
+    else
+    {
+      //console.log('false');
+      return false;
+    }
+  }
+
+  getauthToken(){
+    const token = localStorage.getItem('id_token');
+     return token;
+  }
 }

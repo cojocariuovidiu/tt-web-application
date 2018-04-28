@@ -118,4 +118,62 @@ export class DashboardService {
     }
   }
 
+  getImage(imageLink, tag){
+    let headers = new Headers();
+      const url = `${"api/courses/object/image/url"}`;
+      const token = this.getauthToken();
+      const body = {
+        imageLink: imageLink
+      }
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body ,{headers: headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+  }
+
+  getSignedURL(videoLink, tag){
+    if(tag == "local"){
+      let headers = new Headers();
+      const url = `${"api/courses/object/video/url"}`;
+      const token = this.getauthToken();
+      const body = {
+        videoLink: videoLink
+      }
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body ,{headers: headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+    else{
+      let headers = new Headers();
+      const url = `${"api/courses/object/video/url/social"}`;
+      const token = this.getauthToken();
+      const body = {
+        videoLink: videoLink
+      }
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body ,{headers: headers})
+      .map((response: Response) => {
+        return response.json();
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+}
+
 }

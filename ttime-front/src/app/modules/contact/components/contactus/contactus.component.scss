@@ -17,7 +17,8 @@ agm-map {
     z-index: 10;
 }
 .contact-btn{
-    max-width: 20vw;
+    min-width: 10vw;
+    max-width: 40vw;
 }
 textarea{
     min-height: 150px;
@@ -27,4 +28,5 @@ textarea{
 }
 .send{
     vertical-align: -30%;
+    padding-left: 0.5em;
 }

@@ -22,7 +22,11 @@ export class AuthorizationService {
     //console.log(body);
     headers.append('Content-Type', 'application/json');
     return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => response.json())
+      .map((response: Response) => {
+        const data = response.json();
+        this.coreService.showMessage(data.msg);
+        return data;
+      })
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
         return Observable.throw(error.json());
@@ -80,7 +84,11 @@ export class AuthorizationService {
     const body = JSON.stringify(user);
     //console.log(body);
     return this.http.post(url, body, {headers: headers})
-    .map((response: Response) => response.json())
+    .map((response: Response) => {
+      const data = response.json();
+      this.coreService.showMessage(data.msg);
+      return data;
+    })
     .catch((error: Response) => {
       this.errorService.handleError(error.json());
       return Observable.throw(error.json());

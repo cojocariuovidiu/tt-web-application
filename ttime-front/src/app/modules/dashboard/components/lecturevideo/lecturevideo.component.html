@@ -3,10 +3,7 @@
     <mat-grid-list   [cols]="cols | async" rowHeight="40px"    gutterSize="2px"  >
    
     <mat-grid-tile colspan="11" rowspan="10" fxFlex fxFill>
-     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
-       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"/>
-       <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"/>
-       <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg"/>
+     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" [src]="signedUrl" [poster]="imagethumb" data-setup="{}">
        <track kind="captions" src="../shared/example-captions.vtt" srclang="en" label="English"/>
        <!-- Tracks need an ending tag thanks to IE9 -->
        <track kind="subtitles" src="../shared/example-captions.vtt" srclang="en" label="English"/>
