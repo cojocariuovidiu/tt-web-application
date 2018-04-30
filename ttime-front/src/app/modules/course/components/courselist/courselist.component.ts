@@ -6,6 +6,7 @@ import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { CourseService } from '../../services/course.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-courselist',
   templateUrl: './courselist.component.html',
@@ -18,7 +19,7 @@ export class CourselistComponent implements OnInit {
   title = 'Courses - Teachers Time';
   rowspan: Observable<number>;
   cols: Observable<number>;
-  constructor(private titleService: Title, private observableMedia: ObservableMedia, private courseService: CourseService) { }
+  constructor(private router: Router, private titleService: Title, private observableMedia: ObservableMedia, private courseService: CourseService) { }
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
@@ -65,6 +66,11 @@ export class CourselistComponent implements OnInit {
       this.courses = courses;
     });
     //console.log(this.courses);
+  }
+
+  getCourseDetail(id){
+    console.log(id);
+    this.router.navigate(['/courses/index', id])
   }
 
   onEnrollCourse(courseid){

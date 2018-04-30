@@ -5,39 +5,46 @@
             <mat-grid-tile ngStyle.lt-md="padding-top:15em;" fxLayoutwrap>
           <mat-card class="reg-card" fxFlex fxFlexFill>
             <mat-card-header fxLayout="column" fxLayoutAlign="center center">
-              <mat-card-title><h2 align="center">Prottoy Paul</h2></mat-card-title> 
+              <mat-card-title><h2 align="center">{{user.name}}</h2></mat-card-title> 
             </mat-card-header>
             
-            <form fxLayout="column" fxLayoutAlign="start"> 
+            <form fxLayout="column" fxLayoutAlign="start" [formGroup]="profileForm" (ngSubmit)="sendProfileForm()"> 
                 <mat-form-field floatLabel="auto">
-                    <input matInput placeholder="Name" value="Prottoy Paul"  >
-                    <mat-icon matPrefix>smartphone</mat-icon>
+                    <input matInput placeholder="Name" name="Name" id="Name" formControlName="Name">
+                    <mat-icon matPrefix>person</mat-icon>
                 </mat-form-field>
               <mat-form-field floatLabel="auto">
-                        <input matInput placeholder="  Phone Number" value="" >
-                        <mat-icon matPrefix>smartphone</mat-icon>
+                        <input matInput placeholder="Email" name="Email" id="Email" formControlName="Email">
+                        <mat-icon matPrefix>email</mat-icon>
                 </mat-form-field>
               
             <mat-form-field floatLabel="auto">
-              <input matInput placeholder="Location"  >
+              <textarea matInput placeholder="Location"  name="Location" id="Location" formControlName="Location"></textarea>
               <mat-icon matPrefix>location_on</mat-icon>
               </mat-form-field>
               <mat-form-field>
-             <mat-select placeholder="Institute Type">
+             <mat-select placeholder="Institute Type" name="InstituteType" id="InstituteType" formControlName="InstituteType">
                   <mat-option *ngFor="let inst of institute" [value]="inst.value">
                     {{ inst.viewValue }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field>
-                  <input matInput placeholder="Institute name"  >
+                  <input matInput placeholder="Institute name" name="InstituteName" id="InstituteName" formControlName="InstituteName">
                   <mat-icon matPrefix>school</mat-icon>
                   </mat-form-field>
+                  <mat-radio-group class="radio-group" name="Scope" id="Scope" formControlName="Scope">
+                    <mat-radio-button  [value]="typeParent">Parent</mat-radio-button>
+                    <span class="slabel"></span>
+                    <mat-radio-button [value]="typeTeacher">Teacher</mat-radio-button>
+                    <span class="slabel"></span>
+                    <mat-radio-button [value]="typeTeacher">Both</mat-radio-button>
+                  </mat-radio-group>
             
              
       
             <div fxLayout="column" fxLayoutAlign="center center">
-            <button mat-raised-button class="updatebtn" color="primary">Update Profile</button>
+            <button type="submit" mat-raised-button class="updatebtn" color="primary">Update Profile</button>
             </div>
         </form>
           

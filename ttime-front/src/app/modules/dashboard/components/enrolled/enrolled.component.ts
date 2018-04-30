@@ -7,6 +7,7 @@ import 'rxjs/add/operator/startWith';
 import { User } from '../../../../model/user.model';
 import { DashboardService } from '../../services/dashboard.service';
 import { Course } from '../../../../model/course.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-enrolled',
@@ -34,7 +35,7 @@ export class EnrolledComponent implements OnInit {
   ];*/
 
   title: string = "Enrolled - Teachers Time";
-  constructor(private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
+  constructor(private router: Router, private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
 
   ngOnInit() {
     this.getUser();
@@ -90,6 +91,9 @@ export class EnrolledComponent implements OnInit {
     })
   }
 
-  
+  getCourseDetail(id){
+    console.log(id);
+    this.router.navigate(['/dashboard/enrolled', id]);
+  }
 
 }

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-contactus',
@@ -13,13 +14,18 @@ import 'rxjs/add/operator/startWith';
 export class ContactusComponent implements OnInit {
 
   title: string = 'We are Here:';
+  namePattern: string = '[a-z]*.{3,}';
+  emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   lat: number = 23.745531;
   lng: number = 90.370628;
   amount: number = 20;
   pageTitle: string = "Contact - Teachers Time";
   cols: Observable<number>;
+  contactForm: FormGroup
 
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private formBuilder: FormBuilder, private titleService: Title, private observableMedia: ObservableMedia) {
+    this.createContactForm();
+   }
 
   ngOnInit() {
     this.titleService.setTitle(this.pageTitle);
@@ -42,5 +48,37 @@ export class ContactusComponent implements OnInit {
       }).startWith(start_cols);
   }
 
+  createContactForm(){
+    this.contactForm = this.formBuilder.group({
+      Name: [null, Validators.compose([
+        Validators.required,
+        Validators.pattern(this.namePattern)
+      ])],
+      Email: [null, Validators.compose([
+        Validators.required,
+        Validators.email,
+        Validators.pattern(this.emailPattern)
+      ])],
+      Subject: [
+        null, Validators.compose([
+          Validators.required
+        ])
+      ],
+      Message: [
+        null, Validators.compose([
+          Validators.required
+        ])
+      ]
+    });
+  }
+
+  sendContactForm(){
+    const contact = this.contactForm.value;
+    console.log(contact);
+  }
+
+  resetContactForm(){
+    this.contactForm.reset();
+  }
 
 }

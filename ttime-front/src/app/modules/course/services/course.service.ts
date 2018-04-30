@@ -9,6 +9,7 @@ import { ErrorService } from '../../../services/error.service';
 export class CourseService {
 
   private courses: Course [] = [];
+  private course: Course;
   constructor(private http: Http, private errorService: ErrorService) { }
 
   getCourses(){
@@ -32,6 +33,34 @@ export class CourseService {
       this.courses = transformedCourses;
       //console.log(this.courses);
       return transformedCourses;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
+
+  getCoursesDetail(id){
+    let headers = new Headers();
+    const url = `${"api/courses/byId/"}${id}`;
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(url, {headers: headers})
+    .map((response: Response) => {
+      const course = response.json().course;
+      console.log(course);
+      let transformedCourse: Course;
+      
+        transformedCourse = new Course(
+          course.title,
+          course.preview, 
+          course.details,
+          course.scope,
+          course.freevideo, null, course._id, course.price, course.sessions
+        );
+      
+      this.course = transformedCourse;
+      console.log(this.course);
+      return transformedCourse;
     })
     .catch((error: Response) => {
       this.errorService.handleError(error.json());

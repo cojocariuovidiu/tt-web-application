@@ -8,7 +8,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import '../../../../material.module';
 import { DashboardService } from '../../services/dashboard.service';
-
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { Course } from '../../../../model/course.model';
 
 @Component({
   selector: 'app-lecturevideo',
@@ -22,7 +23,9 @@ export class LecturevideoComponent implements OnInit {
   paramIDCourse: string;
   signedUrl: string;
   imagethumb: string;
+  course: Course;
   // tslint:disable-next-line:no-inferrable-types
+  commentForm: FormGroup;
   title: string = 'Lecture Name - Teachers Time';
   cols: Observable<number>;
   colspan: Observable<number>;
@@ -30,7 +33,7 @@ export class LecturevideoComponent implements OnInit {
   syllabusicon = true;
   ratingicon = true;
   sessionicon = true;
-  lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
+  /*lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
              {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
              {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},
              {lecturenumber: 'Lecture 4', lecturetitle : ' Dealings With Misbehaviour'}];
@@ -38,14 +41,16 @@ export class LecturevideoComponent implements OnInit {
              {sessionnumber: 'session 2', sessionname: 'Problem Understanding', lectures : this.lecture},
              {sessionnumber: 'session 3', sessionname: 'Problem Understanding', lectures : this.lecture},
              {sessionnumber: 'session 4', sessionname: 'Problem Understanding', lectures : this.lecture}];
-  messages = [
+  */messages = [
     {name: 'Classroom Managment' , details: 'yddt' },
 
     {name: 'Python' , details: 'tyyt' },
     {name: 'Python' , details: 'tyyt' },
     {name: 'Python' , details: 'tyyt' }
   ];
-  constructor(private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
+    this.createCommentForm();
+   }
 
   ngOnInit() {
     this.routerParams = this.activatedRoute.params.subscribe(params => {
@@ -64,6 +69,11 @@ export class LecturevideoComponent implements OnInit {
         console.log(data);
         this.signedUrl = data.signedUrl;
       })
+
+      this.dashboardService.getEnrolledDetail(this.paramIDCourse).subscribe((course: Course) => {
+        this.course = course;
+        console.log(this.course);
+      });
       
       this.dashboardService.getImage("/Courses/TestCourse/angular.jpg", usercred.tag).subscribe(data => {
         console.log(data);
@@ -117,5 +127,23 @@ export class LecturevideoComponent implements OnInit {
   ratingiconclick() {
     this.ratingicon = !this.ratingicon;
   }
+
+  createCommentForm(){
+    this.commentForm = this.formBuilder.group({
+      Comment: [null, Validators.compose([
+        Validators.required
+      ])]
+    });
+  }
+
+  sendCommentForm(){
+    const comment = this.commentForm.value;
+    console.log(comment);
+  }
+
+  resetProfileForm(){
+    this.commentForm.reset();
+  }
+
 
 }

@@ -14,29 +14,7 @@ const cfsign = require('aws-cloudfront-sign');
 const emoji = require('node-emoji');
 
 router.get('/public/all', (req, res, next) => {
-    Course.find({}).select('title details price scope preview freevideo')
-        .exec((err, course) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
-        }else{
-            res.status(200).json({success: true, course: course});
-        }
-   });
-});
-
-router.get('/all/social', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
-    Course.find({})
-        .exec((err, course) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
-        }else{
-            res.status(200).json({success: true, course: course});
-        }
-   });
-});
-
-router.get('/all/local', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-    Course.find({})
+    Course.find({}).select('title details price scope preview freevideo _id')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});

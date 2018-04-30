@@ -77,9 +77,9 @@
          
            <p  align="justify" class="text-white">
             {{course.courseDetail}}
-           
+            {{course.courseID}}
          </p>
-         <button align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+         <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          <button [hidden]="!hideLogin()" (click)="onEnrollCourse(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Enroll <mat-icon class="send">add</mat-icon></button>
          </mat-card-content>
          <mat-card-actions>

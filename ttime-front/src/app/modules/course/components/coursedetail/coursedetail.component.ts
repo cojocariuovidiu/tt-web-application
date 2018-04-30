@@ -23,7 +23,7 @@ export class CoursedetailComponent implements OnInit {
   syllabusicon: boolean = true;
   ratingicon: boolean = true;
   sessionicon: boolean = true;
-  lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
+  /*lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
              {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
              {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},
              {lecturenumber: 'Lecture 4', lecturetitle : ' Dealings With Misbehaviour'}];
@@ -31,7 +31,7 @@ export class CoursedetailComponent implements OnInit {
              {sessionnumber: 'session 2', sessionname: 'Problem Understanding', lectures : this.lecture},
              {sessionnumber: 'session 3', sessionname: 'Problem Understanding', lectures : this.lecture},
              {sessionnumber: 'session 4', sessionname: 'Problem Understanding', lectures : this.lecture}];
-  messages = [
+  */messages = [
     {name: 'Classroom Managment' , details: 'In computer programming, a comment is a programmer-readable explanation or annotation in the source code of a computer program. They are added with the purpose of making the source code easier for humans to understand, and are generally ignored by compilers and interpreters.' },
 
     {name: 'Python' , details: 'In computer programming, a comment is a programmer-readable explanation or annotation in the source code of a computer program. They are added with the purpose of making the source code easier for humans to understand, and are generally ignored by compilers and interpreters.' },
@@ -39,19 +39,21 @@ export class CoursedetailComponent implements OnInit {
     {name: 'Python' , details: 'tyyt' },
     {name: 'Python' , details: 'tyyt' }
   ];
-  courses: Course [] = [];
+  course: Course;
   constructor(private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { }
 
   ngOnInit() {
-    this.courseService.getCourses().subscribe((courses: Course[]) => {
-      this.courses = courses;
-      console.log(this.courses);
-    })
     this.gridMap();
     this.titleService.setTitle(this.title);
     this.routerParams = this.activatedRoute.params.subscribe(params => {
       this.paramID = params['id'];
+      console.log(this.paramID);
+      this.courseService.getCoursesDetail(this.paramID).subscribe((course: Course) => {
+        this.course = course;
+        console.log(course);
+      });
    });
+   
   }
 
   gridMap() {
@@ -73,9 +75,6 @@ export class CoursedetailComponent implements OnInit {
         return rowspan_map.get(change.mqAlias);
       }).startWith(row_span);
 
-    this.routerParams = this.activatedRoute.params.subscribe(params => {
-      this.paramID = params['id'];
-   });
 
   }
   sessioniconclick() {

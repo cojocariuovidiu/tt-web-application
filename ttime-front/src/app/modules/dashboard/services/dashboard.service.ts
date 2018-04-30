@@ -11,6 +11,7 @@ import { Course } from '../../../model/course.model';
 export class DashboardService {
   
   courses: Course [] = [];
+  course: Course;
   constructor(private router: Router, private http: Http, private errorService: ErrorService) { }
 
   getauthToken(){
@@ -175,5 +176,32 @@ export class DashboardService {
       });
     }
 }
-
+  getEnrolledDetail(id){
+    let headers = new Headers();
+      const url = `${"api/courses/byId/"}${id}`;
+      headers.append('Content-Type', 'application/json');
+      return this.http.get(url, {headers: headers})
+      .map((response: Response) => {
+        const course = response.json().course;
+        console.log(course);
+        let transformedCourse: Course;
+        
+          transformedCourse = new Course(
+            course.title,
+            course.preview, 
+            course.details,
+            course.scope,
+            course.freevideo, null, course._id, course.price, course.sessions
+          );
+        
+        this.course = transformedCourse;
+        console.log(this.course);
+        return transformedCourse;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }   
+  
 }
