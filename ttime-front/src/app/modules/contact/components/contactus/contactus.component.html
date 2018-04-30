@@ -1,14 +1,14 @@
 <div class="flex-container" style="margin-top: 64px;">
 <mat-grid-list [cols]="cols | async" rowHeight="600px" gutterSize="10px">
-  <mat-grid-tile colspan="1">
-   <div class="gmap">
-      <agm-map [zoom]="amount" [latitude]="lat" [longitude]="lng">
+  <mat-grid-tile colspan="1" fxLayoutwrap>
+   <div class="gmap" fxFlex="1 1 auto" fxFlexFill fxLayoutAlign="center center">
+      <agm-map [zoom]="amount" [latitude]="lat" [longitude]="lng" ngStyle.lt-md="width:90vw;">
         <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
       </agm-map>
       </div>
   </mat-grid-tile>
-  <mat-grid-tile colspan="1">
-    <mat-card class="contact-card">
+  <mat-grid-tile colspan="1" fxLayoutwrap>
+    <mat-card class="contact-card" fxFlex="1 1 auto" fxFlexFill>
       <mat-card-header fxLayout="column" fxLayoutAlign="center center">
             <mat-card-title><h2 align="center">Contact Us</h2></mat-card-title>
        </mat-card-header>

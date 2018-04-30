@@ -1,6 +1,8 @@
 <div class="flex-container my-theme">
-      <button mat-button-raised align="left" (click)="show = !show">{{show ? 'EDITING' : 'Edit Profile'}}</button>
-    <div *ngIf="show; else elseBlock">
+     <div class="my-theme" fxLayout="column" fxLayoutwrap fxLayoutAlign="end end">
+      <div style="padding: 2em;"><button mat-raised-button color="primary"  (click)="show = !show">{{show ? 'View Profile' : 'Edit Profile'}}</button></div>
+     </div>
+    <div *ngIf="show; else showProfile">
         <mat-grid-list cols="1" rowHeight="40em">
             <mat-grid-tile ngStyle.lt-md="padding-top:15em;" fxLayoutwrap>
           <mat-card class="reg-card" fxFlex fxFlexFill>
@@ -45,11 +47,11 @@
         </mat-grid-tile>
       </mat-grid-list> 
     </div>
-    <ng-template #elseBlock>
+    <ng-template #showProfile>
 
     <mat-grid-list cols="1" rowHeight="40em">
       <mat-grid-tile ngStyle.lt-md="padding-top:15em;">
-    <mat-card class="reg-card" fxFlex>
+    <mat-card class="profile-card" fxFlex>
       <mat-card-header fxLayout="column" fxLayoutAlign="center center">
         <mat-card-title><h2 align="center">Prottoy Paul</h2></mat-card-title> 
       </mat-card-header>
