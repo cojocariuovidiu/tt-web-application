@@ -23,7 +23,18 @@ export class LecturevideoComponent implements OnInit {
   title: string = 'Lecture Name - Teachers Time';
   cols: Observable<number>;
   colspan: Observable<number>;
-  panelOpenState: boolean = false;
+  panelOpenState = false;
+  syllabusicon = true;
+  ratingicon = true;
+  sessionicon = true;
+  lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
+             {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
+             {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},
+             {lecturenumber: 'Lecture 4', lecturetitle : ' Dealings With Misbehaviour'}];
+  sessions = [{sessionnumber: 'session 1', sessionname: 'Problem Understanding', lectures : this.lecture},
+             {sessionnumber: 'session 2', sessionname: 'Problem Understanding', lectures : this.lecture},
+             {sessionnumber: 'session 3', sessionname: 'Problem Understanding', lectures : this.lecture},
+             {sessionnumber: 'session 4', sessionname: 'Problem Understanding', lectures : this.lecture}];
   messages = [
     {name: 'Classroom Managment' , details: 'yddt' },
 
@@ -57,8 +68,8 @@ export class LecturevideoComponent implements OnInit {
         ['xs', 11],
         ['sm', 11],
         ['md', 2],
-        ['lg', 2],
-        ['xl', 2]
+        ['lg', 3],
+        ['xl', 3]
       ]);
       let start_cols: number;
       let col_span: number;
@@ -71,7 +82,7 @@ export class LecturevideoComponent implements OnInit {
         .map(change => {
           return cols_map.get(change.mqAlias);
         }).startWith(start_cols);
-  
+
           colspan_map.forEach((colspan, mqAlias) => {
             if (this.observableMedia.isActive(mqAlias)) {
              col_span = colspan;
@@ -81,7 +92,16 @@ export class LecturevideoComponent implements OnInit {
             .map(change => {
               return colspan_map.get(change.mqAlias);
             }).startWith(col_span);
-  
+
+  }
+  sessioniconclick() {
+    this.sessionicon = !this.sessionicon;
+  }
+  syllabusiconclick() {
+    this.syllabusicon = !this.syllabusicon;
+  }
+  ratingiconclick() {
+    this.ratingicon = !this.ratingicon;
   }
 
 }
