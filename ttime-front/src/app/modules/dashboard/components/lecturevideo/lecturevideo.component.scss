@@ -1,12 +1,13 @@
-mat-grid-tile
-{
-   margin: 0;
-   padding: 0; 
-}
+
 mat-card{
     width: 100%;
-    height: 20%;
+    height: 100%;
 }
 textarea{
     min-height: 150px;
+}
+.review-structure{
+    width: 100vmax;
+    padding-left: 6.4%;
+    padding-right: 17.4%;
 }

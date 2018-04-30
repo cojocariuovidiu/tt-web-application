@@ -1,8 +1,8 @@
 
-<div class="flex-container" style="margin-top:64px;" ngStyle.lt-sm="margin-top:57px;"fxFlex fxFill>
+<div class="flex-container" style=" background-color: #bdbdbd"  >
     <mat-grid-list   [cols]="cols | async" rowHeight="40px"    gutterSize="2px"  >
    
-    <mat-grid-tile colspan="11" rowspan="10" fxFlex fxFill>
+    <mat-grid-tile colspan="10" rowspan="10" fxLayoutwrap style="margin: 0; padding-left: 8%;">
      <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"/>
        <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"/>
@@ -15,78 +15,99 @@
      </video>
    
     </mat-grid-tile> 
-    <mat-grid-tile  [colspan]="colspan | async" rowspan="14"   >
-      
-   <mat-list>
-           <mat-list-item *ngFor="let message of messages">
-             <img matListAvatar src="../../../assets/img/in.svg" alt="...">
-             <h3 matLine> {{message.name}} </h3>
-             <p matLine>
-               <span> {{message.details}} </span>
-             </p>
-           </mat-list-item>
-         </mat-list>
+    <mat-grid-tile fxLayoutwrap [colspan]="colspan | async" rowspan="30"   >
+  
+           <mat-accordion style="min-width:100% ;min-height:100%;"  fxLayout="column" class="comments-card" fxFlex="1 1 auto" fxFlexFill>
+               <mat-expansion-panel  hideToggle="true" expanded="true" (click)="syllabusiconclick()">
+                 <mat-expansion-panel-header>
+                   <mat-panel-title>
+                       <mat-icon>{{syllabusicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+                     <strong>Course Map :</strong>
+                   </mat-panel-title>
+                 </mat-expansion-panel-header>
+                  <mat-accordion style="min-width:100% ;min-height:100%;" multi="true" fxFlex>
+                     <mat-expansion-panel *ngFor="let session of sessions" expanded="true" hideToggle="true" (click)="sessioniconclick()"  >
+                         <mat-expansion-panel-header>
+                           <mat-panel-title>
+                               <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+                             <h6><strong>{{session.sessionnumber}} : {{session.sessionname}}</strong></h6>
+                           </mat-panel-title>
+                         </mat-expansion-panel-header>
+                            <mat-list> 
+                                 <mat-list-item role="listitem" *ngFor="let lecturelist of session.lectures"><a href="#">{{lecturelist.lecturenumber}} : {{lecturelist.lecturetitle}}</a></mat-list-item>
+                                 
+                               </mat-list>
+                              
+                       </mat-expansion-panel>
+         
+                    </mat-accordion>
+               </mat-expansion-panel>
+            
+             
+             </mat-accordion>
    
     </mat-grid-tile> 
-    <mat-grid-tile colspan="9" rowspan="6" mat-elevation-z10> 
-              
-        <mat-grid-tile-header><div fxLayout="column wrap" fxLayoutAlign="start stretch"><div fxFlex fxAlign="start"> <h4 class="text-black">Lecture Description:</h4></div></div></mat-grid-tile-header>
-        <div > 
-            <mat-card>      
+    <mat-grid-tile colspan="10" rowspan="6"  fxLayoutwrap > 
+            <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
+                <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Lecture Description:</h4></mat-card-title> </mat-card-header>    
                 <mat-card-content>     
                 <p class="text-black">Want to develop Android apps, but don’t know where to start? In this Nanodegree program, we’ll show you the way. We developed this curriculum with Google for true beginners interested in developing apps for the next billion Android users!</p>
                 </mat-card-content> 
               </mat-card>
-                </div>
+                
        </mat-grid-tile>
+       <mat-grid-tile colspan="10" rowspan="4"  fxLayoutwrap > 
+          <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
+              <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h5 class="text-black">Articles Description:</h5></mat-card-title> </mat-card-header>    
+              <mat-card-content>  <a href="#">Article Link</a>
+              </mat-card-content> 
+            </mat-card>
+              
+     </mat-grid-tile>
+       <mat-grid-tile colspan="10" rowspan="6"  fxLayoutwrap  > 
+          <mat-card fxLayoutAlign="start start" fxLayout="column" class="comments-card" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
+              <mat-card-header style="background-color: #e0e0e0"> <mat-card-title><h4 class="text-black">Please give a review and rate this course  :</h4></mat-card-title> </mat-card-header>    
+              <mat-card-content>     
+                  <form  style="width: 100%;">            
+                      <mat-form-field class="example-full-width" style="width:90vw">
+                          <mat-icon matPrefix>message</mat-icon>
+                          <textarea matInput placeholder="Message" tyle="width:90vw">
+                            
+                          </textarea>
+                        </mat-form-field>
+                  </form>
+              </mat-card-content> 
+            </mat-card>
+              
+     </mat-grid-tile>
    
    </mat-grid-list>
-      <div style="margin-top:1em;">
-       <mat-grid-list   cols="13" rowHeight="40px"    gutterSize="10px" >
-       <mat-grid-tile colspan="13" rowspan="6">
-           <mat-card  style="background: white">           
-             <h4 class="text-black">Comments:</h4>
-              
-   
-               <div fxLayout="column wrap" fxLayoutAlign="start stretch" fxFlex >
-                   <div><form  style="width: 100%;">            
-                       <mat-form-field class="example-full-width" style="width:90vw">
-                           <mat-icon matPrefix>message</mat-icon>
-                           <textarea matInput placeholder="Message" tyle="width:90vw">
-                             
-                           </textarea>
-                         </mat-form-field>
-                        
-         
-                   </form>
-                 </div>
-                 </div>
-             
+
+
+  <div class="review-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0px;padding-right:0px;'">
+    <div style="width: 100%" fxFlex fxAlign="center">
+     <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
+       <mat-expansion-panel  hideToggle="true" (click)="ratingiconclick()">
+         <mat-expansion-panel-header>
+           <mat-panel-title>
+               <mat-icon>{{ratingicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+             <strong>Ratings ang Reviews :</strong>
+           </mat-panel-title>
+         </mat-expansion-panel-header>
      
-               </mat-card>
-             
-           </mat-grid-tile> 
-           <mat-grid-tile colspan="13" rowspan="18" style="background: black;">
-               <mat-accordion style="min-width:100vw ;min-height:100%;">
-                   <mat-expansion-panel>
-                     <mat-expansion-panel-header>
-                       <mat-panel-title>
-                         Comments
-                       </mat-panel-title>
-                     </mat-expansion-panel-header>
-                 
-                     <mat-card *ngFor="let message of messages"> 
-                       <mat-card-actions>   <button mat-mini-fab>Edit</button> </mat-card-actions> 
-                       <mat-card-title style="font-size:1em "> {{message.name}}</mat-card-title>        
-                         <p class="text-black"> {{message.details}}</p>
-                     </mat-card>
-                   </mat-expansion-panel>
-                 </mat-accordion>
-                 
-               </mat-grid-tile>
-       </mat-grid-list>
+         <mat-card *ngFor="let message of messages"> 
+           
+           <mat-card-header><mat-card-title style="font-size:1em "> {{message.name}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button mat-mini-fab>Edit</button></mat-card-actions> </mat-card-header>  
+             <p class="text-black"> {{message.details}}</p>
+         </mat-card>
+       </mat-expansion-panel>
+    
+     
+     </mat-accordion>
          
-          </div>
+     
+    </div>
+ 
+ </div>
    
-   
-   </div>
+</div>

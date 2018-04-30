@@ -10,7 +10,7 @@ export class ChangepasswordComponent implements OnInit {
 
   title: string = "Change Password - Teachers Time";
   constructor(private titleService: Title) { }
-
+  hide = 'true';
   ngOnInit() {
     this.titleService.setTitle(this.title);
   }

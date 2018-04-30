@@ -1,0 +1,44 @@
+.courseintro
+{
+
+    background: url("../../../../../assets/img/bluemountains.svg") no-repeat;
+    background-size: cover;
+    color: white;
+}
+.courseintro2{
+    padding-bottom: 2%;
+}
+.coursedetails
+{
+  
+    max-width: 80vmax ;
+    
+    min-height: 100%;
+    
+}
+.coursemoredetails
+{   
+    max-width: 80vmax ;
+   
+    min-height: 100%;
+    
+
+    
+}
+.fill-remaining-space{
+    flex: 1 1 80%;
+}
+mat-icon {
+ 
+  font: outline;
+
+}
+#table mat-list-item
+{
+    border: 2px solid rgb(199, 187, 20); 
+}
+.course-structure{
+    width: 100vmax;
+    padding-left: 9.6%;
+    padding-right: 9.6%;
+}

@@ -1,16 +1,123 @@
-<div>
-  <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px" >
-    <mat-grid-tile *ngFor="let course of courses" rowspan="4">
-          <div style="height: 100%">
-            <p>{{course.courseDetail}}</p>
-          <mat-vertical-stepper>
-            <mat-step *ngFor = "let lecture of course.courseLectures">
-             
-                <ng-template matStepLabel>  <a routerLink= "/login" routerLinkActive="active" ><span class="icon-text">{{lecture.lectureTitle}}</span></a></ng-template> 
+<div class="flex-container my-theme" style="background-color: #bdbdbd;" >
+    <mat-grid-list class="courseintro" cols="2" rowHeight="5em" gutterSize="20px"   style="background-color: black;">
+                <mat-grid-tile class="coursewall" fxLayoutwrap colspan="2" [rowspan]="4" fxLayout="column" fxLayoutAlign="center center"  fxFlex="1 1 auto" fxFlexFill >
+                 <div>                    <h1>Python</h1> 
+                
+                
+                </div>
+  
+        
+                  </mat-grid-tile>
+    </mat-grid-list>
+  <mat-grid-list class="courseintro2" cols="2" rowHeight="5em" gutterSize="0px"  >
+                  <mat-grid-tile   colspan="2" 
+                  [rowspan]="rowspan | async" fxLayoutwrap >
+                   <mat-card  class="coursedetails"  fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap>
+                  <div><p align="justify">
+                  <strong>About this Course : </strong>This course aims to teach everyone the basics of programming computers using Python. We cover the basics of how one constructs a program from a series of simple instructions in Python. The course has no pre-requisites and avoids all but the simplest mathematics. Anyone with moderate computer experience should be able to master the materials in this course. This course will cover Chapters 1-5 of the textbook “Python for Everybody”.  Once a student completes this course, they will be ready to take more advanced programming courses. This course covers Python3.
+                    
+                  </p>
+                  <mat-divider style="width: 100%; border: 2px #bdbdbd solid"></mat-divider>
+              </div>
+                  </mat-card> 
+                  </mat-grid-tile>  
+                  <mat-grid-tile  fxLayoutwrap  colspan="2" [rowspan]="rowspan | async" >
+                      <mat-card  class="coursemoredetails"   fxLayout="column"   fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap  >
+                          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 1 auto"  ngStyle.lt-md="padding-left:20px; padding-right:20px;"> 
+                            <div fxFlex>
+                          <mat-list id="table" role="list">
+                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >alarm</mat-icon>Hours</mat-list-item>
+                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >book</mat-icon>Lectures</mat-list-item>
+                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >insert_drive_file</mat-icon> Articles</mat-list-item>
+                              <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star_border</mat-icon> Ratings </mat-list-item>
+                              
+                            </mat-list>
+                            
+                          </div>
+                          <div  fxFlex>
+                            <mat-list id="table" role="list">
+                                <mat-list-item role="listitem">2.08hrs/125min</mat-list-item>
+                                <mat-list-item role="listitem">18</mat-list-item>
+                                <mat-list-item role="listitem">3</mat-list-item>
+                                <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  </mat-list-item>
+                              </mat-list>
+                            </div>
+                         
+                        </div>
+                        <div style="padding-top: 10px; ">
+                            <mat-divider style="width: 100%; border: 2px #bdbdbd solid"></mat-divider>
+                          </div>
+                            
+                     </mat-card>
+     
+                     </mat-grid-tile>         
+  </mat-grid-list>
+  <div class="course-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0;padding-right:0;'">
+     <div style="width: 100%" fxFlex fxAlign="center">
+      <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
+        <mat-expansion-panel  hideToggle="true" expanded="true" (click)="syllabusiconclick()">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>{{syllabusicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+              <strong>Course Map :</strong>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+      
+           <mat-accordion style="min-width:100vw ;min-height:100%;" multi="true" fxFlex>
+              <mat-expansion-panel *ngFor="let session of sessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+                      <h4><strong>{{session.sessionnumber}} : {{session.sessionname}}</strong></h4>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
               
-            </mat-step>
-          </mat-vertical-stepper>
-        </div>
-        </mat-grid-tile>                
-</mat-grid-list>
-</div>
+                  <mat-card > 
+                    
+                    <mat-card-header><mat-card-title><h5>{{session.sessionnumber}}</h5></mat-card-title>   </mat-card-header>  
+                     <mat-list> 
+                          <mat-list-item role="listitem" *ngFor="let lecturelist of session.lectures">{{lecturelist.lecturenumber}} : {{lecturelist.lecturetitle}}</mat-list-item>
+                          
+                        </mat-list>
+                        
+                  </mat-card>
+                </mat-expansion-panel>
+  
+             </mat-accordion>
+        </mat-expansion-panel>
+     
+      
+      </mat-accordion>
+          
+      
+     </div>
+  
+  </div>
+  <div class="course-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0px;padding-right:0px;'">
+      <div style="width: 100%" fxFlex fxAlign="center">
+       <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
+         <mat-expansion-panel  hideToggle="true" (click)="ratingiconclick()">
+           <mat-expansion-panel-header>
+             <mat-panel-title>
+                 <mat-icon>{{ratingicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+               <strong>Ratings ang Reviews :</strong>
+             </mat-panel-title>
+           </mat-expansion-panel-header>
+       
+           <mat-card *ngFor="let message of messages"> 
+             
+             <mat-card-header><mat-card-title style="font-size:1em "> {{message.name}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button mat-mini-fab>Edit</button></mat-card-actions> </mat-card-header>  
+               <p class="text-black"> {{message.details}}</p>
+           </mat-card>
+         </mat-expansion-panel>
+      
+       
+       </mat-accordion>
+           
+       
+      </div>
+   
+   </div>
+  </div>
+  
+  
