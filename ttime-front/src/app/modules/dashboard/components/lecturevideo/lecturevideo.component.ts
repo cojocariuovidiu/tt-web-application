@@ -7,6 +7,7 @@ import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import '../../../../material.module';
+import { DashboardService } from '../../services/dashboard.service';
 
 
 @Component({
@@ -19,6 +20,8 @@ export class LecturevideoComponent implements OnInit {
   videoLink: string;
   routerParams: any;
   paramIDCourse: string;
+  signedUrl: string;
+  imagethumb: string;
   // tslint:disable-next-line:no-inferrable-types
   title: string = 'Lecture Name - Teachers Time';
   cols: Observable<number>;
@@ -42,7 +45,7 @@ export class LecturevideoComponent implements OnInit {
     {name: 'Python' , details: 'tyyt' },
     {name: 'Python' , details: 'tyyt' }
   ];
-  constructor(private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
     this.routerParams = this.activatedRoute.params.subscribe(params => {
@@ -56,6 +59,17 @@ export class LecturevideoComponent implements OnInit {
         this.videoLink = params.videoLink;
         console.log(this.videoLink); // popular
       });
+      const usercred = JSON.parse(localStorage.getItem('usercred'));
+      this.dashboardService.getSignedURL(this.videoLink, usercred.tag).subscribe(data => {
+        console.log(data);
+        this.signedUrl = data.signedUrl;
+      })
+      
+      this.dashboardService.getImage("/Courses/TestCourse/angular.jpg", usercred.tag).subscribe(data => {
+        console.log(data);
+        this.imagethumb = data.signedUrl;
+      });
+      
       this.titleService.setTitle(this.title);
       const cols_map = new Map([
         ['xs', 11],

@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { CourseService } from '../../services/course.service';
 @Component({
   selector: 'app-courselist',
   templateUrl: './courselist.component.html',
@@ -17,14 +18,11 @@ export class CourselistComponent implements OnInit {
   title = 'Courses - Teachers Time';
   rowspan: Observable<number>;
   cols: Observable<number>;
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private titleService: Title, private observableMedia: ObservableMedia, private courseService: CourseService) { }
 
   ngOnInit() {
     this.titleService.setTitle(this.title);
-    this.courses.push(new Course('1', 'Java', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
-    this.courses.push(new Course('1', 'C sharp', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
-    this.courses.push(new Course('1', 'Script', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
-    this.courses.push(new Course('1', 'Python', 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.', null, null));
+    this.getCourse();
 
     const cols_map = new Map([
       ['xs', 1],
@@ -62,4 +60,43 @@ export class CourselistComponent implements OnInit {
         }).startWith(row_span);
   }
 
+  getCourse(){
+    this.courseService.getCourses().subscribe((courses: Course []) => {
+      this.courses = courses;
+    });
+    //console.log(this.courses);
+  }
+
+  onEnrollCourse(courseid){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    console.log(usercred.tag);
+    console.log(courseid);
+    this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
+      if(data.success){
+        console.log(data);
+      }
+      else{
+        console.log('error');
+      }
+    })
+  }
+  hideLogin()
+  {
+    const token = this.getauthToken();
+    if(token)
+    {
+      //console.log('true');
+      return true;
+    }
+    else
+    {
+      //console.log('false');
+      return false;
+    }
+  }
+
+  getauthToken(){
+    const token = localStorage.getItem('id_token');
+     return token;
+  }
 }

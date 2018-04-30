@@ -67,7 +67,7 @@
     </mat-card-actions>
   </mat-card>
 </div> Padding is optional-->
-<div class="flex-container mat-elevation-z10">
+<div class="my-theme flex-container">
   <mat-grid-list cols="1" rowHeight="50em">
     <mat-grid-tile ngStyle.lt-md="padding-top:15em;">
   <mat-card class="reg-card" fxFlex>
@@ -75,43 +75,60 @@
       <mat-card-title><h2 align="center">SIGNUP</h2></mat-card-title> 
     </mat-card-header>
     
-    <form fxLayout="column" fxLayoutAlign="start"> 
+    <form fxLayout="column" fxLayoutAlign="start" [formGroup]="registerForm" (ngSubmit)="sendRegisterForm()"> 
         <mat-form-field floatLabel="auto">
-            <input matInput placeholder="Name" required>
-            <mat-icon matPrefix>smartphone</mat-icon>
+            <input matInput placeholder="Enter Your Name" name="Name" id="Name" formControlName="Name" required>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="Name.errors">
+              <mat-error *ngIf="Name.errors.required">Name Required</mat-error>
+              <mat-error *ngIf="Name.errors.pattern">Invalid Name</mat-error>
+            </mat-error>
         </mat-form-field>
       <mat-form-field floatLabel="auto">
-                <input matInput placeholder="  Phone Number" required>
-                <mat-icon matPrefix>smartphone</mat-icon>
+          <input matInput placeholder="Enter Your Mobile Number" name="Mobile" id="Mobile" formControlName="Mobile" required>
+          <mat-icon matPrefix>smartphone</mat-icon>
+          <mat-error *ngIf="Mobile.errors">
+            <mat-error *ngIf="Mobile.errors.required">Mobile Number Required</mat-error>
+            <mat-error *ngIf="Mobile.errors.pattern">Invalid Mobile Number</mat-error>
+            <mat-error *ngIf="Mobile.errors.mobNumExists">Mobile Number Already Registered</mat-error>
+          </mat-error>
         </mat-form-field>
       <mat-form-field floatLabel="auto">
-    <input matInput placeholder="Email" required>
-    <mat-icon matPrefix>smartphone</mat-icon>
+        <input matInput  placeholder="Enter Your Email" name="Email" id="Email" formControlName="Email" required>
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-error *ngIf="Email.errors">
+          <mat-error *ngIf="Email.errors.required">Email Required</mat-error>
+          <mat-error *ngIf="Email.errors.email || Email.errors.pattern">Invalid Email</mat-error>
+        </mat-error>
     </mat-form-field>
   <mat-form-field>
       <mat-icon matPrefix>lock</mat-icon>
-    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
-      
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    <input matInput placeholder="Enter Your Password" [type]="hide ? 'password' : 'text'" name="Password" id="Password" formControlName="Password" matchPassword="Password2" reverse="true" required>
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="Password.errors">
+        <mat-error *ngIf="Password.errors.required">Password Required</mat-error>
+        <mat-error *ngIf="Password.errors.pattern">Password must be 8 characters with 1 uppercase 1 lowercase 1 number and 1 symbol</mat-error>
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-icon matPrefix>lock</mat-icon>
-      <input matInput placeholder="Confirm password" [type]="hide ? 'password' : 'text'">
+      <input matInput placeholder="Confirm Password" [type]="hide2 ? 'password' : 'text'" name="Password2" id="Password2" formControlName="Password2" matchPassword="Password" required>
         
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="Password2.errors">
+        <mat-error *ngIf="Password2.errors.required">Password Required</mat-error>
+        <mat-error *ngIf="!Password2.errors.matchPassword">Passwords donot Match</mat-error>
+      </mat-error>
       </mat-form-field>
     
 
-    <div class="checkbox" fxLayoutAlign="start">
-            <label>Are You</label>  
-            <span></span>
-            <mat-checkbox class="example-margin" >Teacher</mat-checkbox>
-            <span></span>
-            <mat-checkbox class="example-margin">Parent</mat-checkbox>
-          </div>
-
+      <mat-radio-group class="radio-group" name="Scope" id="Scope" formControlName="Scope" fxLayoutAlign="start">
+        <mat-radio-button  [value]="typeParent">Parent</mat-radio-button>
+        <span class="slabel"></span>
+        <mat-radio-button [value]="typeTeacher">Teacher</mat-radio-button>
+      </mat-radio-group>
     <div fxLayout="column" fxLayoutAlign="center center">
-    <button mat-raised-button class="loginbtn" color="primary">Login</button>
+    <button [disabled]="!registerForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Register <mat-icon class="send">send</mat-icon></button>
     </div>
 </form>
 <div class="divider">
@@ -120,8 +137,8 @@
     </span>
   </div>
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="center center">
-      <button mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
-      <button mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
+      <button (click)="socialSignIn('google')" mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
+      <button (click)="socialSignIn('facebook')" mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
     </mat-card-actions>
     </mat-card>
 </mat-grid-tile>

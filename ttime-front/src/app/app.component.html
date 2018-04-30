@@ -20,13 +20,14 @@
             </div>
           <span class="fill-remaining-space" fxShow="true" fxHide.lt-md="true" ></span>
           <span class="right-nav" fxShow="true" fxHide.lt-md="true">
-              <button mat-button id="navbutton" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
-              <button mat-button  id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
-              <button mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
+              <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
+              <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
+              <button *ngIf="hideLogin()" mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
               <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
-              <button mat-menu-item><mat-icon>account_box</mat-icon>Dashboard</button>
+              <button mat-menu-item routerLink= "/dashboard/enrolled"><mat-icon>import_contacts</mat-icon>My Courses</button>
+              <button mat-menu-item routerLink= "/dashboard/profile"><mat-icon>account_box</mat-icon>Profile</button>
               <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
-              <button mat-menu-item><mat-icon>power_settings_new</mat-icon>Logout</button>
+              <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
             </mat-menu>
           </span>
       </mat-toolbar-row>
@@ -40,56 +41,56 @@
         <div> <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>
          <div><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
          <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
-          <div> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
-          <div><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
-           <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
-          <div> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
+          <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
+          <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">My Courses</span></button></div>
+           <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">account_box</i><span class="icon-text">Profile</span></button></div> 
+          <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
             
-         <div><button mat-button id="navbutton" routerLink= "/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
-         <div><button mat-button id="navbutton" routerLink= "/registration" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
-         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Settings</span></button></div>
-         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Logout</span></button></div>
+         <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
+         <div *ngIf="!hideLogin()"><button mat-button id="navbutton" routerLink= "/registration" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
+         <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">settings</i><span class="icon-text">Settings</span></button></div>
+         <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">power_settings_new</i><span class="icon-text">Logout</span></button></div>
        </div>
     </mat-sidenav>
 
      <mat-sidenav-content>
     
-      <div class="routing " style="margin-top: 65px;" ngStyle.lt-sm="margin-top: 0px;"><router-outlet></router-outlet></div>
-    
+      <div class="routing" style="margin-top: 63px;" ngStyle.lt-sm="margin-top: 0px;"><router-outlet></router-outlet></div>
+      <div class="my-second-theme nav-bar mat-elevation-z10 text-white"  id="footer-id" color="primary" >
+        <mat-grid-list  [cols]="cols | async" rowHeight="45px"   gutterSize="0px"   >
+            <mat-grid-tile rowspan="7" style="background: #1A237E;" fxLayoutwrap>
+              <div fxLayout="column wrap"  style="margin-top: 30px; padding-left: 30px; padding-right: 20px;">
+                <h5><strong>Teachers Time</strong></h5>
+                <p align="justify">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>
+              </div>
+              </mat-grid-tile>
+            <mat-grid-tile rowspan="7" style="background:#1A237E;">
+                <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="15px" style="padding-left: 30px;">
+                    <h5><strong>Useful Links</strong></h5> 
+                    <a class="text-white" routerLink="/dashboard/lecturevideo/1" [queryParams]="{ videoLink: '/Courses/TestCourse/LectureQ.mp4'}" style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
+                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">description</mat-icon>Terms of use</a>
+                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">security</mat-icon>Privacy Policy</a>
+                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">contact_mail</mat-icon>Contact</a>
+                    
+                 </div>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan="7" style="background:#1A237E;">
+                <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="5px" style="padding-left: 30px ; padding-top:30px;">
+                <h5> <strong>Contact Us</strong> </h5> 
+                <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>
+                <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p>
+                <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p>
+                <p class="social-icons icon-circle icon-zoom list-inline"> <a><i class="fa fa-facebook"></i></a> <a><i class="fa fa-youtube"></i></a> <a><i class="fa fa-google-plus"></i></a> <a><i class="fa fa-instagram"></i></a><p>   
+                </div>
+            </mat-grid-tile>
+     
+      </mat-grid-list>
+      </div>
     </mat-sidenav-content>
+    
    </mat-sidenav-container>
   </div>
-   <div class=" my-second-theme nav-bar mat-elevation-z10 text-white"  color="primary" >
-    <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="0px"   >
-        <mat-grid-tile rowspan="7" style="background: #1A237E;">
-          <div fxLayout="column wrap"  style="padding-left: 30px">
-            <h5 class="title">Teachers Time</h5>
-            <p align="left">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>
-          </div>
-          </mat-grid-tile>
-        <mat-grid-tile rowspan="7" style="background:#1A237E;">
-            <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="15px" style="padding-left: 30px">
-                <h5><strong>Useful Links</strong></h5> 
-                <a class="text-white" routerLink="/login"  style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
-                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">description</mat-icon>Terms of use</a>
-                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">security</mat-icon>Privacy Policy</a>
-                <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">contact_mail</mat-icon>Contact</a>
-                
-             </div>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="7" style="background:#1A237E;">
-            <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="5px" style="padding-left: 30px ; padding-top:30px;">
-            <h5> <strong>Contact Us</strong> </h5> 
-            <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden dshdh, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>
-            <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p>
-            <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p>
-            <p class="social-icons icon-circle icon-zoom list-inline"> <a><i class="fa fa-facebook"></i></a> <a><i class="fa fa-youtube"></i></a> <a><i class="fa fa-google-plus"></i></a> <a><i class="fa fa-instagram"></i></a><p>
-                
-            </div>
-        </mat-grid-tile>
- 
-  </mat-grid-list>
-  </div>
+   
 </div>
 <app-message></app-message>
   

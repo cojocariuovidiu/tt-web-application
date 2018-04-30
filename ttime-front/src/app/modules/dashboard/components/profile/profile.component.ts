@@ -5,6 +5,8 @@ import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
+import { DashboardService } from '../../services/dashboard.service';
+import { User } from '../../../../model/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -29,9 +31,14 @@ export class ProfileComponent implements OnInit {
    {text: 'Five', colss: 1, rows: 1, color: 'lightgreen'},
    {text: 'Six', colss: 1, rows: 1, color: 'lightpink'}
  ];
- constructor(private observableMedia: ObservableMedia) { }
+ 
+ user = new User('','','');
+  title: string = "Profile - Teachers Time";
+  constructor(private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) { }
 
  ngOnInit() {
+  this.titleService.setTitle(this.title);
+  this.getUser();
    const cols_map = new Map([
      ['xs', 1],
      ['sm', 1],
@@ -50,5 +57,12 @@ export class ProfileComponent implements OnInit {
        return cols_map.get(change.mqAlias);
      }).startWith(start_cols);
  }
+ 
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
+  }
 
 }

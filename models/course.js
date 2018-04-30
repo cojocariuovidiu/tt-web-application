@@ -11,6 +11,14 @@ const CourseSchema = new Schema({
     type: String,
     required: true
   },
+  preview:{
+    type: String,
+    required: true
+  },
+  freevideo:{
+    type: String,
+    required: true
+  },
   price:{
     type: String,
     default: 'Free'
@@ -19,54 +27,69 @@ const CourseSchema = new Schema({
     type: String,
     required: true
   },
-  lectures: [
+  sessions:[
     {
-      lectureTitle:{
+      sessionTitle:{
         type: String,
         required: true
       },
-      lectureDetails:{
+      sessionWeek:{
         type: String,
         required: true
       },
-      lectureLink:{
-        type: String,
-        required: true
-      },
-      lecturePrice:{
-        type: String,
-        default: 'Free'
-      },
-      lectureQuestions:[
+      lectures: [
         {
-          questionlabel: {
+          lectureTitle:{
             type: String,
             required: true
           },
-          option1: {
+          lectureDetails:{
             type: String,
             required: true
           },
-          option2: {
+          lectureLink:{
             type: String,
             required: true
           },
-          option3: {
+          lecturePrice:{
             type: String,
-            required: true
+            default: 'Free'
           },
-          option4: {
-            type: String,
-            required: true
-          },
-          answer: {
-            type: String,
-            required: true
-          }
+          lectureQuestions:[
+            {
+              questionlabel: {
+                type: String,
+                required: true
+              },
+              option1: {
+                type: String,
+                required: true
+              },
+              option2: {
+                type: String,
+                required: true
+              },
+              option3: {
+                type: String,
+                required: true
+              },
+              option4: {
+                type: String,
+                required: true
+              },
+              answer: {
+                type: String,
+                required: true
+              }
+            }
+          ]
         }
       ]
+      
     }
   ]
+  
+  
 });
 
 const Course = module.exports = mongoose.model('Course', CourseSchema);

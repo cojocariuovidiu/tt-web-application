@@ -46,13 +46,13 @@
 </div>
 </mat-grid-list>
 </div>-->
-<div class=" my-theme flex-container">
+<div class="my-theme flex-container">
   
 <mat-grid-list cols="1" rowHeight="56" style="margin-top :5em;"> 
       
-  <mat-grid-tile >
-  <div fxLayout="column wrap" fxLayoutAlign="start stretch" fxFlex >
-      <div style="width: 100%;">          
+  <mat-grid-tile style="padding-top: 6em;">
+  <div fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap>
+      <div style="width: 100%;" fxFlex>          
           <mat-form-field class="example-full-width" style="width:90vw">
               <input matInput [(ngModel)]="filter.courseTitle"  placeholder="Search"  style="width: 90vw;">
               <mat-icon matSuffix >search</mat-icon>
@@ -79,7 +79,8 @@
             {{course.courseDetail}}
            
          </p>
-         <button align="justify" mat-raised-button color="primary" >More Details</button>
+         <button align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+         <button [hidden]="!hideLogin()" (click)="onEnrollCourse(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Enroll <mat-icon class="send">add</mat-icon></button>
          </mat-card-content>
          <mat-card-actions>
              

@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { Course } from '../../model/course.model';
+import { CoreService } from '../../services/core.service';
 
 
 @Component({
@@ -18,8 +20,8 @@ export class HomeComponent implements OnInit {
   rowspan: Observable<number>;
 
   introcols: Observable<number>;
-  courses = [
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
+  /*courses = [
+    {name: 'Classroom Managment' , details: ' ' },
 
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
 
@@ -29,11 +31,24 @@ export class HomeComponent implements OnInit {
 
     {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
 
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' }
-  ];
-  constructor(private titleService: Title, private observableMedia: ObservableMedia) { }
+    {name: 'Csharp' ,  details: '' },
+  ];*/
+  courses: Course [] = [];
+  constructor(private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
+    this.setDisplay();
+    this.showCourses();
+  }
+
+  showCourses(){
+    this.coreService.getCourses().subscribe((courses: Course[]) => {
+      this.courses = courses;
+      //console.log(courses);
+    });
+  }
+
+  setDisplay(){
     this.titleService.setTitle(this.title);
     const cols_map = new Map([
       ['xs', 1],
@@ -88,7 +103,6 @@ export class HomeComponent implements OnInit {
           .map(change => {
             return rowspan_map.get(change.mqAlias);
           }).startWith(row_span);
-
   }
 
 }
