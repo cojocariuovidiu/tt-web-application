@@ -5,6 +5,7 @@ import { AuthorizationService } from '../../services/authorization.service';
 import { existingMobileNumberValidator } from './validateregister';
 import { User } from '../../../../model/user.model';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -29,7 +30,7 @@ export class RegistrationComponent implements OnInit {
   registerForm: FormGroup;
   title: string = "Register - Teachers Time";
 
-  constructor(private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
     this.createRegisterForm();
   }
   
@@ -63,56 +64,23 @@ export class RegistrationComponent implements OnInit {
 
   sendRegisterForm(){
     //console.log(this.registerForm.value);
-    const user = new User(this.Name.value, this.Mobile.value, this.Email.value, 
-      this.Password.value, this.Scope.value, this.localTag, null, null, 'true');
-    console.log(user);
-    /*if(this.registerForm.value.Scope){
-      user = new User(this.Name.value, this.Mobile.value, this.Email.value, 
-        this.Password.value, this.typeTeacher, this.localTag, null, null, 'true');
-      //console.log(user);
-    }
-    else if(this.registerForm.value.Scope2){
-      user = new User(this.Name.value, this.Mobile.value, this.Email.value, 
-        this.Password.value, this.typeParent, this.localTag, null, null, 'true');
-      //console.log(user);
-    }
-    else{
-      user = new User(this.Name.value, this.Mobile.value, this.Email.value, 
-        this.Password.value, this.typeBoth, this.localTag, null, null, 'true');
-      //console.log(user);
-    }
-    console.log(user);
+    const user = new User(this.Name.value, this.Email.value, this.localTag, this.Mobile.value, 
+      this.Password.value, this.Scope.value, null, null, 'true');
     this.authorizationService.registerUser(user).subscribe(data => {
       if(data.success){
-        console.log(data)
+        //console.log(data);
+        this.router.navigate(['/auth/login']);
       }
       else{
         console.log('error');
       }
-    })*/
+    });
   }
 
   resetRegisterForm(){
     this.registerForm.reset();
   }
 
-  /*disableScope2(){
-    if(this.registerForm == undefined){
-      console.log('undefined');
-      return false;
-    }
-    else{
-      var flag = this.Scope.value;
-      if(flag){
-        console.log('true');
-        return true;
-      }
-      else{
-        console.log('false');
-        return false;
-      }
-    }
-  }*/
 
   get Name(){
     return this.registerForm.get('Name') as FormControl;
@@ -143,7 +111,18 @@ export class RegistrationComponent implements OnInit {
 
     this.socialAuthService.signIn(socialPlatformProvider)
       .then((userData) => {
-        console.log(socialPlatform+" sign in data : " , userData);
+        //console.log(socialPlatform+" sign in data : " , userData);
+        const user = new User(userData.name, userData.email, this.socialTag, null, null, null , null, userData.id, 'true');
+        //console.log(user);
+        this.authorizationService.registerSocialUser(user).subscribe(data => {
+          if(data.success){
+            this.authorizationService.storeUserData(data.token, data.user);
+            this.router.navigate(['/dashboard/enrolled']);
+          }
+          else{
+            console.log('error');
+          }
+        })
     });
   }
 }

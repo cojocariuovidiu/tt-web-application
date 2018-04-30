@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ErrorService } from '../../services/error.service';
+import { CoreService } from '../../services/core.service';
 
 @Component({
   selector: 'app-message',
@@ -9,17 +10,20 @@ import { ErrorService } from '../../services/error.service';
 })
 export class MessageComponent implements OnInit {
 
-  constructor(private snackBar: MatSnackBar, private errorService: ErrorService) { }
+  constructor(private coreService: CoreService, private snackBar: MatSnackBar, private errorService: ErrorService) { }
 
   ngOnInit() {
     this.errorService.errorOccurred.subscribe(error => {
       this.openSnackBar(error.msg, error.error);
     })
+    this.coreService.message.subscribe(msg => {
+      this.openSnackBar(msg, "Success");
+    })
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 3000,
+      duration: 5000,
     });
   }
 

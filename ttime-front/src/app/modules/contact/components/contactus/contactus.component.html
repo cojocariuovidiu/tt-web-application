@@ -1,4 +1,4 @@
-<div class="flex-container" style="margin-top: 64px;">
+<div class="my-theme flex-container" style="margin-top: 64px;">
 <mat-grid-list [cols]="cols | async" rowHeight="600px" gutterSize="10px">
   <mat-grid-tile colspan="1" fxLayoutwrap>
    <div class="gmap" fxFlex="1 1 auto" fxFlexFill fxLayoutAlign="center center">
@@ -12,26 +12,26 @@
       <mat-card-header fxLayout="column" fxLayoutAlign="center center">
             <mat-card-title><h2 align="center">Contact Us</h2></mat-card-title>
        </mat-card-header>
-      <form fxLayout="column" fxLayoutAlign="start">      
+      <form fxLayout="column" fxLayoutAlign="start" [formGroup]="contactForm" (ngSubmit)="sendContactForm()">      
         
         <mat-form-field>
           <mat-icon matPrefix>person</mat-icon>
-          <input matInput placeholder="Your Name">
+          <input matInput placeholder="Your Name" name="Name" id="Name" formControlName="Name">
         </mat-form-field>
         
         <mat-form-field>
           <mat-icon matPrefix>subject</mat-icon>
-          <input matInput placeholder="Subject">
+          <input matInput placeholder="Subject" name="Subject" id="Subject" formControlName="Subject">
         </mat-form-field>
 
         <mat-form-field>
             <mat-icon matPrefix>email</mat-icon>
-            <input matInput placeholder="Your Email">
+            <input matInput placeholder="Your Email" name="Email" id="Email" formControlName="Email">
           </mat-form-field>
       
         <mat-form-field>
           <mat-icon matPrefix>message</mat-icon>
-          <textarea matInput placeholder="Message"></textarea>
+          <textarea matInput placeholder="Message" name="Message" id="Message" formControlName="Message"></textarea>
         </mat-form-field>
         <div fxLayout="column" fxLayoutAlign="center center">
             <button mat-raised-button type="submit" class="contact-btn" color="primary">Send <mat-icon class="send">send</mat-icon></button>

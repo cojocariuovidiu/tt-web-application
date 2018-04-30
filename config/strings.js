@@ -1,4 +1,6 @@
 module.exports.message = {
+    loginSuccess: 'Login Successful',
+    logoutSuccess: 'Logout Successful',
     userExists: 'A User Already Exists under this Mobile Number',
     registerFailed: 'Failed to register user',
     registerSuccess: 'User registered',
@@ -46,7 +48,8 @@ module.exports.strategy = {
     localStrategy: 'jwt.local',
     socialStrategy: 'jwt.social',
     adminStrategy: 'jwt.admin',
-    uploaderStrategy: 'jwt.uploader'
+    uploaderStrategy: 'jwt.uploader',
+    tokenValue: 'none'
 }
 
 module.exports.values = {

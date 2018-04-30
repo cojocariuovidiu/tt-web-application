@@ -14,18 +14,7 @@ const cfsign = require('aws-cloudfront-sign');
 const emoji = require('node-emoji');
 
 router.get('/public/all', (req, res, next) => {
-    Course.find({}).select('title details price scope')
-        .exec((err, course) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
-        }else{
-            res.status(200).json({success: true, course: course});
-        }
-   });
-});
-
-router.get('/all', (req, res, next) => {
-    Course.find({})
+    Course.find({}).select('title details price scope preview freevideo _id')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -36,8 +25,8 @@ router.get('/all', (req, res, next) => {
 });
 
 
-router.get('/all/teacher', (req, res, next) => {
-    Course.find({scope: 'teacher'}).select('title details')
+router.get('/public/all/teacher', (req, res, next) => {
+    Course.find({scope: 'teacher'}).select('title details price scope preview freevideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -47,8 +36,8 @@ router.get('/all/teacher', (req, res, next) => {
    });
 });
 
-router.get('/all/parent', (req, res, next) => {
-    Course.find({scope: 'parent'}).select('title details')
+router.get('/public/all/parent', (req, res, next) => {
+    Course.find({scope: 'parent'}).select('title details price scope preview freevideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -71,14 +60,17 @@ router.get('/byId/:id', (req, res, next) => {
     });
 });
 
-router.put('/enroll/course/social/:uid', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
-    SocialUser.findOne({_id: req.params.uid, courses: req.body.courseid}).then(courses => {
+router.put('/enroll/course/social/:courseid', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
+    SocialUser.findOne({_id: req.user._id, courses: req.body.courseid}).then((courses, err) => {
         if(courses)
         {
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseEnrollFailed});
+            res.status(500).json({success: false, error: "Duplicate", msg: Strings.message.courseEnrollFailed});
+        }
+        else if(err){
+            throw err;
         }
         else{
-            SocialUser.getSocialUserById(req.params.uid, (err, user) => {
+            SocialUser.getSocialUserById(req.user._id, (err, user) => {
                 user.courses.push(req.body.courseid);
                 user.save();
             });
@@ -89,14 +81,17 @@ router.put('/enroll/course/social/:uid', passport.authenticate(Strings.strategy.
         
 });
 
-router.put('/enroll/course/:uid', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-    User.findOne({_id: req.params.uid, courses: req.body.courseid}).then(courses => {
+router.put('/enroll/course/:courseid', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+    User.findOne({_id: req.user._id, courses: req.body.courseid}).then((courses, err) => {
         if(courses)
         {
-            res.status(500).json({success: false, error: err, msg: Strings.message.courseEnrollFailed});
+            res.status(500).json({success: false, error: "Duplicate", msg: Strings.message.courseEnrollFailed});
+        }
+        else if(err){
+            throw err;
         }
         else{
-            User.getUserById(req.params.uid, (err, user) => {
+            User.getUserById(req.user._id, (err, user) => {
                 user.courses.push(req.body.courseid);
                 user.save();
             });
@@ -109,25 +104,25 @@ router.put('/enroll/course/:uid', passport.authenticate(Strings.strategy.localSt
 
 router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, courses:data});
+        res.status(200).json({success: true, course:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
     });
 });
 
-router.get('/all/enrolled/public/:id', (req, res, next) => {
+/*router.get('/all/enrolled/public/:id', (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
         res.status(200).json({success: true, courses:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
     });
-});
+});*/
 
 router.get('/all/enrolled/social/:id', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
-    SocialUser.findOne({socialID: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, courses:data});
+    SocialUser.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
+        res.status(200).json({success: true, course:data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.enrolledListGetFailed});
@@ -278,7 +273,7 @@ router.get('/evalutaion/lecture/:id', passport.authenticate(Strings.strategy.loc
 });
 */
 
-//GET VIDEO URL
+/*//GET VIDEO URL
 router.get('/object/video/url', (req, res, next) => {
     var expired = new Date();
     var time = expired.getTime() + (60 * 1000);
@@ -293,8 +288,64 @@ router.get('/object/video/url', (req, res, next) => {
     //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
     res.status(200).json({success: true, signedUrl: signedUrl});
     console.log(signedUrl);
+});*/
+
+//GET VIDEO URL
+router.post('/object/video/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.videoLink;
+    var expired = new Date();
+    var time = expired.getTime() + (60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
 });
 
+//GET IMAGE URL
+router.post('/object/image/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.imageLink;
+    var expired = new Date();
+    var time = expired.getTime() + (1440 * 60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
+});
+
+
+
+//GET VIDEO URL
+router.post('/object/video/url/social', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
+    var link = req.body.videoLink;
+    var expired = new Date();
+    var time = expired.getTime() + (60 * 1000);
+    var signingParams = {
+        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
+        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
+        expireTime: time
+    }
+    var videoUrl = config.CLOUDFRONT_URL + link;  
+    // Generating a signed URL
+    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
+    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
+    res.status(200).json({success: true, signedUrl: signedUrl});
+    console.log(signedUrl);
+});
+  
   
 module.exports = router;
 

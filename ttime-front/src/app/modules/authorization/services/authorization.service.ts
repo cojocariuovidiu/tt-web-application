@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { User } from '../../../model/user.model';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
+import { Router } from '@angular/router';
+import { CoreService } from '../../../services/core.service';
 
 @Injectable()
 export class AuthorizationService {
 
-  constructor(private http: Http, private errorService: ErrorService) {
+  constructor(private coreService: CoreService, private router: Router, private http: Http, private errorService: ErrorService) {
 
   }
 
@@ -16,19 +18,15 @@ export class AuthorizationService {
     let headers = new Headers();
     //const url = `${"http://localhost:8080/api/users/register"}`;
     const url = `${"/api/users/register"}`;
-    /*const body = {
-      name: user.name,
-      email: user.email,
-      type: user.type,
-      tag: user.tag,
-      mobile: user.mobile,
-      password: user.password
-    }*/
     const body = JSON.stringify(user);
-    console.log(body);
+    //console.log(body);
     headers.append('Content-Type', 'application/json');
     return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => response.json())
+      .map((response: Response) => {
+        const data = response.json();
+        this.coreService.showMessage(data.msg);
+        return data;
+      })
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
         return Observable.throw(error.json());
@@ -41,7 +39,11 @@ export class AuthorizationService {
     const url = `${"/api/users/authenticate"}`;
     headers.append('Content-Type', 'application/json');
     return this.http.post(url, logincred, {headers: headers})
-      .map((response: Response) => response.json())
+      .map((response: Response) => {
+        const data = response.json();
+        this.coreService.showMessage(data.msg);
+        return data;
+      })
       .catch((error: Response) => {
         this.errorService.handleError(error.json());
         return Observable.throw(error.json());
@@ -59,8 +61,40 @@ export class AuthorizationService {
     return this.http.post(url, logincred, {headers: headers})
       .map((response: Response) => response.json())
       .catch((error: Response) => {
-        //this.errorService.showMsg(error.json());
+        //this.errorService.handleError(error.json());
         return Observable.throw(error.json());
       });
   }
+
+  storeUserData(token, user)
+  {
+    localStorage.setItem('id_token', token);
+    const usercred = {
+      tag: user.tag,
+      verified: user.verified,
+      type: user.type
+    }
+    localStorage.setItem('usercred', JSON.stringify(usercred));
+  }
+
+  registerSocialUser(user){
+    let headers = new Headers();
+    const url = `${"api/users/register/social"}`;
+    headers.append('Content-Type', 'application/json');
+    const body = JSON.stringify(user);
+    //console.log(body);
+    return this.http.post(url, body, {headers: headers})
+    .map((response: Response) => {
+      const data = response.json();
+      this.coreService.showMessage(data.msg);
+      return data;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
+
+  
+
 }

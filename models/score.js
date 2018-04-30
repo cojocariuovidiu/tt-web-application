@@ -5,11 +5,19 @@ const Schema = mongoose.Schema;
 const ScoreSchema = new Schema({
  score:{
     type: String,
-    default: '0'
+    default: '0',
+    required: true
  },
- lectureIDofCourse: {
-    type: Schema.Types.ObjectId,
-    ref: 'Lecture'
+ lectureTitle: {
+    type: string,
+    required: true
+ },
+ sessionTitle: {
+    type: string,
+    required,
+ },
+ CourseID:{
+    type: Schema.Types.ObjectId
  },
  scoreUserID: {
     type: Schema.Types.ObjectId

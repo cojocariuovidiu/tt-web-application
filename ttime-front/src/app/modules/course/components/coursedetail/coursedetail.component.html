@@ -1,7 +1,7 @@
 <div class="flex-container my-theme" style="background-color: #bdbdbd;" >
     <mat-grid-list class="courseintro" cols="2" rowHeight="5em" gutterSize="20px"   style="background-color: black;">
                 <mat-grid-tile class="coursewall" fxLayoutwrap colspan="2" [rowspan]="4" fxLayout="column" fxLayoutAlign="center center"  fxFlex="1 1 auto" fxFlexFill >
-                 <div>                    <h1>Python</h1> 
+                 <div>                    <h1>{{course.courseTitle}}</h1> 
                 
                 
                 </div>
@@ -14,7 +14,7 @@
                   [rowspan]="rowspan | async" fxLayoutwrap >
                    <mat-card  class="coursedetails"  fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap>
                   <div><p align="justify">
-                  <strong>About this Course : </strong>This course aims to teach everyone the basics of programming computers using Python. We cover the basics of how one constructs a program from a series of simple instructions in Python. The course has no pre-requisites and avoids all but the simplest mathematics. Anyone with moderate computer experience should be able to master the materials in this course. This course will cover Chapters 1-5 of the textbook “Python for Everybody”.  Once a student completes this course, they will be ready to take more advanced programming courses. This course covers Python3.
+                  <strong>About this Course : </strong> {{course.courseDetail}}
                     
                   </p>
                   <mat-divider style="width: 100%; border: 2px #bdbdbd solid"></mat-divider>
@@ -64,19 +64,19 @@
           </mat-expansion-panel-header>
       
            <mat-accordion style="min-width:100vw ;min-height:100%;" multi="true" fxFlex>
-              <mat-expansion-panel *ngFor="let session of sessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
+              <mat-expansion-panel *ngFor="let session of course.courseSessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
-                      <h4><strong>{{session.sessionnumber}} : {{session.sessionname}}</strong></h4>
+                      <h4><strong>{{session.sessionWeek}} : {{session.sessionTitle}}</strong></h4>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
               
                   <mat-card > 
                     
-                    <mat-card-header><mat-card-title><h5>{{session.sessionnumber}}</h5></mat-card-title>   </mat-card-header>  
+                    <mat-card-header><mat-card-title><h5>{{session.sessionWeek}}</h5></mat-card-title>   </mat-card-header>  
                      <mat-list> 
-                          <mat-list-item role="listitem" *ngFor="let lecturelist of session.lectures">{{lecturelist.lecturenumber}} : {{lecturelist.lecturetitle}}</mat-list-item>
+                          <mat-list-item role="listitem" *ngFor="let lecture of session.lectures">{{lecture.lectureTitle}} : {{lecture.lectureDetails}}</mat-list-item>
                           
                         </mat-list>
                         

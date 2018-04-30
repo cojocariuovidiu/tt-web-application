@@ -3,10 +3,7 @@
     <mat-grid-list   [cols]="cols | async" rowHeight="40px"    gutterSize="2px"  >
    
     <mat-grid-tile colspan="10" rowspan="10" fxLayoutwrap style="margin: 0; padding-left: 8%;">
-     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
-       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"/>
-       <source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"/>
-       <source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg"/>
+     <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" [src]="signedUrl" [poster]="imagethumb" data-setup="{}">
        <track kind="captions" src="../shared/example-captions.vtt" srclang="en" label="English"/>
        <!-- Tracks need an ending tag thanks to IE9 -->
        <track kind="subtitles" src="../shared/example-captions.vtt" srclang="en" label="English"/>
@@ -26,15 +23,15 @@
                    </mat-panel-title>
                  </mat-expansion-panel-header>
                   <mat-accordion style="min-width:100% ;min-height:100%;" multi="true" fxFlex>
-                     <mat-expansion-panel *ngFor="let session of sessions" expanded="true" hideToggle="true" (click)="sessioniconclick()"  >
+                     <mat-expansion-panel *ngFor="let session of course.courseSessions" expanded="true" hideToggle="true" (click)="sessioniconclick()"  >
                          <mat-expansion-panel-header>
                            <mat-panel-title>
                                <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
-                             <h6><strong>{{session.sessionnumber}} : {{session.sessionname}}</strong></h6>
+                             <h6><strong>{{session.sessionWeek}} : {{session.sessionTitle}}</strong></h6>
                            </mat-panel-title>
                          </mat-expansion-panel-header>
                             <mat-list> 
-                                 <mat-list-item role="listitem" *ngFor="let lecturelist of session.lectures"><a href="#">{{lecturelist.lecturenumber}} : {{lecturelist.lecturetitle}}</a></mat-list-item>
+                                 <mat-list-item role="listitem" *ngFor="let lecture of session.lectures"><a href="#">{{lecture.lectureTitle}} : {{lecture.lectureLink}}</a></mat-list-item>
                                  
                                </mat-list>
                               
@@ -68,13 +65,14 @@
           <mat-card fxLayoutAlign="start start" fxLayout="column" class="comments-card" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
               <mat-card-header style="background-color: #e0e0e0"> <mat-card-title><h4 class="text-black">Please give a review and rate this course  :</h4></mat-card-title> </mat-card-header>    
               <mat-card-content>     
-                  <form  style="width: 100%;">            
+                  <form  style="width: 100%;"  [formGroup]="commentForm" (ngSubmit)="sendCommentForm()">            
                       <mat-form-field class="example-full-width" style="width:90vw">
                           <mat-icon matPrefix>message</mat-icon>
-                          <textarea matInput placeholder="Message" tyle="width:90vw">
+                          <textarea matInput placeholder="Comment" tyle="width:90vw" name="Comment" id="Comment" formControlName="Comment">
                             
                           </textarea>
                         </mat-form-field>
+                        <button mat-raised-button type="submit" class="contact-btn" color="primary">Comment<mat-icon class="send">send</mat-icon></button>
                   </form>
               </mat-card-content> 
             </mat-card>

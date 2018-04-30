@@ -4,7 +4,9 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { DashboardService } from '../../services/dashboard.service';
+import { User } from '../../../../model/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +16,13 @@ import 'rxjs/add/operator/startWith';
 export class ProfileComponent implements OnInit {
 
   hide = 'true';
+  localTag = 'local';
+  socialTag = 'social';
+  typeTeacher = 'teacher';
+  typeParent = 'parent';
+  typeBoth = 'both';
+  namePattern: string = '[a-z]*.{3,}';
+  emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   show: boolean = true;
  cols: Observable<number>;
   institute = [
@@ -29,9 +38,17 @@ export class ProfileComponent implements OnInit {
    {text: 'Five', colss: 1, rows: 1, color: 'lightgreen'},
    {text: 'Six', colss: 1, rows: 1, color: 'lightpink'}
  ];
- constructor(private observableMedia: ObservableMedia) { }
+ 
+ profileForm: FormGroup;
+ user = new User('','','');
+  title: string = "Profile - Teachers Time";
+  constructor(private formBuilder: FormBuilder, private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) { 
+    this.createProfileForm();
+  }
 
  ngOnInit() {
+  this.titleService.setTitle(this.title);
+  this.getUser();
    const cols_map = new Map([
      ['xs', 1],
      ['sm', 1],
@@ -50,5 +67,63 @@ export class ProfileComponent implements OnInit {
        return cols_map.get(change.mqAlias);
      }).startWith(start_cols);
  }
+ 
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
+  }
+
+  createProfileForm(){
+    this.profileForm = this.formBuilder.group({
+      Name: [null, Validators.compose([
+        Validators.required,
+        Validators.pattern(this.namePattern)
+      ])],
+      Email: [null, Validators.compose([
+        Validators.required,
+        Validators.email,
+        Validators.pattern(this.emailPattern)
+      ])],
+      Location: [
+        null, Validators.compose([
+          Validators.required
+        ])
+      ],
+      InstituteType: [
+        null, Validators.compose([
+          Validators.required
+        ])
+      ],
+      InstituteName: [
+        null, Validators.compose([
+          Validators.required
+        ])
+      ],
+      Scope: [null, Validators.required]
+    });
+  }
+
+  sendProfileForm(){
+    const user = this.profileForm.value;
+    console.log(user);
+  }
+
+  resetProfileForm(){
+    this.profileForm.reset();
+  }
+
+
+  get Name(){
+    return this.profileForm.get('Name') as FormControl;
+  }
+  
+  get Email(){
+    return this.profileForm.get('Email') as FormControl;
+  }
+  get Scope(){
+    return this.profileForm.get('Scope') as FormControl;
+  }
 
 }

@@ -4,6 +4,7 @@ import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Router, NavigationEnd, NavigationCancel, NavigationStart } from '@angular/router';
+import { CoreService } from './services/core.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,8 +13,9 @@ import { Router, NavigationEnd, NavigationCancel, NavigationStart } from '@angul
 export class AppComponent implements OnInit {
   title = 'app';
   loading;
+  authtoken:any;
   cols: Observable<number>;
-  constructor(private router: Router , private observableMedia: ObservableMedia) {
+  constructor(private coreService: CoreService, private router: Router , private observableMedia: ObservableMedia) {
     this.loading = true;
   }
   ngOnInit() {
@@ -48,5 +50,30 @@ export class AppComponent implements OnInit {
                 this.loading = false;
             }
         });
+  }
+
+  hideLogin()
+  {
+    this.getauthToken();
+    if(this.authtoken)
+    {
+      //console.log('true');
+      return true;
+    }
+    else
+    {
+      //console.log('false');
+      return false;
+    }
+  }
+
+  getauthToken(){
+    const token = localStorage.getItem('id_token');
+    this.authtoken = token;
+  }
+
+  OnLogout(){
+    this.authtoken = null;
+    this.coreService.Logout();
   }
 }
