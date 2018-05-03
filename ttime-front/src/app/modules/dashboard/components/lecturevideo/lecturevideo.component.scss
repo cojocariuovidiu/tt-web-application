@@ -5,11 +5,13 @@ mat-card{
 }
 textarea{
     min-height: 150px;
+    width: inherit;
+    max-width: 90vw;
 }
 .review-structure{
-    width: 100vmax;
-    padding-left: 6.4%;
-    padding-right: 17.4%;
+    max-width: 100vw;
+    padding-right: 23.1%;
+    padding-top:2px;
 }
 .send{
     vertical-align: -30%;

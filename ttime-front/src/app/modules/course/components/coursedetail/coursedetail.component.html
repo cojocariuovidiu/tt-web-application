@@ -2,7 +2,10 @@
     <mat-grid-list class="courseintro" cols="2" rowHeight="5em" gutterSize="20px"   style="background-color: black;">
                 <mat-grid-tile class="coursewall" fxLayoutwrap colspan="2" [rowspan]="4" fxLayout="column" fxLayoutAlign="center center"  fxFlex="1 1 auto" fxFlexFill >
                  <div>                    <h1>{{course.courseTitle}}</h1> 
-                
+
+                  <div fxLayout="column" fxLayoutAlign="center center"  fxFlex="1 1 auto" fxFlexFill>
+                      <button (click)="onEnrollCourse(course.courseID)" mat-raised-button color="primary" style="width: 80%;">Enroll Here</button>
+                    </div>
                 
                 </div>
   
@@ -94,7 +97,7 @@
   
   </div>
   <div class="course-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0px;padding-right:0px;'">
-      <div style="width: 100%" fxFlex fxAlign="center">
+    <div style="width: 100%" fxFlex fxAlign="center">
        <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
          <mat-expansion-panel  hideToggle="true" (click)="ratingiconclick()">
            <mat-expansion-panel-header>
@@ -104,10 +107,10 @@
              </mat-panel-title>
            </mat-expansion-panel-header>
        
-           <mat-card *ngFor="let message of messages"> 
+           <mat-card *ngFor="let comment of comments"> 
              
-             <mat-card-header><mat-card-title style="font-size:1em "> {{message.name}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button mat-mini-fab>Edit</button></mat-card-actions> </mat-card-header>  
-               <p class="text-black"> {{message.details}}</p>
+             <mat-card-header><mat-card-title style="font-size:1em "> {{comment.commentUser}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions *ngIf="checkLogin()" align="end"><button *ngIf="user.userID == comment.commentUserID" (click)="onDelete(comment.commentID)" mat-mini-fab>Del</button></mat-card-actions> </mat-card-header>  
+               <p class="text-black"> {{comment.commentBody}}</p>
            </mat-card>
          </mat-expansion-panel>
       

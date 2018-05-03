@@ -34,6 +34,22 @@ const UserSchema = mongoose.Schema({
     required: true,
     default: 'false'
   },
+  institutetype:{
+    type: String,
+    default: 'empty'
+  },
+  institutename:{
+    type: String,
+    default: 'empty'
+  },
+  gender:{
+    type: String,
+    default: 'empty'
+  },
+  location: {
+    type: String,
+    default: 'empty'
+  },
   courses: [
     {
       type: Schema.Types.ObjectId,

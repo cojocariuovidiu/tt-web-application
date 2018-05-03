@@ -298,17 +298,24 @@ router.post('/authenticate/edit', passport.authenticate(Strings.strategy.localSt
 //Profile Edit
 router.patch('/profile/edit/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
   const editUser = {
-    name: req.body.name,
-    email: req.body.email,
-    type: req.body.type,
-    mobile: req.body.mobile
-  }
+    name: req.body.name  || req.user.name,
+    email: req.body.email || req.user.email,
+    type: req.body.type || req.user.type,
+    institutetype: req.body.institutetype || "empty",
+    institutename: req.body.institutename || "empty",
+    gender: req.body.gender || "empty",
+    location: req.body.location || "empty"
+   }
+  
   User.getUserById(req.params.id, (err, user) => {
     if(err) throw err;
     user.name = editUser.name;
     user.email = editUser.email;
     user.type = editUser.type;
-    user.mobile = editUser.mobile;
+    user.institutetype = editUser.institutetype;
+    user.institutename = editUser.institutename;
+    user.gender = editUser.gender;
+    user.location = editUser.location;
     user.save((err, result) => {
       if(err)
       {
@@ -322,7 +329,11 @@ router.patch('/profile/edit/:id', passport.authenticate(Strings.strategy.localSt
             type: result.type,
             mobile: result.mobile,
             tag: result.tag,
-            user: user.verified
+            verified: result.verified,
+            gender: result.gender,
+            location: result.location,
+            institutename: result.institutename,
+            institutetype: result.institutetype
           }
         });
       }
@@ -333,13 +344,23 @@ router.patch('/profile/edit/:id', passport.authenticate(Strings.strategy.localSt
 //Social Profile Edit
 router.patch('/profile/social/edit/:id', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
   const editUser = {
-    type: req.body.type,
-    mobile: req.body.mobile
+    name: req.body.name  || req.user.name,
+    email: req.user.email,
+    type: req.body.type || req.user.type,
+    institutetype: req.body.institutetype || "empty",
+    institutename: req.body.institutename || "empty",
+    gender: req.body.gender || "empty",
+    location: req.body.location || "empty"
   }
   SocialUser.getSocialUserById(req.params.id, (err, user) => {
     if(err) throw err;
+    user.name = editUser.name;
+    user.email = editUser.email;
     user.type = editUser.type;
-    user.mobile = editUser.mobile;
+    user.institutetype = editUser.institutetype;
+    user.institutename = editUser.institutename;
+    user.gender = editUser.gender;
+    user.location = editUser.location;
     user.save((err, result) => {
       if(err)
       {
@@ -352,7 +373,11 @@ router.patch('/profile/social/edit/:id', passport.authenticate(Strings.strategy.
             email: result.email,
             type: result.type,
             mobile: result.mobile,
-            tag: result.tag
+            tag: result.tag,
+            gender: result.gender,
+            location: result.location,
+            institutename: result.institutename,
+            institutetype: result.institutetype
           }
         });
       }

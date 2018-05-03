@@ -61,36 +61,29 @@
     </div>
     </mat-grid-tile>
   </mat-grid-list>
-<div style="padding-left:2%; padding-right:2%; padding-top:2%; ">
+  </div>
+<div style="padding-left:2%; padding-right:2%; padding-top:2%;">
   <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
      <mat-grid-tile *ngFor="let course of courses | coursefilter : filter" fxLayoutwrap [rowspan]="rowspan | async"  style="background: black;">
 
    
-    <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill    >
+    <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill >
         <mat-card-header>
           <mat-card-title>
           <h3 class="text-white">{{course.courseTitle}}</h3>
        </mat-card-title>
-       </mat-card-header>
-         <img matCardImage src="../../../../../assets/img/python.jpg">
+      </mat-card-header>
+      <img matCardImage src="../../../../../assets/img/python.jpg">
          <mat-card-content  [style.height.px]="'250px'">
-         
+           
            <p  align="justify" class="text-white">
             {{course.courseDetail}}
-            {{course.courseID}}
          </p>
          <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          <button [hidden]="!hideLogin()" (click)="onEnrollCourse(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Enroll <mat-icon class="send">add</mat-icon></button>
          </mat-card-content>
-         <mat-card-actions>
-             
-         </mat-card-actions>
-       <mat-card-footer>
-
-       </mat-card-footer>
        </mat-card>
       
  </mat-grid-tile>
 </mat-grid-list>
-</div>
 </div>

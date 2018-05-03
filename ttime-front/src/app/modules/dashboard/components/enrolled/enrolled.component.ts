@@ -19,27 +19,21 @@ export class EnrolledComponent implements OnInit {
   rowspan: Observable<number>;
   cols: Observable<number>;
   courses: Course [] = [];
-
-  /*courses = [
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' }
-  ];*/
-
   title: string = "Enrolled - Teachers Time";
+
   constructor(private router: Router, private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
 
   ngOnInit() {
     this.getUser();
+    this.setDisplay();
+    this.Title();
+  }
+
+  Title(){
     this.titleService.setTitle(this.title);
+  }
+  
+  setDisplay(){
     const cols_map = new Map([
       ['xs', 1],
       ['sm', 1],
@@ -48,11 +42,11 @@ export class EnrolledComponent implements OnInit {
       ['xl', 3]
     ]);
     const rowspan_map = new Map([
-      ['xs', 13],
-      ['sm', 10],
-      ['md', 10],
-      ['lg', 11],
-      ['xl', 9]
+      ['xs', 16],
+      ['sm', 16],
+      ['md', 13],
+      ['lg', 12],
+      ['xl', 12]
     ]);
     let start_cols: number;
     let row_span: number;

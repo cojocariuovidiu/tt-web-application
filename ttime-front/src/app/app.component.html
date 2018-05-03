@@ -26,7 +26,7 @@
               <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
               <button mat-menu-item routerLink= "/dashboard/enrolled"><mat-icon>import_contacts</mat-icon>My Courses</button>
               <button mat-menu-item routerLink= "/dashboard/profile"><mat-icon>account_box</mat-icon>Profile</button>
-              <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
+              <button mat-menu-item routerLink= "/dashboard/changepassword"><mat-icon>settings</mat-icon>Settings</button>
               <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
             </mat-menu>
           </span>
@@ -38,18 +38,18 @@
      <mat-sidenav #sidenav class="mat-elevation-z6" mode="over" align="start"  ngStyle.xs="width:50vw;" align="width:start" fxHide.gt-md="true"ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
       <div class="sidenavbar text-white" fxLayout="column wrap"fxLayoutGap="20px">
        
-        <div> <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>
-         <div><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
-         <div><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
+        <div> <button mat-button id="navbutton"  (click)="sidenav.toggle()" routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>
+         <div><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/courses/index" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
+         <div><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/us/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
           <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
           <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">My Courses</span></button></div>
            <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">account_box</i><span class="icon-text">Profile</span></button></div> 
           <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
             
          <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
-         <div *ngIf="!hideLogin()"><button mat-button id="navbutton" routerLink= "/registration" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
-         <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">settings</i><span class="icon-text">Settings</span></button></div>
-         <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">power_settings_new</i><span class="icon-text">Logout</span></button></div>
+         <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
+         <div *ngIf="hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/dashboard/changepassword" routerLinkActive="active" > <i class="material-icons">settings</i><span class="icon-text">Settings</span></button></div>
+         <div *ngIf="hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" (click)="OnLogout()"> <i class="material-icons">power_settings_new</i><span class="icon-text">Logout</span></button></div>
        </div>
     </mat-sidenav>
 
@@ -67,10 +67,10 @@
             <mat-grid-tile rowspan="7" style="background:#1A237E;">
                 <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="15px" style="padding-left: 30px;">
                     <h5><strong>Useful Links</strong></h5> 
-                    <a class="text-white" routerLink="/dashboard/lecturevideo/1" [queryParams]="{ videoLink: '/Courses/TestCourse/LectureQ.mp4'}" style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
-                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">description</mat-icon>Terms of use</a>
-                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">security</mat-icon>Privacy Policy</a>
-                    <a class="text-white" routerLink="/home"  style="text-decoration: none;"> <mat-icon id="ab">contact_mail</mat-icon>Contact</a>
+                    <a class="text-white" routerLink="/us/about" style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
+                    <a class="text-white" routerLink="/us/terms"  style="text-decoration: none;"> <mat-icon id="ab">description</mat-icon>Terms of use</a>
+                    <a class="text-white" routerLink="/us/privacy"  style="text-decoration: none;"> <mat-icon id="ab">security</mat-icon>Privacy Policy</a>
+                    <a class="text-white" routerLink="/us/contact"  style="text-decoration: none;"> <mat-icon id="ab">contact_mail</mat-icon>Contact</a>
                     
                  </div>
             </mat-grid-tile>

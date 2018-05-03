@@ -11,7 +11,6 @@ const Strings = require('../config/strings');
 //const Evaluate = require('../models/evaluate');
 const AWS = require('aws-sdk');
 const cfsign = require('aws-cloudfront-sign');
-const emoji = require('node-emoji');
 
 router.get('/public/all', (req, res, next) => {
     Course.find({}).select('title details price scope preview freevideo _id')
@@ -130,18 +129,18 @@ router.get('/all/enrolled/social/:id', passport.authenticate(Strings.strategy.so
 });
 
 // Add Comment
-router.post('/comment/add/:id', (req, res, next) => {
-    var emojiedBody = emoji.emojify(req.body.commentBody);
-    console.log(emojiedBody);
+router.post('/comment/add/:id', passport.authenticate([Strings.strategy.localStrategy, Strings.strategy.socialStrategy], {session: false}), (req, res, next) => {
     let newComment = new Comments({
-        commentBody: emojiedBody,
+        commentBody: req.body.commentBody,
         commentUser: req.body.commentUser,
-        commentCourse: req.params.id,
+        commentCourse: req.body.commentCourse,
         commentUserID: req.body.commentUserID
     });
+    //console.log(newComment);
     Comments.addComment(newComment, (err, comment) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.commentInsertFailed});
+            console.log(err);
         } else {
             res.status(201).json({success: true, data: comment, msg: Strings.message.commentInsertSuccess});
         }
@@ -149,7 +148,7 @@ router.post('/comment/add/:id', (req, res, next) => {
     //Comments.find({})
 });
 
-//Edit Comment
+/*//Edit Comment
 router.patch('/comment/edit/:id', (req, res, next) => {
     Comments.findById(req.params.id, (err, comment) => {
         if(err)
@@ -170,10 +169,10 @@ router.patch('/comment/edit/:id', (req, res, next) => {
             });
         }
     });
-});
+});*/
 
 //Delete Comment
-router.delete('/comment/delete/:id', (req, res, next) => {
+router.delete('/comment/delete/:id', passport.authenticate([Strings.strategy.localStrategy, Strings.strategy.socialStrategy], {session: false}), (req, res, next) => {
     Comments.findById(req.params.id, (err, comment) => {
         if(err)
         {
@@ -201,7 +200,7 @@ router.delete('/comment/delete/:id', (req, res, next) => {
 
 //Get Comment
 router.get('/comment/:id', (req, res, next) => {
-    Comments.find({commentCourse: req.params.id}).select('_id commentUser commentBody commentDate commentUserID')
+    Comments.find({commentCourse: req.params.id})
         .sort({commentDate: 'desc'})
         .exec((err, comment) => {
             if(err){
@@ -291,7 +290,7 @@ router.get('/object/video/url', (req, res, next) => {
 });*/
 
 //GET VIDEO URL
-router.post('/object/video/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+router.post('/object/video/url', passport.authenticate([Strings.strategy.localStrategy, Strings.strategy.socialStrategy], {session: false}), (req, res, next) => {
     var link = req.body.videoLink;
     var expired = new Date();
     var time = expired.getTime() + (60 * 1000);
@@ -309,7 +308,7 @@ router.post('/object/video/url', passport.authenticate(Strings.strategy.localStr
 });
 
 //GET IMAGE URL
-router.post('/object/image/url', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+router.post('/object/image/url', passport.authenticate([Strings.strategy.localStrategy, Strings.strategy.socialStrategy], {session: false}), (req, res, next) => {
     var link = req.body.imageLink;
     var expired = new Date();
     var time = expired.getTime() + (1440 * 60 * 1000);
@@ -326,25 +325,6 @@ router.post('/object/image/url', passport.authenticate(Strings.strategy.localStr
     console.log(signedUrl);
 });
 
-
-
-//GET VIDEO URL
-router.post('/object/video/url/social', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
-    var link = req.body.videoLink;
-    var expired = new Date();
-    var time = expired.getTime() + (60 * 1000);
-    var signingParams = {
-        keypairId: config.CLOUDFRONT_PUBLICACCESSID,
-        privateKeyString: config.PRIVATEKEY_CLOUDFRONT,
-        expireTime: time
-    }
-    var videoUrl = config.CLOUDFRONT_URL + link;  
-    // Generating a signed URL
-    var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
-    //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
-    res.status(200).json({success: true, signedUrl: signedUrl});
-    console.log(signedUrl);
-});
   
   
 module.exports = router;

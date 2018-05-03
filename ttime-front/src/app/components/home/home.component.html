@@ -7,7 +7,7 @@
                <h1>WELCOME TO TEACHERS TIME </h1> 
                <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>
                <div fxLayout="row wrap" fxlayout.lt-sm="column wrap" fxLayoutAlign="start start" fxLayoutAlign.lt-md="center center" fxLayoutWrap >
-               <button mat-raised-button color="primary"routerLink= "/login" routerLinkActive="active">Start Here</button>
+               <button mat-raised-button color="primary"routerLink= "/auth/login" routerLinkActive="active">Start Here</button>
                 
               </div>
              </div>
@@ -44,14 +44,11 @@
          <mat-card-content  [style.height.px]="'250px'">
            
            <p  align="justify" class="text-white">
-            {{course.coursePreview}}
+            {{course.courseDetail}}
            
          </p>
          <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          </mat-card-content>
-         <mat-card-actions>
-             
-         </mat-card-actions>
        <mat-card-footer>
 
        </mat-card-footer>

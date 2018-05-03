@@ -31,6 +31,22 @@ const SocialUserSchema = mongoose.Schema({
     type: String,
     default: 'true'
   },
+  institutetype:{
+    type: String,
+    default: 'empty'
+  },
+  institutename:{
+    type: String,
+    default: 'empty'
+  },
+  gender:{
+    type: String,
+    default: 'empty'
+  },
+  location: {
+    type: String,
+    default: 'empty'
+  },
   courses: [{
     type: Schema.Types.ObjectId,
     ref: 'Course'

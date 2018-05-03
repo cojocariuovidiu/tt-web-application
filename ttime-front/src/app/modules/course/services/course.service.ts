@@ -4,12 +4,15 @@ import { Course } from '../../../model/course.model';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
+import { Comment } from '../../../model/comment.model';
+import { User } from '../../../model/user.model';
 
 @Injectable()
 export class CourseService {
 
   private courses: Course [] = [];
   private course: Course;
+  private comments: Comment [] = [];
   constructor(private http: Http, private errorService: ErrorService) { }
 
   getCourses(){
@@ -38,6 +41,49 @@ export class CourseService {
       this.errorService.handleError(error.json());
       return Observable.throw(error.json());
     });
+  }
+
+  getProfile(tag){
+    if(tag == "local"){
+      let headers = new Headers();
+      const url = `${"api/users/profile"}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.get(url, {headers: headers})
+      .map((response: Response) => {
+        const user = response.json();
+        //console.log(user.user);
+        let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
+          ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location);
+        //console.log(profile);
+        return profile;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+    else{
+      let headers = new Headers();
+      const url = `${"api/users/profile/social"}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.get(url, {headers: headers})
+      .map((response: Response) => {
+        const user = response.json();
+        //console.log(user.user);
+        let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
+          ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location);
+        //console.log(profile);
+        return profile;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
   }
 
   getCoursesDetail(id){
@@ -113,6 +159,51 @@ export class CourseService {
         return Observable.throw(error.json());
       });
     }
+  }
+
+  getComment(id){
+    let headers = new Headers();
+    const url = `${"api/courses/comment/"}${id}`
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(url,{headers: headers})
+    .map((response: Response) => {
+      const comments = response.json().comment;
+      console.log(comments);
+      let transformedComments: Comment[] = [];
+      for (let comment of comments) {
+        transformedComments.push(new Comment(
+          comment.commentBody,
+          comment.commentCourse, 
+          comment.commentUser,
+          comment.commentUserID, 
+          comment.commentDate,
+          comment._id
+        ));
+      }
+      this.comments = transformedComments;
+      return transformedComments;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
+
+  deleteComment(id){
+    let headers = new Headers();
+    const url = `${"api/courses/comment/delete/"}${id}`
+    const token = this.getauthToken();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.delete(url, {headers: headers})
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
   }
 
 

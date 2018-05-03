@@ -6,7 +6,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Course } from '../../../../model/course.model';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Comment } from '../../../../model/comment.model';
+import { User } from '../../../../model/user.model';
 
 @Component({
   selector: 'app-coursedetail',
@@ -20,31 +22,27 @@ export class CoursedetailComponent implements OnInit {
   title: string = "Course Name - Teachers Time";
   cols: Observable<number>;
   rowspan: Observable<number>;
-  syllabusicon: boolean = true;
+  syllabusicon: boolean = true; 
   ratingicon: boolean = true;
   sessionicon: boolean = true;
-  /*lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
-             {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
-             {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},
-             {lecturenumber: 'Lecture 4', lecturetitle : ' Dealings With Misbehaviour'}];
-  sessions = [{sessionnumber: 'session 1', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 2', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 3', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 4', sessionname: 'Problem Understanding', lectures : this.lecture}];
-  */messages = [
-    {name: 'Classroom Managment' , details: 'In computer programming, a comment is a programmer-readable explanation or annotation in the source code of a computer program. They are added with the purpose of making the source code easier for humans to understand, and are generally ignored by compilers and interpreters.' },
-
-    {name: 'Python' , details: 'In computer programming, a comment is a programmer-readable explanation or annotation in the source code of a computer program. They are added with the purpose of making the source code easier for humans to understand, and are generally ignored by compilers and interpreters.' },
-    {name: 'Python' , details: 'tyyt' },
-    {name: 'Python' , details: 'tyyt' },
-    {name: 'Python' , details: 'tyyt' }
-  ];
-  course: Course;
-  constructor(private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { }
+  comments: Comment [] = [];
+  course: Course = new Course('','','','');
+  user: User = new User('','','');
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { }
 
   ngOnInit() {
-    this.gridMap();
+    this.setDisplay();
+    this.Title();
+    if(this.checkLogin()){
+      this.getUser();
+    }
+    this.getDetail();
+    this.getCourseComments();
+   }
+  Title(){
     this.titleService.setTitle(this.title);
+  }
+  getDetail(){
     this.routerParams = this.activatedRoute.params.subscribe(params => {
       this.paramID = params['id'];
       console.log(this.paramID);
@@ -53,16 +51,20 @@ export class CoursedetailComponent implements OnInit {
         console.log(course);
       });
    });
-   
+  }
+  getCourseComments(){
+    this.courseService.getComment(this.paramID).subscribe((comments: Comment[]) => {
+      this.comments = comments;
+    });
   }
 
-  gridMap() {
+  setDisplay() {
     const rowspan_map = new Map([
-      ['xs', 5],
-      ['sm', 5],
-      ['md', 3],
-      ['lg', 3],
-      ['xl', 3]
+      ['xs', 7],
+      ['sm', 7],
+      ['md', 5],
+      ['lg', 5],
+      ['xl', 5]
     ]);
     let row_span: number;
     rowspan_map.forEach((rowspan, mqAlias) => {
@@ -87,5 +89,53 @@ export class CoursedetailComponent implements OnInit {
     this.ratingicon = !this.ratingicon;
   }
 
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.courseService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
+  }
+
+  checkLogin(){
+    const token = localStorage.getItem('id_token');
+    if(token)
+    {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  onDelete(id){
+    console.log(id);
+    this.courseService.deleteComment(id).subscribe(data => {
+      if(data.success){
+        console.log(data.data);
+        this.getCourseComments();
+      }
+    })
+  }
+
+  onEnrollCourse(courseid){
+    const isToken = this.checkLogin();
+    if(isToken){
+      const usercred = JSON.parse(localStorage.getItem('usercred'));
+      console.log(usercred.tag);
+      console.log(courseid);
+      this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
+        if(data.success){
+          console.log(data);
+        }
+        else{
+          console.log('error');
+        }
+      });
+    }
+    else{
+      var redirectURL = `${"/courses/index/"}${courseid}`;
+      this.router.navigate(['/auth/login'], { queryParams: { redirect: redirectURL }});
+    }  
+  }
 
 }

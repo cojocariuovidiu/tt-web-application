@@ -23,7 +23,7 @@ export class CoreService {
     return this.http.get(url, {headers: headers})
     .map((response: Response) => {
       const courses = response.json().course;
-      //console.log(courses);
+      console.log(courses);
       let transformedCourses: Course[] = [];
       for (let course of courses) {
         transformedCourses.push(new Course(
@@ -35,7 +35,7 @@ export class CoreService {
         ));
       }
       this.courses = transformedCourses;
-      //console.log(this.courses);
+      console.log(this.courses);
       return transformedCourses;
     })
     .catch((error: Response) => {

@@ -10,6 +10,8 @@ import '../../../../material.module';
 import { DashboardService } from '../../services/dashboard.service';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
 import { Course } from '../../../../model/course.model';
+import { Comment } from '../../../../model/comment.model';
+import { User } from '../../../../model/user.model';
 
 @Component({
   selector: 'app-lecturevideo',
@@ -23,7 +25,9 @@ export class LecturevideoComponent implements OnInit {
   paramIDCourse: string;
   signedUrl: string;
   imagethumb: string;
-  course: Course;
+  course: Course = new Course('','','','');
+  user: User = new User('', '', '');
+  comments: Comment[] = [];
   // tslint:disable-next-line:no-inferrable-types
   commentForm: FormGroup;
   title: string = 'Lecture Name - Teachers Time';
@@ -33,90 +37,93 @@ export class LecturevideoComponent implements OnInit {
   syllabusicon = true;
   ratingicon = true;
   sessionicon = true;
-  /*lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
-             {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
-             {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},
-             {lecturenumber: 'Lecture 4', lecturetitle : ' Dealings With Misbehaviour'}];
-  sessions = [{sessionnumber: 'session 1', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 2', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 3', sessionname: 'Problem Understanding', lectures : this.lecture},
-             {sessionnumber: 'session 4', sessionname: 'Problem Understanding', lectures : this.lecture}];
-  */messages = [
-    {name: 'Classroom Managment' , details: 'yddt' },
 
-    {name: 'Python' , details: 'tyyt' },
-    {name: 'Python' , details: 'tyyt' },
-    {name: 'Python' , details: 'tyyt' }
-  ];
   constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
     this.createCommentForm();
    }
 
   ngOnInit() {
+    this.Title();
+    this.setDisplay();
+    this.getUser();
+    this.getRouterParams();
+    this.getDetail();
+    this.getVideo();
+    this.getCourseComments();  
+  }
+
+  Title(){
+    this.titleService.setTitle(this.title);
+  }
+
+  getVideo(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getSignedURL(this.videoLink).subscribe(data => {
+      console.log(data);
+      this.signedUrl = data.signedUrl;
+    })
+
+    this.dashboardService.getImage("/Courses/TestCourse/angular.jpg").subscribe(data => {
+      console.log(data);
+      this.imagethumb = data.signedUrl;
+    });
+  }
+
+  getRouterParams(){
     this.routerParams = this.activatedRoute.params.subscribe(params => {
       this.paramIDCourse = params['idcourse'];
    });
    this.activatedRoute.queryParams
-      .filter(params => params.videoLink)
-      .subscribe(params => {
-        console.log(params); // {order: "popular"}
+    .filter(params => params.videoLink)
+    .subscribe(params => {
+      console.log(params); // {order: "popular"}
 
-        this.videoLink = params.videoLink;
-        console.log(this.videoLink); // popular
-      });
-      const usercred = JSON.parse(localStorage.getItem('usercred'));
-      this.dashboardService.getSignedURL(this.videoLink, usercred.tag).subscribe(data => {
-        console.log(data);
-        this.signedUrl = data.signedUrl;
-      })
+      this.videoLink = params.videoLink;
+      console.log(this.videoLink); // popular
+    });
+  }
+  getDetail(){
+    this.dashboardService.getEnrolledDetail(this.paramIDCourse).subscribe((course: Course) => {
+      this.course = course;
+      console.log(this.course);
+    });
+  }
+  setDisplay(){
+    const cols_map = new Map([
+      ['xs', 11],
+      ['sm', 11],
+      ['md', 13],
+      ['lg', 13],
+      ['xl', 13]
+    ]);
+    const colspan_map = new Map([
+      ['xs', 11],
+      ['sm', 11],
+      ['md', 2],
+      ['lg', 3],
+      ['xl', 3]
+    ]);
+    let start_cols: number;
+    let col_span: number;
+    cols_map.forEach((cols, mqAlias) => {
+      if (this.observableMedia.isActive(mqAlias)) {
+        start_cols = cols;
+      }
+    });
+    this.cols = this.observableMedia.asObservable()
+      .map(change => {
+        return cols_map.get(change.mqAlias);
+      }).startWith(start_cols);
 
-      this.dashboardService.getEnrolledDetail(this.paramIDCourse).subscribe((course: Course) => {
-        this.course = course;
-        console.log(this.course);
-      });
-      
-      this.dashboardService.getImage("/Courses/TestCourse/angular.jpg", usercred.tag).subscribe(data => {
-        console.log(data);
-        this.imagethumb = data.signedUrl;
-      });
-      
-      this.titleService.setTitle(this.title);
-      const cols_map = new Map([
-        ['xs', 11],
-        ['sm', 11],
-        ['md', 13],
-        ['lg', 13],
-        ['xl', 13]
-      ]);
-      const colspan_map = new Map([
-        ['xs', 11],
-        ['sm', 11],
-        ['md', 2],
-        ['lg', 3],
-        ['xl', 3]
-      ]);
-      let start_cols: number;
-      let col_span: number;
-      cols_map.forEach((cols, mqAlias) => {
-        if (this.observableMedia.isActive(mqAlias)) {
-          start_cols = cols;
-        }
-      });
-      this.cols = this.observableMedia.asObservable()
-        .map(change => {
-          return cols_map.get(change.mqAlias);
-        }).startWith(start_cols);
-
-          colspan_map.forEach((colspan, mqAlias) => {
-            if (this.observableMedia.isActive(mqAlias)) {
-             col_span = colspan;
-            }
-          });
-          this.colspan = this.observableMedia.asObservable()
-            .map(change => {
-              return colspan_map.get(change.mqAlias);
-            }).startWith(col_span);
-
+    colspan_map.forEach((colspan, mqAlias) => {
+      if (this.observableMedia.isActive(mqAlias)) {
+        col_span = colspan;
+      }
+    });
+    this.colspan = this.observableMedia.asObservable()
+      .map(change => {
+        return colspan_map.get(change.mqAlias);
+      }).startWith(col_span);
   }
   sessioniconclick() {
     this.sessionicon = !this.sessionicon;
@@ -130,20 +137,53 @@ export class LecturevideoComponent implements OnInit {
 
   createCommentForm(){
     this.commentForm = this.formBuilder.group({
-      Comment: [null, Validators.compose([
+      CommentBody: [null, Validators.compose([
         Validators.required
       ])]
     });
   }
 
   sendCommentForm(){
-    const comment = this.commentForm.value;
+    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
     console.log(comment);
+    this.dashboardService.addComment(comment).subscribe(data => {
+      if(data.success){
+        console.log(data.data);
+        this.getCourseComments();
+      }
+    });
   }
 
-  resetProfileForm(){
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
+  }
+
+  get CommentBody(){
+    return this.commentForm.get('CommentBody') as FormControl;
+  }
+
+  resetCommentForm(){
     this.commentForm.reset();
   }
 
+  getCourseComments(){
+    console.log(this.course.courseID);
+    this.dashboardService.getComment(this.paramIDCourse).subscribe((comments: Comment[]) => {
+      this.comments = comments;
+    });
+  }
+
+  onDelete(id){
+    console.log(id);
+    this.dashboardService.deleteComment(id).subscribe(data => {
+      if(data.success){
+        console.log(data.data);
+        this.getCourseComments();
+      }
+    })
+  }
 
 }

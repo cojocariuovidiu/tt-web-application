@@ -8,6 +8,10 @@ export class User {
      type?: string;
      tag: string;
      verified?: string;
+     institutename?: string;
+     institutetype?: string;
+     gender?: string;
+     location?: string;
     constructor(
       name: string,
       email: string,
@@ -17,7 +21,11 @@ export class User {
       type?: string,
       userID?: string,
       socialID?: string,
-      verified?: string
+      verified?: string,
+      institutename?: string,
+     institutetype?: string,
+     gender?: string,
+     location?: string
     ) {
       this.userID = userID;
       this.socialID = socialID;
@@ -28,5 +36,9 @@ export class User {
       this.type = type;
       this.tag = tag;
       this.verified = verified;
+      this.institutename = institutename;
+      this.institutetype = institutetype;
+      this.gender = gender;
+      this.location = location;
     }
 }
