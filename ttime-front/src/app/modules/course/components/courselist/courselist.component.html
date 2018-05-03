@@ -46,15 +46,6 @@
 </div>
 </mat-grid-list>
 </div>-->
-<<<<<<< HEAD
-<div class=" my-theme flex-container">
- <div> 
-<mat-grid-list cols="1" rowHeight="56" style="margin-top :5em;"> 
-      
-  <mat-grid-tile >
-  <div fxLayout="column"  fcLayoutWrap fxLayoutAlign="start stretch" fxFlex >
-      <div style="width: 100%;" fxFlex="1 1 auto">          
-=======
 <div class="my-theme flex-container">
   
 <mat-grid-list cols="1" rowHeight="56" style="margin-top :5em;"> 
@@ -62,7 +53,6 @@
   <mat-grid-tile style="padding-top: 6em;">
   <div fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap>
       <div style="width: 100%;" fxFlex>          
->>>>>>> fda4a60880c6b4356b39254b918968aa065d0d8e
           <mat-form-field class="example-full-width" style="width:90vw">
               <input matInput [(ngModel)]="filter.courseTitle"  placeholder="Search"  style="width: 90vw;">
               <mat-icon matSuffix >search</mat-icon>
@@ -72,7 +62,7 @@
     </mat-grid-tile>
   </mat-grid-list>
   </div>
-<div style="padding-left:2%; padding-right:2%;">
+<div style="padding-left:2%; padding-right:2%; padding-top:2%;">
   <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
      <mat-grid-tile *ngFor="let course of courses | coursefilter : filter" fxLayoutwrap [rowspan]="rowspan | async"  style="background: black;">
 
@@ -88,18 +78,12 @@
            
            <p  align="justify" class="text-white">
             {{course.courseDetail}}
-            {{course.courseID}}
          </p>
          <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          <button [hidden]="!hideLogin()" (click)="onEnrollCourse(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Enroll <mat-icon class="send">add</mat-icon></button>
          </mat-card-content>
-       
-       <mat-card-footer>
-
-       </mat-card-footer>
        </mat-card>
       
  </mat-grid-tile>
 </mat-grid-list>
-</div>
 </div>

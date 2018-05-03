@@ -35,7 +35,7 @@ mat-icon {
 }
 #table mat-list-item
 {
-    border: 2px solid rgb(199, 187, 20); 
+    border: 2px solid #3949AB; 
 }
 .course-structure{
     width: 100vmax;
@@ -49,4 +49,14 @@ mat-icon {
 .contact-btn{
     min-width: 10vw;
     max-width: 40vw;
+}
+
+mat-card{
+    width: 100%;
+    height: 100%;
+}
+textarea{
+    min-height: 150px;
+    width: inherit;
+    max-width: 90vw;
 }

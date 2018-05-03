@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
 import { DashboardService } from '../../services/dashboard.service';
 import { Course } from '../../../../model/course.model';
 
@@ -46,11 +47,11 @@ export class EnrolleddetailComponent implements OnInit {
     
     this.titleService.setTitle(this.title);
     const rowspan_map = new Map([
-      ['xs', 5],
-      ['sm', 5],
-      ['md', 3],
-      ['lg', 3],
-      ['xl', 3]
+      ['xs', 7],
+      ['sm', 7],
+      ['md', 5],
+      ['lg', 5],
+      ['xl', 5]
     ]);
     let row_span: number;
     rowspan_map.forEach((rowspan, mqAlias) => {

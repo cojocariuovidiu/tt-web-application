@@ -33,6 +33,8 @@ export class LecturevideoComponent implements OnInit {
   syllabusicon = true;
   ratingicon = true;
   sessionicon = true;
+
+
   /*lecture = [{lecturenumber: 'Lecture 1', lecturetitle : 'What Students Do in class' },
              {lecturenumber: 'Lecture 2', lecturetitle : 'Problems Teacher face'},
              {lecturenumber: 'Lecture 3', lecturetitle : 'Why students Misbehave '},

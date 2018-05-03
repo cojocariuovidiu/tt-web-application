@@ -21,28 +21,24 @@ export class ProfileComponent implements OnInit {
   typeTeacher = 'teacher';
   typeParent = 'parent';
   typeBoth = 'both';
-  namePattern: string = '[a-z]*.{3,}';
+  namePattern = '[a-z]*.{3,}';
   emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  show: boolean = true;
+  show = true;
  cols: Observable<number>;
+usertest = [
+  {fullname: 'Prottoy Paul', Email : 'hasd@dhfdja.com' , Phone: '12231213', Gender: 'Male' , Address: ' sdndshfksdhfkdsjfkjdhdfsjdsfhs',
+  Institute: ' bxdbd College'},
+];
   institute = [
   {value: 'school', viewValue: 'School'},
   {value: 'college', viewValue: 'College'},
-  {value: 'university', viewValue: 'Univarsity'}
+  {value: 'university', viewValue: 'University'}
 ];
- tiles = [
-   {text: 'One', colss: 1, rows: 1, color: 'blue'},
-   {text: 'Two', colss: 1, rows: 1, color: 'red'},
-   {text: 'Three', colss: 1, rows: 1, color: 'green'},
-   {text: 'Four', colss: 1, rows: 1, color: 'lightblue'},
-   {text: 'Five', colss: 1, rows: 1, color: 'lightgreen'},
-   {text: 'Six', colss: 1, rows: 1, color: 'lightpink'}
- ];
- 
+
  profileForm: FormGroup;
  user = new User('','','');
-  title: string = "Profile - Teachers Time";
-  constructor(private formBuilder: FormBuilder, private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) { 
+  title = "Profile - Teachers Time";
+  constructor(private formBuilder: FormBuilder, private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) {
     this.createProfileForm();
   }
 
@@ -67,15 +63,15 @@ export class ProfileComponent implements OnInit {
        return cols_map.get(change.mqAlias);
      }).startWith(start_cols);
  }
- 
-  getUser(){
+
+  getUser() {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
       this.user = profile;
     });
   }
 
-  createProfileForm(){
+  createProfileForm() {
     this.profileForm = this.formBuilder.group({
       Name: [null, Validators.compose([
         Validators.required,
@@ -105,24 +101,24 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  sendProfileForm(){
+  sendProfileForm() {
     const user = this.profileForm.value;
     console.log(user);
   }
 
-  resetProfileForm(){
+  resetProfileForm() {
     this.profileForm.reset();
   }
 
 
-  get Name(){
+  get Name() {
     return this.profileForm.get('Name') as FormControl;
   }
-  
-  get Email(){
+
+  get Email() {
     return this.profileForm.get('Email') as FormControl;
   }
-  get Scope(){
+  get Scope() {
     return this.profileForm.get('Scope') as FormControl;
   }
 

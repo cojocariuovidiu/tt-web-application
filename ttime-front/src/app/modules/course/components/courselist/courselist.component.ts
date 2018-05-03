@@ -33,11 +33,11 @@ export class CourselistComponent implements OnInit {
       ['xl', 3]
     ]);
     const rowspan_map = new Map([
-      ['xs', 13],
-      ['sm', 10],
-      ['md', 10],
-      ['lg', 11],
-      ['xl', 9]
+      ['xs', 16],
+      ['sm', 16],
+      ['md', 13],
+      ['lg', 12],
+      ['xl', 12]
     ]);
     let start_cols: number;
     let row_span: number;
