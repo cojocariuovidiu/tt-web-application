@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Course } from '../../model/course.model';
 import { CoreService } from '../../services/core.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -34,9 +35,13 @@ export class HomeComponent implements OnInit {
     {name: 'Csharp' ,  details: '' },
   ];*/
   courses: Course [] = [];
-  constructor(private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
+  constructor(private router: Router, private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
+    const dash = this.coreService.checkLogin();
+    if(dash){
+      this.router.navigate(['/dashboard/enrolled']);
+    }
     this.setDisplay();
     this.showCourses();
   }
@@ -103,6 +108,10 @@ export class HomeComponent implements OnInit {
           .map(change => {
             return rowspan_map.get(change.mqAlias);
           }).startWith(row_span);
+  }
+
+  getCourseDetail(id){
+    this.router.navigate(['/courses/index', id]);
   }
 
 }

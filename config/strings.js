@@ -53,8 +53,8 @@ module.exports.strategy = {
 }
 
 module.exports.values = {
-    loginExpiration:  60, //86400, // 1 day
-    emailLinkExpiration: 30 // 10 minutes
+    loginExpiration:  86400, // 1 day
+    emailLinkExpiration: 600 // 10 minutes
 }
 
 module.exports.errors = {

@@ -47,7 +47,7 @@
             {{course.coursePreview}}
            
          </p>
-         <button align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+         <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          </mat-card-content>
          <mat-card-actions>
              
