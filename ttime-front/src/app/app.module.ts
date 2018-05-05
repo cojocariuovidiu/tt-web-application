@@ -38,7 +38,6 @@ import { CoreService } from './services/core.service';
 export class AppModule {
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('my-theme');
-    overlayContainer.getContainerElement().classList.add('my-second-theme');
   }
 
  }

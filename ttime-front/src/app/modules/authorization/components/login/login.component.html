@@ -53,7 +53,7 @@ fxLayout="column" >
       <mat-error *ngIf="loginMobile.errors.mobNumExists">No User under this Mobile Number</mat-error>
     </mat-error>
      </mat-form-field>
-  <mat-form-field>
+  <mat-form-field >
       <mat-icon matPrefix>lock</mat-icon>
     <input matInput placeholder="Your Password" [type]="hide ? 'password' : 'text'" name="loginPassword" id="loginPassword" formControlName="loginPassword" required>
       

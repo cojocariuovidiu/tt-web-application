@@ -50,6 +50,7 @@ export class LecturevideoComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
     this.createCommentForm();
+    this.createdummy();
    }
 
   ngOnInit() {
@@ -195,6 +196,11 @@ export class LecturevideoComponent implements OnInit {
         this.getCourseComments();
       }
     })
+  }
+  createdummy(){
+    this.firstFormGroup = this.formBuilder.group({
+
+    });
   }
 
 }

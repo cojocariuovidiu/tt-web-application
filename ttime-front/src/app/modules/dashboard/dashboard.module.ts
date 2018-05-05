@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule} from '../../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -28,4 +29,8 @@ import { MatchsettingspasswordDirective } from './components/changepassword/matc
   declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent, MatchsettingspasswordDirective],
   providers: [DashboardService]
 })
-export class DashboardModule { }
+export class DashboardModule {
+  constructor(overlayContainer: OverlayContainer) {
+    overlayContainer.getContainerElement().classList.add('my-second-theme');
+  }
+}
