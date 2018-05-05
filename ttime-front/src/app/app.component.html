@@ -26,7 +26,7 @@
               <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
               <button mat-menu-item routerLink= "/dashboard/enrolled"><mat-icon>import_contacts</mat-icon>My Courses</button>
               <button mat-menu-item routerLink= "/dashboard/profile"><mat-icon>account_box</mat-icon>Profile</button>
-              <button mat-menu-item routerLink= "/dashboard/changepassword"><mat-icon>settings</mat-icon>Settings</button>
+              <button *ngIf="checkTag()" mat-menu-item routerLink= "/dashboard/changepassword"><mat-icon>settings</mat-icon>Settings</button>
               <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
             </mat-menu>
           </span>
@@ -48,7 +48,7 @@
             
          <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
          <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i><span class="icon-text">Registration</span></button></div>
-         <div *ngIf="hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/dashboard/changepassword" routerLinkActive="active" > <i class="material-icons">settings</i><span class="icon-text">Settings</span></button></div>
+         <div *ngIf="hideLogin() && checkTag()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/dashboard/changepassword" routerLinkActive="active" > <i class="material-icons">settings</i><span class="icon-text">Settings</span></button></div>
          <div *ngIf="hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" (click)="OnLogout()"> <i class="material-icons">power_settings_new</i><span class="icon-text">Logout</span></button></div>
        </div>
     </mat-sidenav>

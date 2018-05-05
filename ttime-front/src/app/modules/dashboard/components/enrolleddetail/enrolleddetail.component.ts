@@ -38,7 +38,9 @@ export class EnrolleddetailComponent implements OnInit {
     this.Title();
     this.setDisplay();
     this.getDetail();
-    this.getUser();
+    //this.getUser();
+    this.user = this.dashboardService.user;
+    console.log(this.user);
   }
 
   Title(){
@@ -78,7 +80,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   Video(id){
-    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: '/Courses/TestCourse/LectureQ.mp4' }});
+    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: this.course.courseFreeVideo }});
   }
 
   getDetail(){

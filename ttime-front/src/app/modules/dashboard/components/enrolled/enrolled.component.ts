@@ -24,9 +24,20 @@ export class EnrolledComponent implements OnInit {
   constructor(private router: Router, private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
 
   ngOnInit() {
+    //this.user = this.dashboardService.user;
     this.getUser();
     this.setDisplay();
     this.Title();
+    
+  }
+
+  hideCourse(){
+    if(this.courses.length == 0){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   Title(){

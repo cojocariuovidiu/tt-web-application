@@ -55,7 +55,8 @@ export class LecturevideoComponent implements OnInit {
   ngOnInit() {
     this.Title();
     this.setDisplay();
-    this.getUser();
+    //this.getUser();
+    this.user = this.dashboardService.user;
     this.getRouterParams();
     this.getDetail();
     this.getVideo();

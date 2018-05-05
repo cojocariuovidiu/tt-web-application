@@ -301,10 +301,10 @@ router.patch('/profile/edit/:id', passport.authenticate(Strings.strategy.localSt
     name: req.body.name  || req.user.name,
     email: req.body.email || req.user.email,
     type: req.body.type || req.user.type,
-    institutetype: req.body.institutetype || "empty",
-    institutename: req.body.institutename || "empty",
-    gender: req.body.gender || "empty",
-    location: req.body.location || "empty"
+    institutetype: req.body.institutetype || req.user.institutetype,
+    institutename: req.body.institutename || req.user.institutename,
+    gender: req.body.gender || req.user.gender,
+    location: req.body.location || req.user.location
    }
   
   User.getUserById(req.params.id, (err, user) => {
@@ -346,16 +346,18 @@ router.patch('/profile/social/edit/:id', passport.authenticate(Strings.strategy.
   const editUser = {
     name: req.body.name  || req.user.name,
     email: req.user.email,
+    mobile: req.body.mobile || req.user.mobile,
     type: req.body.type || req.user.type,
-    institutetype: req.body.institutetype || "empty",
-    institutename: req.body.institutename || "empty",
-    gender: req.body.gender || "empty",
-    location: req.body.location || "empty"
+    institutetype: req.body.institutetype || req.user.institutetype,
+    institutename: req.body.institutename || req.user.institutename,
+    gender: req.body.gender || req.user.gender,
+    location: req.body.location || req.user.location
   }
   SocialUser.getSocialUserById(req.params.id, (err, user) => {
     if(err) throw err;
     user.name = editUser.name;
     user.email = editUser.email;
+    user.mobile = editUser.mobile;
     user.type = editUser.type;
     user.institutetype = editUser.institutetype;
     user.institutename = editUser.institutename;
@@ -388,13 +390,46 @@ router.patch('/profile/social/edit/:id', passport.authenticate(Strings.strategy.
 //Change Password
 router.patch('/change/password/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
   var password = req.body.password;
+  var newpassword = req.body.newpassword;
   User.getUserById(req.params.id, (err, user) => {
     if(err) throw err;
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(password, salt, (err, hash) => {
-        if(err) throw err;
-        password = hash;
-        user.password = password;
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newpassword, salt, (err, hash) => {
+            if(err) throw err;
+            password = hash;
+            user.password = password;
+            user.save((err, result) => {
+              if(err)
+              {
+                res.status(500).json({success: false, error: err, msg: Strings.message.passwordEditFailed});
+              }
+              else{
+                res.status(200).json({success: true, msg: Strings.message.passwordEditSuccess});
+              }
+            });
+          });
+        });
+      } else {
+        return res.status(401).json({success: false, error: err, msg: Strings.message.wrongPassword});
+      }
+    });
+    
+  });
+});
+
+//Change Mobile
+router.patch('/change/mobile/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
+  var password = req.body.password;
+  var mobile = req.body.mobile;
+  User.getUserById(req.params.id, (err, user) => {
+    if(err) throw err;
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) throw err;
+      if(isMatch){
+        user.mobile = mobile;
         user.save((err, result) => {
           if(err)
           {
@@ -403,9 +438,12 @@ router.patch('/change/password/:id', passport.authenticate(Strings.strategy.loca
           else{
             res.status(200).json({success: true, msg: Strings.message.passwordEditSuccess});
           }
-        });
-      });
+        });  
+      } else {
+        return res.status(401).json({success: false, error: err, msg: Strings.message.wrongPassword});
+      }
     });
+    
   });
 });
 

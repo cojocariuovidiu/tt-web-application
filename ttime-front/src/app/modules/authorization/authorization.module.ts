@@ -11,8 +11,8 @@ import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider, FacebookLogi
 import { GOOGLE_APP_ID, FACEBOOK_APP_ID } from '../../config/config';
 import { AuthorizationService } from './services/authorization.service';
 import { AuthorizationComponent } from './authorization.component';
-import { MatchpasswordDirective } from './components/registration/matchpassword.directive';
 import { Title } from '@angular/platform-browser';
+import { MatchpasswordDirective } from './components/registration/matchpassword.directive';
 
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
@@ -53,7 +53,7 @@ export function getAuthServiceConfigs() {
     AuthorizationComponent,
     LoginComponent,
     RegistrationComponent,
-    MatchpasswordDirective,
+    MatchpasswordDirective
   ]
 })
 export class AuthorizationModule { }

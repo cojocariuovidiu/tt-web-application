@@ -67,6 +67,19 @@ export class AppComponent implements OnInit {
     }
   }
 
+  checkTag(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    if(usercred == null || undefined){
+      return true;
+    }
+    else if(usercred.tag == "local"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
   getauthToken(){
     const token = localStorage.getItem('id_token');
     this.authtoken = token;

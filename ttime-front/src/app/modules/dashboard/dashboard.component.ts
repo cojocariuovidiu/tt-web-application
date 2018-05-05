@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../../model/user.model';
 import { Router } from '@angular/router';
+import { DashboardService } from './services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,15 +10,17 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   
-  user: User;
+  user: User = new User('','','');
   navLinks = [
     {label: 'Enrolled', path: '/dashboard/enrolled'},
     {label: 'Profile', path: '/dashboard/profile'}
   ];
-  constructor(private router: Router) { }
+  constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.router.url);
+    //console.log(this.router.url);
+    this.getUser();
+    //this.user = this.dashboardService.user;
   }
 
   hideTab(){
@@ -31,6 +34,14 @@ export class DashboardComponent implements OnInit {
     else{
       return false;
     }
+  }
+
+  getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+      console.log(this.user);
+    });
   }
 
 }

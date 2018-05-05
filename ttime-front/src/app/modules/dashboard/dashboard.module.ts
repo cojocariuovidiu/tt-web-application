@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule} from '../../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -14,6 +13,7 @@ import { EnrolleddetailComponent } from './components/enrolleddetail/enrolleddet
 import { ChangepasswordComponent } from './components/changepassword/changepassword.component';
 import { LecturevideoComponent } from './components/lecturevideo/lecturevideo.component';
 import { DashboardService } from './services/dashboard.service';
+import { MatchsettingspasswordDirective } from './components/changepassword/matchsettingspassword.directive';
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { DashboardService } from './services/dashboard.service';
     FlexLayoutModule,
     DashboardRoutingModule
   ],
-  declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent],
+  declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent, MatchsettingspasswordDirective],
   providers: [DashboardService]
 })
 export class DashboardModule { }

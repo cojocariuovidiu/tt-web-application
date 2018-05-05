@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   genderFemale = 'female';
   typeBoth = 'both';
   namePattern = '[a-z]*.{3,}';
+  mobilePattern: RegExp = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/;
   emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   show = true;
  cols: Observable<number>;
@@ -41,7 +42,8 @@ usertest = [
  user = new User('','','');
   title = "Profile - Teachers Time";
   constructor(private formBuilder: FormBuilder, private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) {
-    this.getUser();
+    this.user = this.dashboardService.user;
+    //this.getUser();
     this.createProfileForm();
   }
 
@@ -83,6 +85,9 @@ usertest = [
        
         Validators.pattern(this.emailPattern)
       ])],
+      Mobile: [null, Validators.compose([
+       Validators.pattern(this.mobilePattern)
+      ])],
       Location: [
         null
       ],
@@ -98,7 +103,7 @@ usertest = [
   }
 
   sendProfileForm() {
-    const user = new User(this.Name.value, this.Email.value, null, null, null, this.Scope.value, null, null, null, 
+    const user = new User(this.Name.value, this.Email.value, null, this.Mobile.value, null, this.Scope.value, null, null, null, 
       this.InstituteName.value, this.InstituteType.value, this.Gender.value, this.Location.value);
     console.log(this.user.userID);
     const usercred = JSON.parse(localStorage.getItem('usercred'));
@@ -125,6 +130,9 @@ usertest = [
   get Email() {
     return this.profileForm.get('Email') as FormControl;
   }
+  get Mobile() {
+    return this.profileForm.get('Mobile') as FormControl;
+  }
   get Scope() {
     return this.profileForm.get('Scope') as FormControl;
   }
@@ -144,6 +152,16 @@ usertest = [
   onView(){
     this.getUser();
     this.show = !this.show;
+  }
+
+  checkTag(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    if(usercred.tag == "local"){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
 }

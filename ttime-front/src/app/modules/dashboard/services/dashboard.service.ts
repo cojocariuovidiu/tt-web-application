@@ -13,6 +13,7 @@ export class DashboardService {
   
   courses: Course [] = [];
   course: Course;
+  public user: User;
   comments: Comment [] = [];
   constructor(private router: Router, private http: Http, private errorService: ErrorService) { }
 
@@ -34,7 +35,8 @@ export class DashboardService {
         let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
           ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location
         );
-        //console.log(profile);
+        this.user = profile;
+        console.log(this.user);
         return profile;
       })
       .catch((error: Response) => {
@@ -55,6 +57,8 @@ export class DashboardService {
         let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
           ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location);
         //console.log(profile);
+        this.user = profile;
+        console.log(this.user);
         return profile;
       })
       .catch((error: Response) => {
@@ -291,41 +295,90 @@ export class DashboardService {
       });
     }
 
-    editProfile(user, id, tag){
-      if(tag == "local"){
-        let headers = new Headers();
-        const url = `${"api/users/profile/edit/"}${id}`
-        const body = JSON.stringify(user);
-        const token = this.getauthToken();
-        headers.append('Authorization', token);
-        headers.append('Content-Type', 'application/json');
-        return this.http.patch(url, body ,{headers: headers})
-        .map((response: Response) => {
-          const data = response.json();
-          return data;
-        })
-        .catch((error: Response) => {
-          this.errorService.handleError(error.json());
-          return Observable.throw(error.json());
-        });
-      }
-      else{
-        let headers = new Headers();
-        const url = `${"api/users/profile/social/edit/"}${id}`
-        const body = JSON.stringify(user);
-        const token = this.getauthToken();
-        headers.append('Authorization', token);
-        headers.append('Content-Type', 'application/json');
-        return this.http.patch(url, body ,{headers: headers})
-        .map((response: Response) => {
-          const data = response.json();
-          return data;
-        })
-        .catch((error: Response) => {
-          this.errorService.handleError(error.json());
-          return Observable.throw(error.json());
-        });
-      }
+  editProfile(user, id, tag){
+    if(tag == "local"){
+      let headers = new Headers();
+      const url = `${"api/users/profile/edit/"}${id}`
+      const body = JSON.stringify(user);
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.patch(url, body ,{headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
     }
+    else{
+      let headers = new Headers();
+      const url = `${"api/users/profile/social/edit/"}${id}`
+      const body = JSON.stringify(user);
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.patch(url, body ,{headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+  }
   
+  checkMobile(mobile){
+    let headers = new Headers();
+    //const url = `${"http://localhost:8080/api/users/check/mobile"}`;
+    const url = `${"/api/users/check/mobile"}`;
+    const logincred = {
+      mobile: mobile
+    }
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(url, logincred, {headers: headers})
+      .map((response: Response) => response.json())
+      .catch((error: Response) => {
+        //this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+  }
+
+  changePassword(id, body){
+    let headers = new Headers();
+    const url = `${"api/users/change/password/"}${id}`
+    const token = this.getauthToken();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.patch(url, body ,{headers: headers})
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
+
+  changeMobile(id, body){
+    let headers = new Headers();
+    const url = `${"api/users/change/mobile/"}${id}`
+    const token = this.getauthToken();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.patch(url, body ,{headers: headers})
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
 }

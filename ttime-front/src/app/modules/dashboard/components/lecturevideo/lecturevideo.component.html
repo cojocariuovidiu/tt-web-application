@@ -24,7 +24,7 @@
                          <mat-expansion-panel-header>
                            <mat-panel-title>
                                <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
-                             <h6><strong>{{session.sessionWeek}} : {{session.sessionTitle}}</strong></h6>
+                             <h6><strong>{{session.sessionNo}} : {{session.sessionTitle}}</strong></h6>
                            </mat-panel-title>
                          </mat-expansion-panel-header>
                             <mat-list> 
@@ -49,7 +49,7 @@
             <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
                 <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Lecture Description:</h4></mat-card-title> </mat-card-header>    
                 <mat-card-content>     
-                <p class="text-black">Lecture Description.</p>
+                <p class="text-black">{{course.courseDetail}}</p>
                 </mat-card-content> 
               </mat-card>
                 

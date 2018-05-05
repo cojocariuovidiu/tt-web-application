@@ -7,7 +7,7 @@
             <mat-grid-tile ngStyle.lt-md="padding-top:15em;" fxLayoutwrap>
           <mat-card class="reg-card" fxFlex fxFlexFill>
             <mat-card-header fxLayout="column" fxLayoutAlign="center center">
-              <mat-card-title><h2 align="center">{{user.name}}</h2></mat-card-title> 
+              <mat-card-title><h2 align="center">Edit Profile</h2></mat-card-title> 
             </mat-card-header>
             
             <form fxLayout="column" fxLayoutAlign="start" [formGroup]="profileForm" (ngSubmit)="sendProfileForm()"> 
@@ -19,6 +19,10 @@
                         <input matInput placeholder="Email" name="Email" id="Email" formControlName="Email">
                         <mat-icon matPrefix>email</mat-icon>
                 </mat-form-field>
+                <mat-form-field floatLabel="auto" *ngIf="checkTag()">
+                    <input matInput placeholder="Mobile" name="Mobile" id="Mobile" formControlName="Mobile">
+                    <mat-icon matPrefix>smartphone</mat-icon>
+              </mat-form-field>
                 <mat-radio-group class="radio-group" name="Gender" id="Gender" formControlName="Gender">
                     <mat-radio-button  [value]="genderMale">Male</mat-radio-button>
                     <span class="slabel"></span>
