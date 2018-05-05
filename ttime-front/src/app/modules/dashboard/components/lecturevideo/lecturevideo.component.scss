@@ -21,3 +21,18 @@ textarea{
     min-width: 10vw;
     max-width: 40vw;
 }
+.example-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+  
+  .example-selected-value {
+    margin: 15px 0;
+  }
+  mat-step-header .mat-step-label {
+    overflow: visible;
+}

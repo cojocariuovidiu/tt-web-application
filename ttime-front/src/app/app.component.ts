@@ -55,24 +55,22 @@ export class AppComponent implements OnInit {
   hideLogin()
   {
     this.getauthToken();
-    if(this.authtoken)
-    {
-      //console.log('true');
+    if(this.authtoken) {
+      // console.log('true');
       return true;
-    }
-    else
+    } else
     {
-      //console.log('false');
+      // console.log('false');
       return false;
     }
   }
 
-  getauthToken(){
+  getauthToken() {
     const token = localStorage.getItem('id_token');
     this.authtoken = token;
   }
 
-  OnLogout(){
+  OnLogout() {
     this.authtoken = null;
     this.coreService.Logout();
   }
