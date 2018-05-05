@@ -38,6 +38,16 @@ export class LecturevideoComponent implements OnInit {
   ratingicon = true;
   sessionicon = true;
 
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+
+  seasons = [
+    'Winter',
+    'Spring',
+    'Summer',
+    'Autumn',
+  ];
+
   constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
     this.createCommentForm();
    }

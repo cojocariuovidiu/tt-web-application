@@ -78,14 +78,14 @@ export class EnrolledComponent implements OnInit {
     });
   }
 
-  getEnrolled(id){
+  getEnrolled(id) {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getEnrolledCourses(id, usercred.tag).subscribe((courses: Course[]) => {
       this.courses = courses;
     })
   }
 
-  getCourseDetail(id){
+  getCourseDetail(id) {
     console.log(id);
     this.router.navigate(['/dashboard/enrolled', id]);
   }
