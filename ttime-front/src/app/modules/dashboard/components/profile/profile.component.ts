@@ -105,11 +105,11 @@ usertest = [
   sendProfileForm() {
     const user = new User(this.Name.value, this.Email.value, null, this.Mobile.value, null, this.Scope.value, null, null, null, 
       this.InstituteName.value, this.InstituteType.value, this.Gender.value, this.Location.value);
-    console.log(this.user.userID);
+    //console.log(this.user.userID);
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.editProfile(user, this.user.userID, usercred.tag).subscribe(data => {
       if(data.success){
-        console.log(data);
+        //console.log(data);
         this.resetProfileForm();
       }
       else{

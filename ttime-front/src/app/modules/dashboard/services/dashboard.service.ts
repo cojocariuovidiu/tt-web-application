@@ -7,6 +7,8 @@ import { ErrorService } from '../../../services/error.service';
 import { Router } from '@angular/router';
 import { Course } from '../../../model/course.model';
 import { Comment } from '../../../model/comment.model';
+import { CoreService } from '../../../services/core.service';
+
 
 @Injectable()
 export class DashboardService {
@@ -15,7 +17,7 @@ export class DashboardService {
   course: Course;
   public user: User;
   comments: Comment [] = [];
-  constructor(private router: Router, private http: Http, private errorService: ErrorService) { }
+  constructor(private coreService: CoreService, private router: Router, private http: Http, private errorService: ErrorService) { }
 
   getauthToken(){
     const token = localStorage.getItem('id_token');
@@ -36,12 +38,17 @@ export class DashboardService {
           ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location
         );
         this.user = profile;
-        console.log(this.user);
+        //console.log(this.user);
         return profile;
       })
       .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
+        if(error.status == 401){
+          this.router.navigate(['/auth/login']);
+        }
+        else{
+          this.errorService.handleError(error.json());
+          return Observable.throw(error.json());
+        }
       });
     }
     else{
@@ -58,7 +65,7 @@ export class DashboardService {
           ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location);
         //console.log(profile);
         this.user = profile;
-        console.log(this.user);
+        //console.log(this.user);
         return profile;
       })
       .catch((error: Response) => {
@@ -118,7 +125,7 @@ export class DashboardService {
           ));
         }
         this.courses = transformedCourses;
-        console.log(this.courses);
+        //console.log(this.courses);
         return transformedCourses;
       })
       .catch((error: Response) => {
@@ -210,7 +217,7 @@ export class DashboardService {
       return this.http.get(url, {headers: headers})
       .map((response: Response) => {
         const course = response.json().course;
-        console.log(course);
+        //console.log(course);
         let transformedCourse: Course;
         
           transformedCourse = new Course(
@@ -222,7 +229,7 @@ export class DashboardService {
           );
         
         this.course = transformedCourse;
-        console.log(this.course);
+        //console.log(this.course);
         return transformedCourse;
       })
       .catch((error: Response) => {
@@ -257,7 +264,7 @@ export class DashboardService {
       return this.http.get(url,{headers: headers})
       .map((response: Response) => {
         const comments = response.json().comment;
-        console.log(comments);
+        //console.log(comments);
         let transformedComments: Comment[] = [];
         for (let comment of comments) {
           transformedComments.push(new Comment(
@@ -306,6 +313,7 @@ export class DashboardService {
       return this.http.patch(url, body ,{headers: headers})
       .map((response: Response) => {
         const data = response.json();
+        this.coreService.showMessage(data.msg);
         return data;
       })
       .catch((error: Response) => {
@@ -323,6 +331,7 @@ export class DashboardService {
       return this.http.patch(url, body ,{headers: headers})
       .map((response: Response) => {
         const data = response.json();
+        this.coreService.showMessage(data.msg);
         return data;
       })
       .catch((error: Response) => {
@@ -357,6 +366,7 @@ export class DashboardService {
     return this.http.patch(url, body ,{headers: headers})
     .map((response: Response) => {
       const data = response.json();
+      this.coreService.showMessage(data.msg);
       return data;
     })
     .catch((error: Response) => {
@@ -374,11 +384,17 @@ export class DashboardService {
     return this.http.patch(url, body ,{headers: headers})
     .map((response: Response) => {
       const data = response.json();
+      this.coreService.showMessage(data.msg);
       return data;
     })
     .catch((error: Response) => {
       this.errorService.handleError(error.json());
       return Observable.throw(error.json());
     });
+  }
+
+  Logout()
+  {
+    this.coreService.Logout();
   }
 }

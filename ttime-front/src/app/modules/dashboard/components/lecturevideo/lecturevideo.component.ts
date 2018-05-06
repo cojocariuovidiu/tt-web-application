@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import {Observable} from 'rxjs/Observable';
@@ -25,7 +25,9 @@ export class LecturevideoComponent implements OnInit {
   paramIDCourse: string;
   signedUrl: string;
   imagethumb: string;
-  course: Course = new Course('','','','');
+  sessionID: number = 0;
+  lectureID: number = 0;
+  
   user: User = new User('', '', '');
   comments: Comment[] = [];
   // tslint:disable-next-line:no-inferrable-types
@@ -47,22 +49,30 @@ export class LecturevideoComponent implements OnInit {
     'Summer',
     'Autumn',
   ];
+  course = new Course('','','','','','','','',[]);
 
-  constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
+  constructor(private router: Router, private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
     this.createCommentForm();
     this.createdummy();
+    
    }
 
   ngOnInit() {
-    this.Title();
-    this.setDisplay();
+    
     //this.getUser();
+    
     this.user = this.dashboardService.user;
     this.getRouterParams();
+    this.getQueryParams();
     this.getDetail();
+    
     this.getVideo();
-    this.getCourseComments();  
+    this.getCourseComments();
+    this.Title();
+    this.setDisplay();
   }
+
+  
 
   Title(){
     this.titleService.setTitle(this.title);
@@ -71,12 +81,12 @@ export class LecturevideoComponent implements OnInit {
   getVideo(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getSignedURL(this.videoLink).subscribe(data => {
-      console.log(data);
+      //console.log(data);
       this.signedUrl = data.signedUrl;
     })
 
     this.dashboardService.getImage("/Courses/TestCourse/angular.jpg").subscribe(data => {
-      console.log(data);
+      //console.log(data);
       this.imagethumb = data.signedUrl;
     });
   }
@@ -85,19 +95,28 @@ export class LecturevideoComponent implements OnInit {
     this.routerParams = this.activatedRoute.params.subscribe(params => {
       this.paramIDCourse = params['idcourse'];
    });
+  }
+  getQueryParams(){
+   
    this.activatedRoute.queryParams
     .filter(params => params.videoLink)
     .subscribe(params => {
-      console.log(params); // {order: "popular"}
+      //console.log(params); // {order: "popular"}
 
       this.videoLink = params.videoLink;
-      console.log(this.videoLink); // popular
+      this.sessionID = parseInt(params.sessionID);
+      this.lectureID = parseInt(params.lectureID); 
+      
     });
   }
   getDetail(){
     this.dashboardService.getEnrolledDetail(this.paramIDCourse).subscribe((course: Course) => {
       this.course = course;
-      console.log(this.course);
+      //console.log(this.sessionID);
+      //console.log(this.lectureID);
+      //console.log(course.courseSessions[0].lectures[0].lectureDetails);
+      //var x = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureDetails;
+      //console.log(x);
     });
   }
   setDisplay(){
@@ -157,10 +176,10 @@ export class LecturevideoComponent implements OnInit {
 
   sendCommentForm(){
     const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
-    console.log(comment);
+    //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
-        console.log(data.data);
+        //console.log(data.data);
         this.getCourseComments();
       }
     });
@@ -182,17 +201,17 @@ export class LecturevideoComponent implements OnInit {
   }
 
   getCourseComments(){
-    console.log(this.course.courseID);
+    //console.log(this.course.courseID);
     this.dashboardService.getComment(this.paramIDCourse).subscribe((comments: Comment[]) => {
       this.comments = comments;
     });
   }
 
   onDelete(id){
-    console.log(id);
+    //console.log(id);
     this.dashboardService.deleteComment(id).subscribe(data => {
       if(data.success){
-        console.log(data.data);
+        //console.log(data.data);
         this.getCourseComments();
       }
     })
@@ -201,6 +220,11 @@ export class LecturevideoComponent implements OnInit {
     this.firstFormGroup = this.formBuilder.group({
 
     });
+  }
+
+  onLecture(session, lecture, link){
+    this.router.navigate(['/dashboard/lecturevideo', this.course.courseID], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
+    //console.log(session, lecture, link);
   }
 
 }

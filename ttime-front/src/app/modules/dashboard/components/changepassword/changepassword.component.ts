@@ -21,7 +21,7 @@ export class ChangepasswordComponent implements OnInit {
     this.createSettingsForm1();
     this.createSettingsForm2();
   }
-  hide = 'true';
+  hide = true;
   ngOnInit() {
     this.titleService.setTitle(this.title);
     this.user = this.dashboardService.user;
@@ -59,17 +59,18 @@ export class ChangepasswordComponent implements OnInit {
   }
 
   sendSettingsForm1(){
-    console.log(this.settingsForm1.value);
+    //console.log(this.settingsForm1.value);
     const body = {
       password: this.Password.value,
       mobile: this.Mobile.value
     }
     this.dashboardService.changeMobile(this.user.userID, body).subscribe(data => {
       if(data.success){
-        console.log(data);
+        //console.log(data);
+        this.dashboardService.Logout();
       }
     });
-    this.resetSettingsForm1();
+    //this.resetSettingsForm1();
   }
 
   resetSettingsForm1(){
@@ -77,15 +78,16 @@ export class ChangepasswordComponent implements OnInit {
   }
 
   sendSettingsForm2(){
-    console.log(this.settingsForm2.value);
-    console.log(this.user.userID);
+    //console.log(this.settingsForm2.value);
+    //console.log(this.user.userID);
     const body = {
       password: this.CurrentPassword.value,
       newpassword: this.NewPassword.value
     }
     this.dashboardService.changePassword(this.user.userID, body).subscribe(data => {
       if(data.success){
-        console.log(data);
+        //console.log(data);
+        this.dashboardService.Logout();
       }
       else{
         console.log('error');

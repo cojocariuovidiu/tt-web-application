@@ -273,27 +273,6 @@ router.patch('/logout/:tag', passport.authenticate(Strings.strategy.localStrateg
 }); */
 
 
-// Authenticate For Editing
-router.post('/authenticate/edit', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-  const id = req.body.id;
-  const password = req.body.password;
-
-  User.getUserById(id, (err, user) => {
-    if(err) throw err;
-    if(!user){
-      return res.status(404).json({success: false, error: err, msg: Strings.message.userNotFound});
-    }
-
-    User.comparePassword(password, user.password, (err, isMatch) => {
-      if(err) throw err;
-      if(isMatch){
-        return res.status(200).json({success: true, msg: Strings.message.authSuccess})
-      } else {
-        return res.status(401).json({success: false, error: err, msg: Strings.message.wrongPassword});
-      }
-    });
-  });
-});
 
 //Profile Edit
 router.patch('/profile/edit/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
@@ -433,10 +412,10 @@ router.patch('/change/mobile/:id', passport.authenticate(Strings.strategy.localS
         user.save((err, result) => {
           if(err)
           {
-            res.status(500).json({success: false, error: err, msg: Strings.message.passwordEditFailed});
+            res.status(500).json({success: false, error: err, msg: Strings.message.mobileEditFailed});
           }
           else{
-            res.status(200).json({success: true, msg: Strings.message.passwordEditSuccess});
+            res.status(200).json({success: true, msg: Strings.message.mobileEditSuccess});
           }
         });  
       } else {

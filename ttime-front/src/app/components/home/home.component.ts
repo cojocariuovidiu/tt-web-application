@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   showCourses(){
     this.coreService.getCourses().subscribe((courses: Course[]) => {
       this.courses = courses;
-      console.log(courses);
+      //console.log(courses);
     });
   }
 

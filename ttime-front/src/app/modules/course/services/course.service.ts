@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
 import { Comment } from '../../../model/comment.model';
 import { User } from '../../../model/user.model';
+import { CoreService } from '../../../services/core.service';
 
 @Injectable()
 export class CourseService {
@@ -13,7 +14,7 @@ export class CourseService {
   private courses: Course [] = [];
   private course: Course;
   private comments: Comment [] = [];
-  constructor(private http: Http, private errorService: ErrorService) { }
+  constructor(private coreService: CoreService, private http: Http, private errorService: ErrorService) { }
 
   getCourses(){
     let headers = new Headers();
@@ -93,7 +94,7 @@ export class CourseService {
     return this.http.get(url, {headers: headers})
     .map((response: Response) => {
       const course = response.json().course;
-      console.log(course);
+      //console.log(course);
       let transformedCourse: Course;
       
         transformedCourse = new Course(
@@ -105,7 +106,7 @@ export class CourseService {
         );
       
       this.course = transformedCourse;
-      console.log(this.course);
+      //console.log(this.course);
       return transformedCourse;
     })
     .catch((error: Response) => {
@@ -132,6 +133,7 @@ export class CourseService {
       headers.append('Content-Type', 'application/json');
       return this.http.put(url, cid, {headers: headers})
         .map((response: Response) => {
+          this.coreService.showMessage(response.json().msg);
           return response.json();  
         })
         .catch((error: Response) => {
@@ -152,6 +154,7 @@ export class CourseService {
       headers.append('Content-Type', 'application/json');
       return this.http.put(url, cid, {headers: headers})
       .map((response: Response) => {
+        this.coreService.showMessage(response.json().msg);
         return response.json();  
       })
       .catch((error: Response) => {
@@ -168,7 +171,7 @@ export class CourseService {
     return this.http.get(url,{headers: headers})
     .map((response: Response) => {
       const comments = response.json().comment;
-      console.log(comments);
+      //console.log(comments);
       let transformedComments: Comment[] = [];
       for (let comment of comments) {
         transformedComments.push(new Comment(

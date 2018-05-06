@@ -24,7 +24,7 @@ export class EnrolleddetailComponent implements OnInit {
   commentForm: FormGroup;
   rowspan: Observable<number>;
   syllabusicon: boolean = true;
-  course: Course = new Course('','','','');
+  course: Course = new Course('','','','', '', '', '', '', []);
   user: User = new User('', '','');
   comments: Comment[] = [];
   ratingicon: boolean = true;
@@ -40,7 +40,7 @@ export class EnrolleddetailComponent implements OnInit {
     this.getDetail();
     //this.getUser();
     this.user = this.dashboardService.user;
-    console.log(this.user);
+    //console.log(this.user);
   }
 
   Title(){
@@ -80,7 +80,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   Video(id){
-    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: this.course.courseFreeVideo }});
+    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: this.course.courseFreeVideo, 'sessionID': '0', 'lectureID': '0' }});
   }
 
   getDetail(){
@@ -90,7 +90,7 @@ export class EnrolleddetailComponent implements OnInit {
       this.dashboardService.getEnrolledDetail(this.paramID).subscribe((course: Course) => {
         //console.log(course);
         this.course = course;
-        console.log(this.course.courseID);
+        //console.log(this.course.courseID);
       })
     });
     this.getCourseComments();
@@ -113,10 +113,10 @@ export class EnrolleddetailComponent implements OnInit {
 
   sendCommentForm(){
     const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
-    console.log(comment);
+    //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
-        console.log(data.data);
+        //console.log(data.data);
         this.getCourseComments();
       }
     });
@@ -131,17 +131,17 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   getCourseComments(){
-    console.log(this.course.courseID);
+    //console.log(this.course.courseID);
     this.dashboardService.getComment(this.paramID).subscribe((comments: Comment[]) => {
       this.comments = comments;
     });
   }
 
   onDelete(id){
-    console.log(id);
+    //console.log(id);
     this.dashboardService.deleteComment(id).subscribe(data => {
       if(data.success){
-        console.log(data.data);
+        //console.log(data.data);
         this.getCourseComments();
       }
     })

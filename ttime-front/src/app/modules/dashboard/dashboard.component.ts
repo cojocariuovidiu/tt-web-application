@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
+    
     //console.log(this.router.url);
     this.getUser();
     //this.user = this.dashboardService.user;
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
       this.user = profile;
-      console.log(this.user);
+      //console.log(this.user);
     });
   }
 

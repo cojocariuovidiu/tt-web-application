@@ -45,10 +45,10 @@ export class CoursedetailComponent implements OnInit {
   getDetail(){
     this.routerParams = this.activatedRoute.params.subscribe(params => {
       this.paramID = params['id'];
-      console.log(this.paramID);
+      //console.log(this.paramID);
       this.courseService.getCoursesDetail(this.paramID).subscribe((course: Course) => {
         this.course = course;
-        console.log(course);
+       //console.log(course);
       });
    });
   }
@@ -108,10 +108,10 @@ export class CoursedetailComponent implements OnInit {
   }
 
   onDelete(id){
-    console.log(id);
+    //console.log(id);
     this.courseService.deleteComment(id).subscribe(data => {
       if(data.success){
-        console.log(data.data);
+        //console.log(data.data);
         this.getCourseComments();
       }
     })
@@ -121,11 +121,11 @@ export class CoursedetailComponent implements OnInit {
     const isToken = this.checkLogin();
     if(isToken){
       const usercred = JSON.parse(localStorage.getItem('usercred'));
-      console.log(usercred.tag);
-      console.log(courseid);
+      //console.log(usercred.tag);
+      //console.log(courseid);
       this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
         if(data.success){
-          console.log(data);
+          //console.log(data);
         }
         else{
           console.log('error');
