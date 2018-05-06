@@ -42,8 +42,8 @@
          <div><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/courses/index" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button></div>
          <div><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/us/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button></div> 
           <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
-          <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">My Courses</span></button></div>
-           <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/contact" routerLinkActive="active" > <i class="material-icons">account_box</i><span class="icon-text">Profile</span></button></div> 
+          <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/dashboard/enrolled" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">My Courses</span></button></div>
+           <div *ngIf="hideLogin()"><button mat-button id="navbutton" routerLink= "/dashboard/profile" routerLinkActive="active" > <i class="material-icons">account_box</i><span class="icon-text">Profile</span></button></div> 
           <div *ngIf="hideLogin()"> <hr style="background-color:#FFFFFF;border-width:0;color:#FFFFFF;height:2px;line-height:0;text-align:left;width:100%;"> </div>
             
          <div *ngIf="!hideLogin()"><button mat-button id="navbutton" (click)="sidenav.toggle()" routerLink= "/auth/login" routerLinkActive="active" > <i class="material-icons">person</i><span class="icon-text">Login</span></button></div>
