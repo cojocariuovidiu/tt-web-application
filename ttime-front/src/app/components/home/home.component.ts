@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import {Observable} from 'rxjs/Observable';
-import {ObservableMedia} from '@angular/flex-layout';
+import { Observable } from 'rxjs/Observable';
+import { ObservableMedia } from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Course } from '../../model/course.model';
@@ -19,37 +19,36 @@ export class HomeComponent implements OnInit {
   title: string = "Home - Teachers Time";
   cols: Observable<number>;
   rowspan: Observable<number>;
-
   introcols: Observable<number>;
-  /*courses = [
-    {name: 'Classroom Managment' , details: ' ' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Python' , details: 'Python is an interpreted high-level programming language for general-purpose programming. Created by Guido van Rossum and first released in 1991, Python has a design philosophy that emphasizes code readability, notably using significant whitespace. It provides constructs that enable clear programming on both small and large scales.' },
-
-    {name: 'Csharp' ,  details: '' },
-  ];*/
-  courses: Course [] = [];
+  coursesTeacher: Course [] = [];
+  coursesParent: Course [] = [];
   constructor(private router: Router, private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
-    const dash = this.coreService.checkLogin();
-    if(dash){
-      this.router.navigate(['/dashboard/enrolled']);
-    }
+    this.redirectToDash();
     this.setDisplay();
-    this.showCourses();
+    this.showCoursesParent();
+    this.showCoursesTeacher();
+    
   }
 
-  showCourses(){
-    this.coreService.getCourses().subscribe((courses: Course[]) => {
-      this.courses = courses;
+  redirectToDash(){
+    const isDash = this.coreService.checkLogin();
+    if(isDash){
+      this.router.navigate(['/dashboard/enrolled']);
+    }
+  }
+
+  showCoursesTeacher(){
+    this.coreService.getCoursesTeacher().subscribe((courses: Course[]) => {
+      this.coursesTeacher = courses;
       //console.log(courses);
+    });
+  }
+
+  showCoursesParent(){
+    this.coreService.getCoursesParent().subscribe((courses: Course[]) => {
+      this.coursesParent = courses;
     });
   }
 

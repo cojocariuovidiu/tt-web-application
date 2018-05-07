@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { DashboardService } from '../../services/dashboard.service';
 import { Course } from '../../../../model/course.model';
 import { Comment } from '../../../../model/comment.model';
@@ -38,7 +38,6 @@ export class EnrolleddetailComponent implements OnInit {
     this.Title();
     this.setDisplay();
     this.getDetail();
-    //this.getUser();
     this.user = this.dashboardService.user;
     //console.log(this.user);
   }
@@ -104,13 +103,6 @@ export class EnrolleddetailComponent implements OnInit {
     });
   }
 
-  getUser(){
-    const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
-    });
-  }
-
   sendCommentForm(){
     const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
     //console.log(comment);
@@ -147,6 +139,13 @@ export class EnrolleddetailComponent implements OnInit {
       }
     })
   }
+
+  /*getUser(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+      this.user = profile;
+    });
+  }*/
 }
 
 

@@ -10,7 +10,7 @@ const nodemailer = require('nodemailer');
 const Email = require('../config/email');
 const Strings = require('../config/strings');
 
-// Register User
+// Check for User
 router.post('/check/mobile', (req,res,next) => {
   const mobile = req.body.mobile;
   User.getUserByMobile(mobile, (err, user) => {
@@ -18,10 +18,12 @@ router.post('/check/mobile', (req,res,next) => {
       res.status(200).json({success: false, mobile: user.mobile, msg: Strings.message.userExists});
     }
     else{
-      res.status(200).json({success: true, mobile: null, msg: "Mobile Number Available"});
+      res.status(200).json({success: true, mobile: null, msg: Strings.message.mobileNumberAvailable});
     }
   });
 });
+
+//Register User
 router.post('/register', (req, res, next) => {
   let newUser = new User({
     name: req.body.name,
@@ -120,55 +122,6 @@ router.post('/register/social', (req, res, next) => {
   });
 });
 
-/*// Authenticate
-router.patch('/authenticate', (req, res, next) => {
-  const mobile = req.body.mobile;
-  const password = req.body.password;
-
-  User.getUserByMobile(mobile, (err, user) => {
-    if(err) throw err;
-    if(!user){
-      return res.status(404).json({success: false, error: Strings.errors.notFound, msg: Strings.message.userNotFound});
-    }
-
-    User.comparePassword(password, user.password, (err, isMatch) => {
-      if(err) throw err;
-      if(isMatch){
-        user.token = "none";
-        user.save((err, user) => {
-          if(err) throw err;
-          else{
-            const newtoken = jwt.sign({data: user}, config.secret, {
-              expiresIn: Strings.values.loginExpiration
-            });
-            user.token = `Bearer ${newtoken}`;
-            user.save((err, user) =>{
-              res.status(200).json({
-                success: true,
-                token: `Bearer ${newtoken}`,
-                msg: Strings.message.loginSuccess,
-                user: {
-                  id: user._id,
-                  name: user.name,
-                  mobile: user.mobile,
-                  token: user.token,
-                  email: user.email,
-                  type: user.type,
-                  tag: user.tag,
-                  verified: user.verified
-                }
-              });
-            });
-          }
-        });
-      }
-      else{
-        return res.status(401).json({success: false, error: Strings.errors.notAuthorized, msg: Strings.message.wrongPassword});
-      }
-    });
-  });
-});*/
-
 // Authenticate
 router.post('/authenticate', (req, res, next) => {
   const mobile = req.body.mobile;
@@ -207,71 +160,6 @@ router.post('/authenticate', (req, res, next) => {
     });
   });
 });
-
-/*//Logout
-router.patch('/logout/:tag', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
-  const editUser = {
-    tag: req.params.tag
-  }
-  User.getUserById(req.user._id, (err, user) => {
-    if(err) throw err;
-    user.token = "none";
-    user.save((err, result) => {
-      if(err)
-      {
-        res.status(500).json({success: false, error: err, msg: Strings.message.profileEditFailed});
-      }
-      else{
-        res.status(200).json({success: true, msg: Strings.message.profileEditSuccess,
-          user: {
-            name: result.name,
-            email: result.email,
-            type: result.type,
-            mobile: result.mobile,
-            token: result.token,
-            tag: result.tag,
-            user: result.verified
-          }
-        });
-      }
-    });
-  });
-});*/
-
-
-/*router.post('/addlogin', (req, res, next) => {
-  let newCurrent = new Current ({
-    userid: req.body.userid,
-    token: req.body.token
-  });
-  Current.getCurrentByuserID(newCurrent.userid, (err, current) => {
-    if(err) throw err;
-    if(current){
-      return res.status(200).json({success: false, error: "duplicate", msg: "login exists", 
-        current: {
-          userid: current.userid,
-          token: current.token
-        }
-      });
-    }
-    else{
-      Current.addCurrent(newCurrent, (err, current) => {
-        if(err){
-          res.status(500).json({success: false, error: err, msg: "failed"});
-        }else{
-          res.status(201).json({success: true, msg: "login add success",
-            current: {
-              userid: current.userid,
-              token: current.token
-            }
-          });
-        }
-        
-      });
-    }
-  });
-}); */
-
 
 
 //Profile Edit
@@ -437,7 +325,7 @@ router.get('/profile/social', passport.authenticate(Strings.strategy.socialStrat
   res.status(200).json({user: req.user});
 });
 
-
+//TO DO User Verify, Forgot Password
 router.post('/forgot/password', (req, res, next) => {
   User.getUserByMobile(req.body.mobile, (err, user) => {
     if(user)

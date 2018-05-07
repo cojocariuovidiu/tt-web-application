@@ -27,11 +27,11 @@
            </mat-grid-tile>                
   </mat-grid-list>
  </div>
- <h5 class="featured">Featured Courses:</h5>
-<div style="padding-left:2%; padding-right:2%; ">
+<div *ngIf="coursesTeacher" style="padding-left:2%; padding-right:2%; ">
+  <h5>Featured Courses for Teachers:</h5>
   <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
      <mat-grid-tile
-    *ngFor="let course of courses" fxLayoutwrap
+    *ngFor="let course of coursesTeacher" fxLayoutwrap
      [rowspan]="rowspan | async"  style="background: black;">
 
    
@@ -58,4 +58,35 @@
  </mat-grid-tile>
 </mat-grid-list>
 </div>
+<div *ngIf="coursesParent" style="padding-left:2%; padding-right:2%; ">
+    <h5>Featured Courses for Parents:</h5>
+    <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
+       <mat-grid-tile
+      *ngFor="let course of coursesParent" fxLayoutwrap
+       [rowspan]="rowspan | async"  style="background: black;">
+  
+     
+      <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill>
+          <mat-card-header>
+            <mat-card-title>
+            <h3 class="text-white">{{course.courseTitle}}</h3>
+         </mat-card-title>
+         </mat-card-header>
+           <img matCardImage src="../../../assets/img/python.jpg">
+           <mat-card-content  [style.height.px]="'250px'">
+             
+             <p  align="justify" class="text-white">
+              {{course.courseDetail}}
+             
+           </p>
+           <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+           </mat-card-content>
+         <mat-card-footer>
+  
+         </mat-card-footer>
+         </mat-card>
+        
+   </mat-grid-tile>
+  </mat-grid-list>
+  </div>
 </div>

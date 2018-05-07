@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comment } from '../../../../model/comment.model';
 import { User } from '../../../../model/user.model';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-coursedetail',
@@ -19,6 +20,7 @@ export class CoursedetailComponent implements OnInit {
 
   routerParams: any;
   paramID: string;
+  commentForm: FormGroup;
   title: string = "Course Name - Teachers Time";
   cols: Observable<number>;
   rowspan: Observable<number>;
@@ -28,7 +30,9 @@ export class CoursedetailComponent implements OnInit {
   comments: Comment [] = [];
   course: Course = new Course('','','','');
   user: User = new User('','','');
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { 
+    this.createCommentForm();
+  }
 
   ngOnInit() {
     this.setDisplay();
@@ -38,7 +42,16 @@ export class CoursedetailComponent implements OnInit {
     }
     this.getDetail();
     this.getCourseComments();
-   }
+  }
+
+  createCommentForm(){
+    this.commentForm = this.formBuilder.group({
+      CommentBody: [null, Validators.compose([
+        Validators.required
+      ])]
+    });
+  }
+
   Title(){
     this.titleService.setTitle(this.title);
   }
@@ -106,6 +119,27 @@ export class CoursedetailComponent implements OnInit {
       return false;
     }
   }
+
+  sendCommentForm(){
+    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
+    //console.log(comment);
+    this.courseService.addComment(comment).subscribe(data => {
+      if(data.success){
+        //console.log(data.data);
+        this.resetCommentForm();
+        this.getCourseComments();
+      }
+    });
+  }
+
+  get CommentBody(){
+    return this.commentForm.get('CommentBody') as FormControl;
+  }
+
+  resetCommentForm(){
+    this.commentForm.reset();
+  }
+
 
   onDelete(id){
     //console.log(id);

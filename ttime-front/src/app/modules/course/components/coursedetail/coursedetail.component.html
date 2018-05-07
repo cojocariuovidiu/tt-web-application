@@ -97,6 +97,22 @@
   
   </div>
   <div class="course-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0px;padding-right:0px;'">
+      <div  *ngIf="checkLogin()" fxFlex="1 1 auto" fxFlexFill>
+          <mat-card class="comments-card" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutwrap fxFlex="1 1 auto" fxFlexFill  >  
+              <mat-card-header> <mat-card-title><h4 class="text-black">Please give a review and rate this course  :</h4></mat-card-title> </mat-card-header>    
+              <mat-card-content>     
+                  <form [formGroup]="commentForm" (ngSubmit)="sendCommentForm()">            
+                      <mat-form-field  style="width:100%;" >
+                          <mat-icon matPrefix>message</mat-icon>
+                          <textarea matInput placeholder="Comment" style="width:100%;" name="CommentBody" id="CommentBody" formControlName="CommentBody">
+                            
+                          </textarea>
+                        </mat-form-field>
+                        <button mat-raised-button type="submit" class="contact-btn" color="primary">Comment<mat-icon class="send">send</mat-icon></button>
+                  </form>
+              </mat-card-content> 
+            </mat-card>
+        </div>
     <div style="width: 100%" fxFlex fxAlign="center">
        <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
          <mat-expansion-panel  hideToggle="true" (click)="ratingiconclick()">

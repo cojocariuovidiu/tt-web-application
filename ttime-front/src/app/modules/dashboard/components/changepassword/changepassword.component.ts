@@ -17,11 +17,13 @@ export class ChangepasswordComponent implements OnInit {
   settingsForm2: FormGroup;
   user: User = new User('','','');
   title: string = "Settings - Teachers Time";
+  hide = true;
+  
   constructor(private dashboardService: DashboardService, private formBuilder: FormBuilder, private titleService: Title) { 
     this.createSettingsForm1();
     this.createSettingsForm2();
   }
-  hide = true;
+  
   ngOnInit() {
     this.titleService.setTitle(this.title);
     this.user = this.dashboardService.user;

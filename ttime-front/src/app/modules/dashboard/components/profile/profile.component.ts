@@ -27,11 +27,12 @@ export class ProfileComponent implements OnInit {
   mobilePattern: RegExp = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/;
   emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   show = true;
- cols: Observable<number>;
-usertest = [
-  {fullname: 'Prottoy Paul', Email : 'hasd@dhfdja.com' , Phone: '12231213', Gender: 'Male' , Address: ' sdndshfksdhfkdsjfkjdhdfsjdsfhs',
-  Institute: ' bxdbd College'},
-];
+  cols: Observable<number>;
+  usertest = [
+    { fullname: 'Prottoy Paul', Email : 'hasd@dhfdja.com' , Phone: '12231213', Gender: 'Male' , Address: ' sdndshfksdhfkdsjfkjdhdfsjdsfhs',
+      Institute: ' bxdbd College'
+    },
+  ];
   institute = [
   {value: 'school', viewValue: 'School'},
   {value: 'college', viewValue: 'College'},
@@ -42,12 +43,13 @@ usertest = [
  user = new User('','','');
   title = "Profile - Teachers Time";
   constructor(private formBuilder: FormBuilder, private observableMedia: ObservableMedia, private dashboardService: DashboardService, private titleService: Title) {
-    this.user = this.dashboardService.user;
+    //this.user = this.dashboardService.user;
     //this.getUser();
     this.createProfileForm();
   }
 
  ngOnInit() {
+   this.user = this.dashboardService.user;
   this.titleService.setTitle(this.title);
    const cols_map = new Map([
      ['xs', 1],

@@ -19,6 +19,24 @@ export class AppComponent implements OnInit {
     this.loading = true;
   }
   ngOnInit() {
+    this.setDisplay();
+  }
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+            this.loading = true;
+        } else if (
+            event instanceof NavigationEnd ||
+            event instanceof NavigationCancel
+            ) {
+            this.loading = false;
+        }
+      });
+  }
+
+  setDisplay(){
     const cols_map = new Map([
       ['xs', 1],
       ['sm', 1],
@@ -36,20 +54,6 @@ export class AppComponent implements OnInit {
       .map(change => {
         return cols_map.get(change.mqAlias);
       }).startWith(start_cols);
-  }
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngAfterViewInit() {
-    this.router.events
-        .subscribe((event) => {
-            if (event instanceof NavigationStart) {
-                this.loading = true;
-            } else if (
-                event instanceof NavigationEnd ||
-                event instanceof NavigationCancel
-                ) {
-                this.loading = false;
-            }
-        });
   }
 
   hideLogin()

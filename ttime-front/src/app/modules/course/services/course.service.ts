@@ -16,9 +16,37 @@ export class CourseService {
   private comments: Comment [] = [];
   constructor(private coreService: CoreService, private http: Http, private errorService: ErrorService) { }
 
-  getCourses(){
+  getCoursesTeacher(){
     let headers = new Headers();
-    const url = `${"api/courses/public/all"}`;
+    const url = `${"api/courses/public/all/teacher"}`;
+    headers.append('Content-Type', 'application/json');
+    return this.http.get(url, {headers: headers})
+    .map((response: Response) => {
+      const courses = response.json().course;
+      //console.log(courses);
+      let transformedCourses: Course[] = [];
+      for (let course of courses) {
+        transformedCourses.push(new Course(
+          course.title,
+          course.preview, 
+          course.details,
+          course.scope,
+          course.freevideo, null, course._id, course.price, null
+        ));
+      }
+      this.courses = transformedCourses;
+      //console.log(this.courses);
+      return transformedCourses;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+  }
+
+  getCoursesParent(){
+    let headers = new Headers();
+    const url = `${"api/courses/public/all/parent"}`;
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {headers: headers})
     .map((response: Response) => {
@@ -207,6 +235,25 @@ export class CourseService {
       this.errorService.handleError(error.json());
       return Observable.throw(error.json());
     });
+  }
+
+  addComment(comment){
+    let headers = new Headers();
+    const url = `${"api/courses/comment/add/"}${comment.commentCourse}`
+    const body = JSON.stringify(comment);
+    const token = this.getauthToken();
+    headers.append('Authorization', token);
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(url, body, {headers: headers})
+    .map((response: Response) => {
+      const data = response.json();
+      return data;
+    })
+    .catch((error: Response) => {
+      this.errorService.handleError(error.json());
+      return Observable.throw(error.json());
+    });
+    
   }
 
 

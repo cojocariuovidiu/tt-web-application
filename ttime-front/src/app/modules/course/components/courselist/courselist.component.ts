@@ -12,10 +12,11 @@ import { Router } from '@angular/router';
   templateUrl: './courselist.component.html',
   styleUrls: ['./courselist.component.scss']
 })
-export class CourselistComponent implements OnInit {
+export class CourselistComponent implements OnInit{
 
   filter: Course = new Course(null, null, null, null, null);
-  courses: Course [] = [];
+  coursesParent: Course [] = [];
+  coursesTeacher: Course [] = [];
   title = 'Courses - Teachers Time';
   rowspan: Observable<number>;
   cols: Observable<number>;
@@ -24,7 +25,50 @@ export class CourselistComponent implements OnInit {
   ngOnInit() {
     this.titleService.setTitle(this.title);
     this.getCourse();
+    this.setDisplay();
+  }
 
+  showTitle1(){
+    console.log(this.filter.courseTitle);
+    if((this.filter.courseTitle == null || this.filter.courseTitle == "") && this.coursesTeacher.length != 0){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  showTitle2(){
+    console.log(this.filter.courseTitle);
+    if((this.filter.courseTitle == null || this.filter.courseTitle == "") && this.coursesParent.length != 0){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  getCourse(){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    if(usercred == null || undefined){
+      this.getCourseParent();
+      this.getCourseTeacher();
+    }
+    else{
+      if(usercred.type == "teacher"){
+        this.getCourseTeacher();
+      }
+      else if(usercred.type == "parent"){
+        this.getCourseParent();
+      }
+      else{
+        this.getCourseParent();
+        this.getCourseTeacher();
+      }
+    }
+  }
+
+  setDisplay(){
     const cols_map = new Map([
       ['xs', 1],
       ['sm', 1],
@@ -56,16 +100,22 @@ export class CourselistComponent implements OnInit {
         }
       });
     this.rowspan = this.observableMedia.asObservable()
-        .map(change => {
-          return rowspan_map.get(change.mqAlias);
-        }).startWith(row_span);
+      .map(change => {
+        return rowspan_map.get(change.mqAlias);
+      }).startWith(row_span);
   }
 
-  getCourse(){
-    this.courseService.getCourses().subscribe((courses: Course []) => {
-      this.courses = courses;
+  getCourseTeacher(){
+    this.courseService.getCoursesTeacher().subscribe((courses: Course []) => {
+      this.coursesTeacher = courses;
     });
     //console.log(this.courses);
+  }
+
+  getCourseParent(){
+    this.courseService.getCoursesParent().subscribe((courses: Course []) => {
+      this.coursesParent = courses;
+    });
   }
 
   getCourseDetail(id){

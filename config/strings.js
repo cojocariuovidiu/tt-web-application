@@ -43,7 +43,10 @@ module.exports.message = {
     emailVerifySuccess: 'Successfully Verified Email',
     emailVerifySendSuccess: 'A verification mail was sent to your email address',
     emailVerifySendFailed: 'Sending of verification mail Failed',
-    somethingWentWrong: 'Something Went Wrong'
+    somethingWentWrong: 'Something Went Wrong',
+    mobileNumberAvailable: 'Mobile Number is Available',
+    profileEditSuccess: 'Profile was Changed Successfully',
+    profileEditFailed: 'Profile Change Failed'
 }
 
 module.exports.strategy = {
