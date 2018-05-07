@@ -49,7 +49,7 @@
             <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
                 <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Lecture Description:</h4></mat-card-title> </mat-card-header>    
                 <mat-card-content>     
-                <p class="text-black">{{course.courseSessions[0].lectures[0].lectureDetails}}</p>
+                <p class="text-black">{{course?.courseSessions[sessionID]?.lectures[lectureID]?.lectureDetails}}</p>
                 </mat-card-content> 
               </mat-card>
                 

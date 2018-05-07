@@ -97,7 +97,7 @@ export class EnrolledComponent implements OnInit {
   }
 
   getCourseDetail(id) {
-    console.log(id);
+    //console.log(id);
     this.router.navigate(['/dashboard/enrolled', id]);
   }
 

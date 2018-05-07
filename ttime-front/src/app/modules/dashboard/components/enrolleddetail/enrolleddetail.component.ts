@@ -117,6 +117,7 @@ export class EnrolleddetailComponent implements OnInit {
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
         //console.log(data.data);
+        this.resetCommentForm();
         this.getCourseComments();
       }
     });

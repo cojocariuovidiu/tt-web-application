@@ -69,9 +69,9 @@ fxLayout="column" >
       OR <!--Padding is optional-->
     </span>
   </div>
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="center center">
-      <button (click)="socialSignIn('google')" mat-raised-button color="warn"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
-      <button (click)="socialSignIn('facebook')" mat-raised-button color="primary"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
+    <mat-card-actions fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutAlign.lt-md="center center">
+      <button (click)="socialSignIn('google')" mat-raised-button color="warn" fxFlex="1 1 auto"><i id="g" class="fa fa-google-plus"></i><span>LOGIN WITH GOOGLE</span></button>
+      <button (click)="socialSignIn('facebook')" mat-raised-button color="primary" fxFlex="1 1 auto"><i id="f" class="fa fa-facebook"></i><span>LOGIN WITH FACEBOOK</span></button>
     </mat-card-actions>
   </mat-card>
 </mat-grid-tile>
