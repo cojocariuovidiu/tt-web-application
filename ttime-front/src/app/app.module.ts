@@ -8,7 +8,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { HttpModule } from '@angular/http';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {OverlayContainer} from '@angular/cdk/overlay';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { ErrorService } from './services/error.service';

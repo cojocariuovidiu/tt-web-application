@@ -11,12 +11,11 @@ import { Router } from '@angular/router';
 export class CoreService {
 
   message = new EventEmitter<string>();
-  authtoken:any;
+  authtoken: any;
   user: any;
   private courses: Course [] = [];
   constructor(private router: Router, private http: Http, private errorService: ErrorService) { }
-  
-  getCoursesTeacher(){
+  getCoursesTeacher() {
     let headers = new Headers();
     const url = `${"api/courses/public/all/teacher"}`;
     headers.append('Content-Type', 'application/json');

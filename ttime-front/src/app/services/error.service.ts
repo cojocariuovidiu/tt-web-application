@@ -7,7 +7,7 @@ export class ErrorService implements ErrorHandler {
   constructor() { }
 
   handleError(error) {
-    //console.log(error);
+    // console.log(error);
     this.errorOccurred.emit(error);
     throw error;
  }

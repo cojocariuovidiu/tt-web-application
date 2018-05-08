@@ -13,7 +13,7 @@ import { CoreService } from './services/core.service';
 export class AppComponent implements OnInit {
   title = 'app';
   loading;
-  authtoken:any;
+  authtoken: any;
   cols: Observable<number>;
   constructor(private coreService: CoreService, private router: Router , private observableMedia: ObservableMedia) {
     this.loading = true;
@@ -26,17 +26,17 @@ export class AppComponent implements OnInit {
     this.router.events
       .subscribe((event) => {
         if (event instanceof NavigationStart) {
-            this.loading = true;
+          this.loading = true;
         } else if (
-            event instanceof NavigationEnd ||
-            event instanceof NavigationCancel
-            ) {
-            this.loading = false;
+          event instanceof NavigationEnd ||
+          event instanceof NavigationCancel
+          ) {
+          this.loading = false;
         }
       });
   }
 
-  setDisplay(){
+  setDisplay() {
     const cols_map = new Map([
       ['xs', 1],
       ['sm', 1],
@@ -56,33 +56,29 @@ export class AppComponent implements OnInit {
       }).startWith(start_cols);
   }
 
-  hideLogin()
-  {
+  hideLogin() {
     this.getauthToken();
-    if(this.authtoken) {
+    if (this.authtoken) {
       // console.log('true');
       return true;
-    } else
-    {
+    } else {
       // console.log('false');
       return false;
     }
   }
 
-  checkTag(){
+  checkTag() {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    if(usercred == null || undefined){
+    if (usercred == null || undefined) {
       return true;
-    }
-    else if(usercred.tag == "local"){
+    } else if (usercred.tag === 'local') {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
 
-  getauthToken(){
+  getauthToken() {
     const token = localStorage.getItem('id_token');
     this.authtoken = token;
   }
