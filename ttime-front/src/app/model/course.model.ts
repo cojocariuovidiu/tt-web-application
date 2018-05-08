@@ -13,13 +13,13 @@ export class Course{
             lectureID: string,
             lectureLink: string,
             lecturePrice: string,
-            lectureQuestion: Array<{
-                questionLabel: string,
+            lectureQuestions: Array<{
+                answer: string,
                 option1: string,
                 option2: string,
                 option3: string,
                 option4: string,
-                answer: string
+                questionlabel: string
             }>,
             lectureTitle: string
         }>,
@@ -43,13 +43,13 @@ export class Course{
                         lectureID: string,
                         lectureLink: string,
                         lecturePrice: string,
-                        lectureQuestion: Array<{
-                            questionLabel: string,
+                        lectureQuestions: Array<{
+                            answer: string,
                             option1: string,
                             option2: string,
                             option3: string,
                             option4: string,
-                            answer: string
+                            questionlabel: string
                         }>,
                         lectureTitle: string
                     }>,

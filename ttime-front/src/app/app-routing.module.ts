@@ -14,7 +14,8 @@ const APP_ROUTES: Routes = [
         path: 'auth', loadChildren: 'app/modules/authorization/authorization.module#AuthorizationModule'
     },
     {
-        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule', canActivate: [CoreService]
+        path: 'dashboard', loadChildren: 'app/modules/dashboard/dashboard.module#DashboardModule', canActivate: [CoreService],
+        runGuardsAndResolvers: `always`
     },
     {
         path: 'courses', loadChildren: 'app/modules/course/course.module#CourseModule'
@@ -31,7 +32,7 @@ const APP_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(APP_ROUTES,  {preloadingStrategy: PreloadAllModules})],
+  imports: [RouterModule.forRoot(APP_ROUTES,  {preloadingStrategy: PreloadAllModules, onSameUrlNavigation: `reload`})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import {Observable} from 'rxjs/Observable';
@@ -19,15 +19,20 @@ import { User } from '../../../../model/user.model';
   styleUrls: ['./lecturevideo.component.scss']
 })
 export class LecturevideoComponent implements OnInit {
+  @ViewChild('endQuestion') endQuestion: ElementRef;
+  @ViewChild('stepper') stepper: ElementRef;
 
   videoLink: string;
+  navigationSubscription: any;
+  totalScore: number;
+  userScore: number;
+  questionLength: number;
   routerParams: any;
   paramIDCourse: string;
   signedUrl: string;
   imagethumb: string;
   sessionID: number = 0;
   lectureID: number = 0;
-  
   user: User = new User('', '', '');
   comments: Comment[] = [];
   // tslint:disable-next-line:no-inferrable-types
@@ -39,9 +44,14 @@ export class LecturevideoComponent implements OnInit {
   syllabusicon = true;
   ratingicon = true;
   sessionicon = true;
+  valueOption1: string = "A";
+  valueOption2: string = "B";
+  valueOption3: string = "C";
+  valueOption4: string = "D";
+  valueAnswers: {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  }
+  QuestionForm: FormGroup;
 
   seasons = [
     'Winter',
@@ -52,8 +62,9 @@ export class LecturevideoComponent implements OnInit {
   course = new Course('','','','','','','','',[]);
 
   constructor(private router: Router, private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
+    
     this.createCommentForm();
-    this.createdummy();
+    //this.createQuestionForm();
     
    }
 
@@ -70,6 +81,13 @@ export class LecturevideoComponent implements OnInit {
     this.getCourseComments();
     this.Title();
     this.setDisplay();
+    this.createQuestionForm();
+  }
+
+  ngOnDestroy(){
+    if (this.navigationSubscription) {  
+      this.navigationSubscription.unsubscribe();
+   }
   }
 
   
@@ -117,6 +135,9 @@ export class LecturevideoComponent implements OnInit {
       //console.log(course.courseSessions[0].lectures[0].lectureDetails);
       //var x = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureDetails;
       //console.log(x);
+      console.log(course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length);
+      this.totalScore = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+      this.questionLength = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
     });
   }
   setDisplay(){
@@ -185,6 +206,7 @@ export class LecturevideoComponent implements OnInit {
       }
     });
   }
+  
 
   getUser(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
@@ -217,10 +239,44 @@ export class LecturevideoComponent implements OnInit {
       }
     })
   }
-  createdummy(){
-    this.firstFormGroup = this.formBuilder.group({
-
+  createQuestionForm(){
+    this.QuestionForm = this.formBuilder.group({
+      Option:[null, Validators.compose([
+        Validators.required
+      ])]
     });
+  }
+
+  sendQuestionForm(realAns){
+    //console.log("Question Form",this.Option.value);
+    //console.log(this.Answer.value);
+    //console.log(Answer.nativeElement.value);
+    console.log("real answer", realAns);
+    const ans = this.Option.value;
+    if(ans !== realAns){
+      this.totalScore = this.totalScore - 1;
+    }
+    this.questionLength = this.questionLength - 1;
+    if(this.questionLength === 0){
+      let endDiv: HTMLElement = this.endQuestion.nativeElement as HTMLElement;
+      endDiv.click();
+    }
+  }
+
+  onQuestionEnd(stepper){
+    this.userScore = this.totalScore;
+    this.totalScore = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+    this.questionLength = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+    stepper.reset();
+  }
+
+  get Option(){
+    return this.QuestionForm.get('Option') as FormControl;
+  }
+  
+
+  resetQuestionForm(){
+    this.QuestionForm.reset();
   }
 
   onLecture(session, lecture, link){

@@ -67,76 +67,38 @@
           <mat-card fxLayout="column"  fxLayoutAlign="start stretch" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" [ngStyle.xs]="'padding-left: 0;'">  
               <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Quiz</h4></mat-card-title> </mat-card-header>    
               <mat-card-content>    
-                  <form [formGroup]="firstFormGroup">
-                      <mat-horizontal-stepper >
-          
-                         
-                        <mat-step  >
-                        
-                            <mat-radio-group class="example-radio-group" >
-                                What is your favourite season?
-                                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                                  {{season}}
-                                </mat-radio-button>
-                              </mat-radio-group>
+                  
+                      <mat-horizontal-stepper #stepper>
+                        <mat-step *ngFor="let question of course?.courseSessions[sessionID]?.lectures[lectureID]?.lectureQuestions">
+                          <form [formGroup]="QuestionForm" (ngSubmit)="sendQuestionForm(question.answer)">
+                          <mat-radio-group class="radio-group" name="Option" id="Option" formControlName="Option">
+                            {{question.questionlabel}}
+                            <mat-radio-button class="radio-button" [value]="valueOption1">
+                              {{question.option1}}
+                            </mat-radio-button>
+                            <mat-radio-button class="radio-button" [value]="valueOption2">
+                              {{question.option2}}
+                            </mat-radio-button>
+                            <mat-radio-button class="radio-button" [value]="valueOption3">
+                              {{question.option3}}
+                            </mat-radio-button>
+                            <mat-radio-button class="radio-button" [value]="valueOption4">
+                              {{question.option4}}
+                            </mat-radio-button>
+                          </mat-radio-group>
                           <div>
-                            <button mat-button matStepperNext type="button">Next</button>
+                            <button mat-button matStepperNext type="submit">Next</button>
                           </div>
+                        </form>
                         </mat-step>
                         <mat-step>
-                       
-                            
-                            <mat-radio-group class="example-radio-group" >
-                                What is your favourite season?
-                                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                                  {{season}}
-                                </mat-radio-button>
-                              </mat-radio-group>
-                          <div>
-                            <button mat-button matStepperPrevious type="button">Back</button>
-                            <button mat-button matStepperNext type="button">Next</button>
+                          Your Score is {{totalScore}}.
+                          <div #endQuestion (click)="onQuestionEnd(stepper)">
+
                           </div>
                         </mat-step>
-                        <mat-step>
-                            <mat-radio-group class="example-radio-group" >
-                                What is your favourite season?
-                                <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                                  {{season}}
-                                </mat-radio-button>
-                              </mat-radio-group>
-                             <div>
-                               <button mat-button matStepperPrevious type="button">Back</button>
-                               <button mat-button matStepperNext type="button">Next</button>
-                             </div>
-                           </mat-step>
-                           <mat-step>
-                              
-                              <mat-radio-group class="example-radio-group" >
-                                  What is your favourite season?
-                                  <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                                    {{season}}
-                                  </mat-radio-button>
-                                </mat-radio-group>
-                               <div>
-                                 <button mat-button matStepperPrevious type="button">Back</button>
-                                 <button mat-button matStepperNext type="button">Next</button>
-                               </div>
-                             </mat-step>
-                             <mat-step>
-                                
-                                <mat-radio-group class="example-radio-group" >
-                                    What is your favourite season?
-                                    <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-                                      {{season}}
-                                    </mat-radio-button>
-                                  </mat-radio-group>
-                                 <div>
-                                   <button mat-button matStepperPrevious type="button">Back</button>
-                                   <button mat-button matStepperNext type="button">Next</button>
-                                 </div>
-                               </mat-step>
                       </mat-horizontal-stepper>
-                    </form>
+                    
                     
               </mat-card-content>
                 
