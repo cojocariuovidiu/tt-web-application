@@ -79,7 +79,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   Video(id){
-    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: this.course.courseFreeVideo, 'sessionID': '0', 'lectureID': '0' }});
+    this.router.navigate(['/dashboard/lecturevideo',id], { queryParams: { videoLink: this.course.courseSessions[0].lectures[0].lectureLink, 'sessionID': '0', 'lectureID': '0' }});
   }
 
   getDetail(){

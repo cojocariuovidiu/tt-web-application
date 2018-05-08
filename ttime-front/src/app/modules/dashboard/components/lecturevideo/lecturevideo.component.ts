@@ -267,6 +267,7 @@ export class LecturevideoComponent implements OnInit {
     this.userScore = this.totalScore;
     this.totalScore = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
     this.questionLength = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+    console.log("Your Score: ",this.userScore);
     stepper.reset();
   }
 
