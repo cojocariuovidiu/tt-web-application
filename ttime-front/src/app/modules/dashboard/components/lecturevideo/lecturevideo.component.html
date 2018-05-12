@@ -64,11 +64,11 @@
      </mat-grid-tile>
        <mat-grid-tile colspan="10" rowspan="12"  fxLayoutwrap  > 
         
-          <mat-card fxLayout="column"  fxLayoutAlign="start stretch" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" [ngStyle.xs]="'padding-left: 0;'">  
+          <mat-card *ngIf="isLength; else elseBlock2" fxLayout="column"  fxLayoutAlign="start stretch" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" [ngStyle.xs]="'padding-left: 0;'">  
               <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Quiz</h4></mat-card-title> </mat-card-header>    
-              <mat-card-content>    
+              <mat-card-content *ngIf="isScore; else elseBlock">    
                   
-                <mat-horizontal-stepper *ngIf="isScore; else elseBlock" #stepper>
+                <mat-horizontal-stepper #stepper>
                   <mat-step *ngFor="let question of course?.courseSessions[sessionID]?.lectures[lectureID]?.lectureQuestions">
                     <form [formGroup]="QuestionForm" (ngSubmit)="sendQuestionForm(question.answer)">
                     <mat-radio-group class="radio-group" name="Option" id="Option" formControlName="Option">
@@ -90,23 +90,37 @@
                       <button mat-button matStepperNext type="submit">Next</button>
                     </div>
                   </form>
-                  </mat-step>
-                  <mat-step>
-                    Your Score is {{totalScore}}.
-                    <div #endQuestion (click)="onQuestionEnd(stepper)">
+                  <div #endQuestion (click)="onQuestionEnd(stepper)">
 
-                    </div>
+                  </div>
                   </mat-step>
                 </mat-horizontal-stepper>
-                <ng-template #elseBlock>
-                  <div>
-                    <p> Your Score is {{userScore}}.</p>
-                  </div>
-                </ng-template>
+                
                     
               </mat-card-content>
+              <ng-template #elseBlock>
+                <mat-card-content>
+                  <div>
+                    <p> Your Score is {{userScore}}.</p>
+                  </div>   
+                </mat-card-content>
+              </ng-template>
                 
           </mat-card>
+
+          <ng-template #elseBlock2>
+          <mat-card fxLayout="column"  fxLayoutAlign="start stretch" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" [ngStyle.xs]="'padding-left: 0;'">  
+            <mat-card-header style="background-color: #e0e0e0 "> 
+              <mat-card-title>
+                <h4 class="text-black">Quiz</h4>
+              </mat-card-title> 
+            </mat-card-header>
+            <mat-card-content>
+              <p>No Quizzes on this Lecture.</p>
+            </mat-card-content>
+          </mat-card>   
+          </ng-template> 
+
               
      </mat-grid-tile>
    

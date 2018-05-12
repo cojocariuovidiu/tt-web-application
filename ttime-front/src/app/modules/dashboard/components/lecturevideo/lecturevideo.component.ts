@@ -33,6 +33,7 @@ export class LecturevideoComponent implements OnInit {
   sessionID: number = 0;
   lectureID: number = 0;
   isScore: boolean;
+  isLength: boolean;
   user: User = new User('', '', '');
   comments: Comment[] = [];
   // tslint:disable-next-line:no-inferrable-types
@@ -69,12 +70,11 @@ export class LecturevideoComponent implements OnInit {
     //this.getUser();
     this.createCommentForm();
     this.isScore = true;
+    this.isLength = true;
     this.user = this.dashboardService.user;
     this.getRouterParams();
     this.getQueryParams();
     this.getDetail();
-    
-    this.getVideo();
     this.getCourseComments();
     this.Title();
     this.setDisplay();
@@ -87,12 +87,12 @@ export class LecturevideoComponent implements OnInit {
     this.titleService.setTitle(this.title);
   }
 
-  getVideo(){
+  getVideo(videoLink){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getSignedURL(this.videoLink).subscribe(data => {
+    this.dashboardService.getSignedURL(videoLink).subscribe(data => {
       //console.log(data);
       this.signedUrl = data.signedUrl;
-      console.log(this.signedUrl);
+      //console.log(this.signedUrl);
     })
 
     this.dashboardService.getImage("/Courses/TestCourse/angular.jpg").subscribe(data => {
@@ -116,23 +116,21 @@ export class LecturevideoComponent implements OnInit {
       this.videoLink = params.videoLink;
       this.sessionID = parseInt(params.sessionID);
       this.lectureID = parseInt(params.lectureID); 
+      //console.log(params);
+      this.getVideo(params.videoLink);
       
     });
   }
   getDetail(){
     this.dashboardService.getEnrolledDetail(this.paramIDCourse).subscribe((course: Course) => {
       this.course = course;
-      //console.log(this.sessionID);
-      //console.log(this.lectureID);
-      //console.log(course.courseSessions[0].lectures[0].lectureDetails);
-      //var x = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureDetails;
-      //console.log(x);
-      console.log(course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length);
-     
       this.totalScore = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
       this.questionLength = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+      if(this.questionLength == 0){
+        this.isLength = false;
+      }
       this.checkScore();
-      });
+    });
   }
 
   checkScore(){
@@ -141,7 +139,7 @@ export class LecturevideoComponent implements OnInit {
       lectureID: this.lectureID,
       sessionID: this.sessionID
     }
-    console.log(this.user.userID, this.course.courseID, body);
+    //console.log(this.user.userID, this.course.courseID, body);
     this.dashboardService.checkScoringCourse(body, this.user.userID, this.course.courseID).subscribe(data => {
       if(data.success){
         this.userScore = data.score.score;
@@ -217,14 +215,6 @@ export class LecturevideoComponent implements OnInit {
     });
   }
   
-
-  /*getUser(){
-    const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
-    });
-  }*/
-
   get CommentBody(){
     return this.commentForm.get('CommentBody') as FormControl;
   }
@@ -261,7 +251,7 @@ export class LecturevideoComponent implements OnInit {
     //console.log("Question Form",this.Option.value);
     //console.log(this.Answer.value);
     //console.log(Answer.nativeElement.value);
-    console.log("real answer", realAns);
+    //console.log("real answer", realAns);
     const ans = this.Option.value;
     if(ans !== realAns){
       this.totalScore = this.totalScore - 1;
@@ -304,12 +294,10 @@ export class LecturevideoComponent implements OnInit {
   onLecture(session, lecture, link){
     this.router.navigate(['/dashboard/lecturevideo', this.course.courseID], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
     this.isScore = true;
+    this.isLength = true;
     this.user = this.dashboardService.user;
-    this.getRouterParams();
-    this.getQueryParams();
     this.getDetail();
-    this.getVideo();
-    //console.log(session, lecture, link);
+    this.resetQuestionForm();
   }
 
 }

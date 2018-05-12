@@ -161,6 +161,7 @@ export class DashboardService {
     const body = {
       videoLink: videoLink
     }
+    //console.log(body);
     headers.append('Authorization', token);
     headers.append('Content-Type', 'application/json');
     return this.http.post(url, body ,{headers: headers})
