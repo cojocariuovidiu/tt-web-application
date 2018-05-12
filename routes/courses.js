@@ -10,6 +10,7 @@ const Comments = require('../models/comment');
 const Strings = require('../config/strings');
 const AWS = require('aws-sdk');
 const cfsign = require('aws-cloudfront-sign');
+const Score = require('../models/score');
 
 router.get('/public/all', (req, res, next) => {
     Course.find({}).select('title details price scope preview freevideo _id')
@@ -100,9 +101,104 @@ router.put('/enroll/course/:courseid', passport.authenticate(Strings.strategy.lo
         
 });
 
+/*//Get Scores
+router.get('/score/:courseid', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
+    Score.getScoreByID()
+});*/
+
+//Scoring Local
+router.post('/score/:courseid', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    let newScore = new Score({
+        score: req.body.lectureScore,
+        lectureID: req.body.lectureID,
+        sessionID: req.body.sessionID,
+        courseID: req.params.courseid,
+        userID: req.user._id
+    });
+    Score.getScoreByID(newScore.userID, newScore.courseID, newScore.lectureID, newScore.sessionID, (err, score) => {
+        if(score){
+            res.status(409).json({success: false, error: "Duplicate", score: score ,msg: "Score Exists"});
+        }
+        else if(err){
+            res.status(500).json({success: false, error: Strings.errors.serverError, msg: "Failed to Save"});
+        }
+        else{
+            Score.addScore(newScore, (err, score) => {
+                if(err){
+                    res.status(500).json({success: false, error: Strings.errors.serverError, msg: "Failed to Save"});
+                }
+                else{
+                    res.status(200).json({success: true, score: score, msg: "Score Saved"});
+                }
+            });
+        }
+    });
+});
+
+//Scoring Social
+router.post('/score/social/:courseid', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
+    let newScore = new Score({
+        score: req.body.score,
+        lectureID: req.body.lectureID,
+        sessionID: req.body.sessionID,
+        courseID: req.params.courseid,
+        userID: req.user._id
+    });
+    Score.getScoreByID(newScore.userID, newScore.courseID, newScore.lectureID, newScore.sessionID, (err, score) => {
+        if(score){
+            res.status(409).json({success: false, error: "Duplicate", score: score, msg: "Score Exists"});
+        }
+        else if(err){
+            res.status(500).json({success: false, error: Strings.errors.serverError, msg: "Failed to Save"});
+        }
+        else{
+            Score.addScore(newScore, (err, result) => {
+                if(err){
+                    res.status(500).json({success: false, error: Strings.errors.serverError, msg: "Failed to Save"});
+                }
+                else{
+                    res.status(200).json({success: true, score: result, msg: "Score Saved"});
+                }
+            });
+        }
+    });
+});
+
+//Check Score
+router.post('/score/check/:courseid', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
+    const lectureID = req.body.lectureID; 
+    const courseID = req.params.courseid;
+    const userID = req.user._id;
+    const sessionID = req.body.sessionID;
+    Score.getScoreByID(userID, courseID, lectureID, sessionID, (err, score) => {
+        if(score){
+            res.status(200).json({success: true, score: score, msg: "Score Exists"});
+        }
+        else{
+            res.status(200).json({success: false, score: score, msg: "Score does not Exist"});
+        }
+    });
+});
+
+//Check Score Social
+router.post('/score/check/social/:courseid', passport.authenticate(Strings.strategy.socialStrategy, {session: false}), (req, res, next) => {
+    const lectureID = req.body.lectureID; 
+    const courseID = req.params.courseid;
+    const userID = req.user._id;
+    const sessionID = req.body.sessionID;
+    Score.getScoreByID(userID, courseID, lectureID, sessionID, (err, score) => {
+        if(score){
+            res.status(200).json({success: true, score: score, msg: "Score Exists"});
+        }
+        else{
+            res.status(200).json({success: false, score: score, msg: "Score does not Exist"});
+        }
+    });
+});
+
 router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, course:data});
+        res.status(200).json({success: true, course: data});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
@@ -216,7 +312,7 @@ router.post('/object/video/url', passport.authenticate([Strings.strategy.localSt
     var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
     //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
     res.status(200).json({success: true, signedUrl: signedUrl});
-    console.log(signedUrl);
+    //console.log(signedUrl);
 });
 
 //GET IMAGE URL
@@ -234,7 +330,7 @@ router.post('/object/image/url', passport.authenticate([Strings.strategy.localSt
     var signedUrl = cfsign.getSignedUrl(videoUrl, signingParams);
     //var sendUrl = `<source src="`+signedUrl+`" type="video/mp4">`;
     res.status(200).json({success: true, signedUrl: signedUrl});
-    console.log(signedUrl);
+    //console.log(signedUrl);
 });
 
   

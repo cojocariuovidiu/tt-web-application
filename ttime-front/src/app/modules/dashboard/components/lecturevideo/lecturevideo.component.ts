@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
 import {Observable} from 'rxjs/Observable';
@@ -23,7 +23,6 @@ export class LecturevideoComponent implements OnInit {
   @ViewChild('stepper') stepper: ElementRef;
 
   videoLink: string;
-  navigationSubscription: any;
   totalScore: number;
   userScore: number;
   questionLength: number;
@@ -33,6 +32,7 @@ export class LecturevideoComponent implements OnInit {
   imagethumb: string;
   sessionID: number = 0;
   lectureID: number = 0;
+  isScore: boolean;
   user: User = new User('', '', '');
   comments: Comment[] = [];
   // tslint:disable-next-line:no-inferrable-types
@@ -48,9 +48,6 @@ export class LecturevideoComponent implements OnInit {
   valueOption2: string = "B";
   valueOption3: string = "C";
   valueOption4: string = "D";
-  valueAnswers: {
-
-  }
   QuestionForm: FormGroup;
 
   seasons = [
@@ -63,7 +60,6 @@ export class LecturevideoComponent implements OnInit {
 
   constructor(private router: Router, private formBuilder: FormBuilder, private dashboardService: DashboardService, private activatedRoute: ActivatedRoute, private titleService: Title, private observableMedia: ObservableMedia) {
     
-    this.createCommentForm();
     //this.createQuestionForm();
     
    }
@@ -71,7 +67,8 @@ export class LecturevideoComponent implements OnInit {
   ngOnInit() {
     
     //this.getUser();
-    
+    this.createCommentForm();
+    this.isScore = true;
     this.user = this.dashboardService.user;
     this.getRouterParams();
     this.getQueryParams();
@@ -82,12 +79,6 @@ export class LecturevideoComponent implements OnInit {
     this.Title();
     this.setDisplay();
     this.createQuestionForm();
-  }
-
-  ngOnDestroy(){
-    if (this.navigationSubscription) {  
-      this.navigationSubscription.unsubscribe();
-   }
   }
 
   
@@ -101,6 +92,7 @@ export class LecturevideoComponent implements OnInit {
     this.dashboardService.getSignedURL(this.videoLink).subscribe(data => {
       //console.log(data);
       this.signedUrl = data.signedUrl;
+      console.log(this.signedUrl);
     })
 
     this.dashboardService.getImage("/Courses/TestCourse/angular.jpg").subscribe(data => {
@@ -136,10 +128,28 @@ export class LecturevideoComponent implements OnInit {
       //var x = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureDetails;
       //console.log(x);
       console.log(course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length);
+     
       this.totalScore = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
       this.questionLength = course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
+      this.checkScore();
+      });
+  }
+
+  checkScore(){
+    this.user = this.dashboardService.user;
+    const body = {
+      lectureID: this.lectureID,
+      sessionID: this.sessionID
+    }
+    console.log(this.user.userID, this.course.courseID, body);
+    this.dashboardService.checkScoringCourse(body, this.user.userID, this.course.courseID).subscribe(data => {
+      if(data.success){
+        this.userScore = data.score.score;
+        this.isScore = false;
+      }
     });
   }
+
   setDisplay(){
     const cols_map = new Map([
       ['xs', 11],
@@ -208,12 +218,12 @@ export class LecturevideoComponent implements OnInit {
   }
   
 
-  getUser(){
+  /*getUser(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
       this.user = profile;
     });
-  }
+  }*/
 
   get CommentBody(){
     return this.commentForm.get('CommentBody') as FormControl;
@@ -267,7 +277,18 @@ export class LecturevideoComponent implements OnInit {
     this.userScore = this.totalScore;
     this.totalScore = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
     this.questionLength = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
-    console.log("Your Score: ",this.userScore);
+    const body = {
+      score: this.userScore.toString(),
+      lectureID: this.lectureID,
+      sessionID: this.sessionID
+    }
+    this.dashboardService.scoringCourse(body, this.user.userID, this.course.courseID).subscribe(data => {
+      if(data.success){
+        this.userScore = data.score.score;
+        this.isScore = false;
+      }
+    });
+    //console.log("Your Score: ",this.userScore);
     stepper.reset();
   }
 
@@ -282,6 +303,12 @@ export class LecturevideoComponent implements OnInit {
 
   onLecture(session, lecture, link){
     this.router.navigate(['/dashboard/lecturevideo', this.course.courseID], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
+    this.isScore = true;
+    this.user = this.dashboardService.user;
+    this.getRouterParams();
+    this.getQueryParams();
+    this.getDetail();
+    this.getVideo();
     //console.log(session, lecture, link);
   }
 

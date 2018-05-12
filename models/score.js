@@ -5,23 +5,32 @@ const Schema = mongoose.Schema;
 const ScoreSchema = new Schema({
  score:{
     type: String,
-    default: '0',
+    default: 'none',
     required: true
  },
- lectureTitle: {
-    type: string,
+ lectureID: {
+    type: String,
     required: true
  },
- sessionTitle: {
-    type: string,
-    required,
+ sessionID: {
+    type: String,
+    required: true
  },
- CourseID:{
+ courseID:{
     type: Schema.Types.ObjectId
  },
- scoreUserID: {
+ userID: {
     type: Schema.Types.ObjectId
  }
 });
 
 const Score = module.exports = mongoose.model('Score', ScoreSchema);
+
+module.exports.getScoreByID = function(userID, courseID, lectureID, sessionID, callback){
+    const query = {userID: userID, courseID: courseID, lectureID: lectureID, sessionID: sessionID}
+    Score.findOne(query, callback);
+}
+
+module.exports.addScore = function(newScore, callback){
+    newScore.save(callback);
+}

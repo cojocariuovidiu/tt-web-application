@@ -50,11 +50,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: 'empty'
   },
-  courses: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Course'
-    }]
+  courses: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Course'
+  }]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

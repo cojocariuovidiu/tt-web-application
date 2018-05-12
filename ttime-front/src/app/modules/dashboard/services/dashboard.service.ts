@@ -393,6 +393,80 @@ export class DashboardService {
     });
   }
 
+  
+
+  scoringCourse(body, userID, courseID){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    if(usercred.tag === "local"){
+      let headers = new Headers();
+      const url = `${"api/courses/score/"}${courseID}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body, {headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+    else{
+      let headers = new Headers();
+      const url = `${"api/courses/score/social/"}${courseID}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body, {headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+  }
+
+  checkScoringCourse(body, userID, courseID){
+    const usercred = JSON.parse(localStorage.getItem('usercred'));
+    if(usercred.tag === "local"){
+      let headers = new Headers();
+      const url = `${"api/courses/score/check/"}${courseID}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body, {headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+    else{
+      let headers = new Headers();
+      const url = `${"api/courses/score/check/social/"}${courseID}`;
+      const token = this.getauthToken();
+      headers.append('Authorization', token);
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body, {headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+    }
+  }
+
   Logout()
   {
     this.coreService.Logout();
