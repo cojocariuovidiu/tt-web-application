@@ -243,6 +243,7 @@ router.patch('/profile/social/edit/:id', passport.authenticate(Strings.strategy.
             type: result.type,
             mobile: result.mobile,
             tag: result.tag,
+            verified: result.verified,
             gender: result.gender,
             location: result.location,
             institutename: result.institutename,
@@ -323,6 +324,42 @@ router.get('/profile', passport.authenticate(Strings.strategy.localStrategy, {se
 //SocialUser Profile
 router.get('/profile/social', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
   res.status(200).json({user: req.user});
+});
+
+//Contact Us
+router.post('/contact/us', (req, res, next) => {
+  const body = {
+    name: req.body.name,
+    email: req.body.email,
+    subject: req.body.subject,
+    message: req.body.message
+  }
+  //var url = Email.content.redirectUrl2 + token;
+  var html = `<p>` + body.message + `.</p></br><p>Sincerely,</p></br><p>` + body.name + `</p></br><p>` + body.email + `</p>`;
+  let transporter = nodemailer.createTransport({
+    service: Email.credentials.emailService,
+    auth: {
+      user: Email.credentials.devemail,
+      pass: Email.credentials.devpassword
+    }
+  });
+  var message = {
+    from: body.email,
+    to: Email.credentials.devemail,
+    subject: body.subject,
+    html: html
+  };
+  transporter.sendMail(message, (err, info) => {
+    //console.log(err);
+    //console.log(info);
+    if (err) {
+      res.status(500).json({success: false, error: err, msg: Strings.message.contactEmailSendFailed})
+      throw err;
+    }
+    else{
+      res.status(200).json({success: true, msg: Strings.message.contactEmailSendSuccess, body: body});
+    }
+  });
 });
 
 //TO DO User Verify, Forgot Password

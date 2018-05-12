@@ -5,6 +5,7 @@ import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { ContactService } from '../../services/contact.service';
 
 @Component({
   selector: 'app-contactus',
@@ -23,7 +24,7 @@ export class ContactusComponent implements OnInit {
   cols: Observable<number>;
   contactForm: FormGroup
 
-  constructor(private formBuilder: FormBuilder, private titleService: Title, private observableMedia: ObservableMedia) {
+  constructor(private contactService: ContactService, private formBuilder: FormBuilder, private titleService: Title, private observableMedia: ObservableMedia) {
     this.createContactForm();
    }
 
@@ -56,7 +57,6 @@ export class ContactusComponent implements OnInit {
       ])],
       Email: [null, Validators.compose([
         Validators.required,
-        Validators.email,
         Validators.pattern(this.emailPattern)
       ])],
       Subject: [
@@ -73,12 +73,38 @@ export class ContactusComponent implements OnInit {
   }
 
   sendContactForm(){
-    const contact = this.contactForm.value;
-    console.log(contact);
+    const contact = {
+      name: this.Name.value,
+      email: this.Email.value,
+      subject: this.Subject.value,
+      message: this.Message.value
+    }
+    this.contactService.contactUs(contact).subscribe(data => {
+      if(data.success){
+        this.resetContactForm();
+      }
+    });
+    //console.log(contact);
   }
 
   resetContactForm(){
     this.contactForm.reset();
+  }
+
+  get Name(){
+    return this.contactForm.get('Name') as FormControl;
+  }
+
+  get Email(){
+    return this.contactForm.get('Email') as FormControl;
+  }
+
+  get Subject(){
+    return this.contactForm.get('Subject') as FormControl;
+  }
+
+  get Message(){
+    return this.contactForm.get('Message') as FormControl;
   }
 
 }

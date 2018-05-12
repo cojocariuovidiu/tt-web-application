@@ -13,8 +13,8 @@ const Strings = require('../config/strings');
 const Admin = require('../models/admin');
 const Uploader = require('../models/uploader');
 
-/*//Add new Admin
-router.post('/add/new/admin',(req, res, next) => {
+//Add new Admin
+/*router.post('/add/new/admin',(req, res, next) => {
     let newAdmin = new Admin({
         name: req.body.name,
         email: req.body.email,
@@ -221,117 +221,8 @@ router.get('/all/courses', passport.authenticate([Strings.strategy.adminStrategy
     });
 });
 
-/*//Post Lecture Courses Admin by Course ID
-router.post('/add/new/lecture/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    let newLecture = new Lectures({
-        lectureTitle: req.body.lectureTitle,
-        lectureDetails: req.body.lectureDetails,
-        lectureLink: req.body.lectureLink,
-        lectureCourse: req.params.id,
-        lecturePrice: req.body.lecturePrice
-    });
-    Lectures.addLecture(newLecture, (err, lecture) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.lectureInsertFailed});
-        } else {
-            res.status(201).json({success: true, data: lecture, msg: Strings.message.lectureInsertSuccess});
-        }
-    });    
-});
 
-//Delete Lecture by Lecture ID
-router.delete('/delete/lecture/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    Lectures.findLectureById(req.params.id , (err, lecture) =>{
-        if(lecture)
-        {
-            lecture.remove((err, result) => {
-                if(err)
-                {
-                    res.status(500).json({success: false, error: err, msg: Strings.message.lectureDeleteFailed});
-                }
-                else{
-                    res.status(200).json({success: true, data: result, msg: Strings.message.lectureDeleteSuccess});
-                }
-            });
-        }
-        else if(err){
-            res.status(404).json({success: false, error: err ,msg: Strings.message.lectureNotFound});
-        }
-        else
-        {
-            res.status(500).json({success: false, error: err, msg: Strings.message.lectureDeleteFailed});
-        }
-    });
-});
-
-//Get Lectures by Course ID
-router.get('/all/lectures/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    Lectures.find({lectureCourse: req.params.id}).exec((err, lecture) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.lectureGetFailed});
-        }else{
-            res.status(200).json({success: true, data: lecture});
-        }
-    });
-});
-
-//Post Evaluate Questions by Lecture ID
-router.post('/add/evaluation/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    let newEvaluate = new Evaluate({
-        questionLabel: req.body.questionLabel,
-        optionA: req.body.optionA,
-        optionB: req.body.optionB,
-        optionC: req.body.optionC,
-        optionD: req.body.optionD,
-        correctAnswer: req.body.correctAnswer,
-        lectureIDofCourse: req.params.id
-    });
-    //console.log(newEvaluate);
-    Evaluate.addEvaluate(newEvaluate, (err, eval) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.questionInsertFailed});
-        } else {
-            res.status(201).json({success: true, data: eval, msg: Strings.message.questionInsertSuccess});
-        }
-    });
-});
-
-//Delete Evaluate Questions by Question ID
-router.delete('/delete/evaluation/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    Evaluate.findEvaluateById(req.params.id , (err, eval) => {
-        if(eval)
-        {
-            eval.remove((err, result) => {
-                if(err)
-                {
-                    res.status(500).json({success: false, error: err, msg: Strings.message.questionDeleteFailed});
-                }
-                else{
-                    res.status(200).json({success: true, data: result, msg: Strings.message.questionDeleteSuccess});
-                }
-            });
-        }
-        else if(err){
-            res.status(404).json({success: false, error: err, msg: Strings.message.questionNotFound});
-        }
-        else
-        {
-            res.status(500).json({success: false, error: err, msg: Strings.message.questionDeleteFailed});
-        }
-    });
-});
-
-//Get evaluation by Lecuture ID
-router.get('/all/evaluation/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
-    Evaluate.find({lectureIDofCourse: req.params.id}).exec((err, eval) => {
-        if(err){
-            res.status(500).json({success: false, error: err, msg: Strings.message.evaluationGetFailed});
-        }else{
-            res.status(200).json({success: true, data: eval});
-        }
-    });
-});*/
-
+//list S3
 router.get('/list/videos', (req, res, next) => {
     const dir = 'Courses/TestCourse/';
     let s3Bucket = new AWS.S3({

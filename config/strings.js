@@ -46,7 +46,9 @@ module.exports.message = {
     somethingWentWrong: 'Something Went Wrong',
     mobileNumberAvailable: 'Mobile Number is Available',
     profileEditSuccess: 'Profile was Changed Successfully',
-    profileEditFailed: 'Profile Change Failed'
+    profileEditFailed: 'Profile Change Failed',
+    contactEmailSendFailed: 'Something went wrong, message was not delivered',
+    contactEmailSendSuccess: 'Message Delivered Successfully'
 }
 
 module.exports.strategy = {

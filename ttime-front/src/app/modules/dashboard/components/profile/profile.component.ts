@@ -113,6 +113,16 @@ export class ProfileComponent implements OnInit {
       if(data.success){
         //console.log(data);
         this.resetProfileForm();
+        //console.log(data.result.tag);
+        //console.log(data.result.type);
+        //console.log(data.result.verified);
+        localStorage.removeItem('usercred');
+        const usercred = {
+          tag: data.user.tag,
+          verified: data.user.verified,
+          type: data.user.type
+        }
+        localStorage.setItem('usercred', JSON.stringify(usercred));
       }
       else{
         console.log("error");
