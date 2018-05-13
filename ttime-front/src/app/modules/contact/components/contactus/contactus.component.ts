@@ -81,7 +81,7 @@ export class ContactusComponent implements OnInit {
       message: this.Message.value
     }
     this.resetContactForm(this.contactForm);
-    
+    this.contactService.onMessage("Your Message is in Queue");
     this.contactService.contactUs(contact).subscribe(data => {
       if(data.success){
         
