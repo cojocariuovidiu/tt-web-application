@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Comment } from '../../../../model/comment.model';
 import { User } from '../../../../model/user.model';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { CoreService } from '../../../../services/core.service';
 
 @Component({
   selector: 'app-coursedetail',
@@ -30,7 +31,7 @@ export class CoursedetailComponent implements OnInit {
   comments: Comment [] = [];
   course: Course = new Course('','','','');
   user: User = new User('','','');
-  constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { 
+  constructor(private coreService: CoreService, private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute, private titleService: Title, private courseService: CourseService, private observableMedia: ObservableMedia ) { 
     this.createCommentForm();
   }
 
@@ -151,20 +152,27 @@ export class CoursedetailComponent implements OnInit {
     })
   }
 
-  onEnrollCourse(courseid){
+  onEnrollCourse(courseid, scope){
     const isToken = this.checkLogin();
     if(isToken){
       const usercred = JSON.parse(localStorage.getItem('usercred'));
       //console.log(usercred.tag);
       //console.log(courseid);
-      this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
-        if(data.success){
-          //console.log(data);
-        }
-        else{
-          console.log('error');
-        }
-      });
+      //console.log(scope);
+      if(scope === usercred.type){
+        this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
+          if(data.success){
+            //console.log(data);
+          }
+          else{
+            console.log('error');
+          }
+        });
+      }
+      else{
+        const MSG = "You have Enrolled as "+ usercred.type +", Failed to Enroll Course for " + scope + ".";
+        this.coreService.showMessage(MSG, "Problem");
+      }
     }
     else{
       var redirectURL = `${"/courses/index/"}${courseid}`;

@@ -167,8 +167,27 @@ router.delete('/delete/uploader/:id', passport.authenticate(Strings.strategy.adm
     });
 });
 
-
 //Post Courses Admin
+router.post('/add/new/course', (req, res, next) => {
+    let newCourse = new Course({
+        title: req.body.title,
+        details: req.body.details,
+        preview: req.body.preview,
+        freevideo: req.body.price,
+        price: req.body.price,
+        scope: req.body.scope,
+        sessions: req.body.sessions
+    });
+    Course.addCourse(newCourse, (err, course) => {
+        if(err){
+            res.status(500).json({success: false, error: err, msg: Strings.message.courseInsertFailed });
+        } else {
+            res.status(200).json({success: true, data: course, msg: Strings.message.courseInsertSuccess });
+        }
+    });
+});
+
+/*//Post Courses Admin
 router.post('/add/new/course', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {
     let newCourse = new Course({
         title: req.body.title,
@@ -183,7 +202,7 @@ router.post('/add/new/course', passport.authenticate([Strings.strategy.adminStra
             res.status(201).json({success: true, data: course, msg: Strings.message.courseInsertSuccess });
         }
     });
-});
+});*/
 
 //Delete Course by Course ID
 router.delete('/delete/course/:id', passport.authenticate([Strings.strategy.adminStrategy, Strings.strategy.uploaderStrategy], {session: false}), (req, res, next) => {

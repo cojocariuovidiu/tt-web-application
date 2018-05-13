@@ -4,7 +4,7 @@ import { AuthService, FacebookLoginProvider, GoogleLoginProvider} from 'angular5
 import { AuthorizationService } from '../../services/authorization.service';
 import { existingMobileNumberValidator } from './validatelogin';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../../../model/user.model';
 
 @Component({
@@ -14,16 +14,18 @@ import { User } from '../../../../model/user.model';
 })
 export class LoginComponent implements OnInit {
   socialTag = "social";
+  redirectURL = "invalid";
   hide = true;
   mobilePattern: RegExp = /(^(\+88|0088)?(01){1}[56789]{1}(\d){8})$/;//'[0-9]*.{11}';
   public loginForm : FormGroup;
   title: string = "Login - Teachers Time";
   
-  constructor(private router: Router, private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private titleService: Title, private authorizationService: AuthorizationService, private socialAuthService: AuthService, private formBuilder: FormBuilder) {
     this.createLoginForm();
   }
 
   ngOnInit() {
+    this.getQueryParams();
     this.titleService.setTitle(this.title);
   }
 
@@ -51,7 +53,13 @@ export class LoginComponent implements OnInit {
       //console.log(data);
       if(data.success){
         this.authorizationService.storeUserData(data.token, data.user);
-        this.router.navigate(['/dashboard']);
+        if(this.redirectURL === "invalid"){
+          this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.router.navigate([this.redirectURL]);
+        }
+        
       }
       else{
         this.resetLoginForm();
@@ -87,7 +95,12 @@ export class LoginComponent implements OnInit {
         this.authorizationService.registerSocialUser(user).subscribe(data => {
           if(data.success){
             this.authorizationService.storeUserData(data.token, data.user);
-            this.router.navigate(['/dashboard']);
+            if(this.redirectURL === "invalid"){
+              this.router.navigate(['/dashboard']);
+            }
+            else{
+              this.router.navigate([this.redirectURL]);
+            }
           }
           else{
             console.log('error');
@@ -96,4 +109,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  getQueryParams(){
+    this.activatedRoute.queryParams
+     .filter(params => params.redirect)
+     .subscribe(params => {
+       //console.log(params); // {order: "popular"}
+      this.redirectURL = params.redirect;
+      //console.log("redirect",this.redirectURL);
+    });
+  }
 }

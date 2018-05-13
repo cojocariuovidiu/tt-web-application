@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class CoreService {
 
-  message = new EventEmitter<string>();
+  message = new EventEmitter<object>();
   authtoken: any;
   user: any;
   private courses: Course [] = [];
@@ -113,8 +113,14 @@ export class CoreService {
     this.router.navigate(['/auth/login']);    
   }
 
-  showMessage(msg){
-    this.message.emit(msg);
+  
+
+  showMessage(msg, msgType?){
+    const message = {
+      msg: msg,
+      msgType: msgType || "Success"
+    }
+    this.message.emit(message);
   }
 
 }

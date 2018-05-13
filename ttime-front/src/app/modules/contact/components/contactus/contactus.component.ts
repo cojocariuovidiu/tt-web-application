@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator, FormGroupDirective} from '@angular/forms';
 import { ContactService } from '../../services/contact.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { ContactService } from '../../services/contact.service';
   styleUrls: ['./contactus.component.scss']
 })
 export class ContactusComponent implements OnInit {
+  @ViewChild(FormGroupDirective) contactFormDirective: FormGroupDirective;
 
   title: string = 'We are Here:';
   namePattern: string = '[a-z]*.{3,}';
@@ -79,15 +80,18 @@ export class ContactusComponent implements OnInit {
       subject: this.Subject.value,
       message: this.Message.value
     }
+    this.resetContactForm(this.contactForm);
+    
     this.contactService.contactUs(contact).subscribe(data => {
       if(data.success){
-        this.resetContactForm();
+        
       }
     });
     //console.log(contact);
   }
 
-  resetContactForm(){
+  resetContactForm(form){
+    this.contactFormDirective.resetForm();
     this.contactForm.reset();
   }
 

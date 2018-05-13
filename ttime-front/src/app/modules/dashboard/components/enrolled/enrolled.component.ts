@@ -19,9 +19,12 @@ export class EnrolledComponent implements OnInit {
   rowspan: Observable<number>;
   cols: Observable<number>;
   courses: Course [] = [];
+  isCourseHide: boolean;
   title: string = "Enrolled - Teachers Time";
 
-  constructor(private router: Router, private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  }
+  constructor(private router: Router, private dashboardService: DashboardService, private titleService: Title, private observableMedia: ObservableMedia) {  
+    this.isCourseHide = false;
+  }
 
   ngOnInit() {
     //this.user = this.dashboardService.user;
@@ -33,10 +36,10 @@ export class EnrolledComponent implements OnInit {
 
   hideCourse(){
     if(this.courses.length == 0){
-      return true;
+      this.isCourseHide = true;
     }
     else{
-      return false;
+      this.isCourseHide = false;
     }
   }
 
@@ -86,6 +89,7 @@ export class EnrolledComponent implements OnInit {
     this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
       this.user = profile;
       this.getEnrolled(profile.userID);
+      this.hideCourse();
     });
   }
 

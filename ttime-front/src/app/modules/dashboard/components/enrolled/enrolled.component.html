@@ -1,4 +1,4 @@
-<div *ngIf="!hideCourse()" class="flex-container">
+<div *ngIf="isCourseHide; else elseBlock" class="flex-container">
   <div style="padding-left:2%; padding-right:2%; padding-top:2%; ">
     <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
        <mat-grid-tile *ngFor="let course of courses" fxLayoutwrap [rowspan]="rowspan | async"  style="background: black;">
@@ -30,6 +30,8 @@
  </div>
     
 </div>
-<div *ngIf="hideCourse()">
+<ng-template #elseBlock>
+<div>
   <p>You currently have no courses. Click<a routerLink="/courses/index"> here </a>to enroll on a course.</p>
 </div>
+</ng-template>

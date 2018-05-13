@@ -87,4 +87,13 @@ export class AppComponent implements OnInit {
     this.authtoken = null;
     this.coreService.Logout();
   }
+
+  onRoute(){
+    if(this.router.url == "/admin/dashboard"){
+      return false;
+    }
+    {
+      return true;
+    }
+  }
 }

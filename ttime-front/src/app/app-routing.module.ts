@@ -24,6 +24,9 @@ const APP_ROUTES: Routes = [
         path: 'us', loadChildren: 'app/modules/contact/contact.module#ContactModule'
     },
     {
+        path: 'admin', loadChildren: 'app/modules/admin/admin.module#AdminModule'
+    },
+    {
         path: '', redirectTo: '/home', pathMatch: 'full'
     },
     {

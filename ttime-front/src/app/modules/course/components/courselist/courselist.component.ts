@@ -29,7 +29,7 @@ export class CourselistComponent implements OnInit{
   }
 
   showTitle1(){
-    console.log(this.filter.courseTitle);
+    //console.log(this.filter.courseTitle);
     if((this.filter.courseTitle == null || this.filter.courseTitle == "") && this.coursesTeacher.length != 0){
       return true;
     }
@@ -39,7 +39,7 @@ export class CourselistComponent implements OnInit{
   }
 
   showTitle2(){
-    console.log(this.filter.courseTitle);
+    //console.log(this.filter.courseTitle);
     if((this.filter.courseTitle == null || this.filter.courseTitle == "") && this.coursesParent.length != 0){
       return true;
     }

@@ -11,6 +11,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { ContactComponent } from './contact.component';
 import { AgmCoreModule } from '@agm/core';
+import { ContactService } from './services/contact.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,9 @@ import { AgmCoreModule } from '@agm/core';
     TermsComponent, 
     PrivacyComponent, 
     ContactComponent
+  ],
+  providers:[
+    ContactService
   ]
 })
 export class ContactModule { }

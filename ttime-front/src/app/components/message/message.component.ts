@@ -15,10 +15,10 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
     this.errorService.errorOccurred.subscribe(error => {
       this.openSnackBar(error.msg, error.error);
-    })
+    });
     this.coreService.message.subscribe(msg => {
-      this.openSnackBar(msg, "Success");
-    })
+      this.openSnackBar(msg.msg, msg.msgType);
+    });
   }
 
   openSnackBar(message: string, action: string) {

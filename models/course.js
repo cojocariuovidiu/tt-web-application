@@ -29,16 +29,24 @@ const CourseSchema = new Schema({
   },
   sessions:[
   {
+    sessionID:{
+      type: String,
+      required: true
+    },
     sessionTitle:{
       type: String,
       required: true
     },
-    sessionWeek:{
+    sessionNo:{
       type: String,
       required: true
     },
     lectures: [
     {
+      lectureID:{
+        type: String,
+        required: true
+      },
       lectureTitle:{
         type: String,
         required: true
