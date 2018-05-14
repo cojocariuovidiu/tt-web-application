@@ -12,33 +12,6 @@ const cfsign = require('aws-cloudfront-sign');
 const Strings = require('../config/strings');
 const Admin = require('../models/admin');
 
-//Add new Admin
-/*router.post('/add/new/admin',(req, res, next) => {
-    let newAdmin = new Admin({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-      });
-      Admin.getAdminByEmail(req.body.email, (err, admin) => {
-        if(admin){
-          res.status(409).json({success: false, error: err, msg: Strings.message.userExists});
-        }
-        else{
-          Admin.addAdmin(newAdmin, (err, admin) => {
-            if(err){
-              res.status(500).json({success: false, error: err, msg: Strings.message.registerFailed});
-            } else {
-              res.status(201).json({success: true, msg: Strings.message.registerSuccess, 
-                admin: {
-                  name: admin.name,
-                  email: admin.email
-                }
-            });
-            }
-          });
-        }
-    })
-});*/
 
 //Add new Admin
 router.post('/add/new/admin',(req, res, next) => {
