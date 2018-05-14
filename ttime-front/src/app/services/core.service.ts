@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 import { Course } from '../model/course.model';
-import 'rxjs/Rx';
+import { map, catchError} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ErrorService } from './error.service';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ export class CoreService {
     const url = `${"api/courses/public/all/teacher"}`;
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {headers: headers})
-    .map((response: Response) => {
+    .pipe(map((response: Response) => {
       const courses = response.json().course;
       //console.log(courses);
       let transformedCourses: Course[] = [];
@@ -36,11 +36,11 @@ export class CoreService {
       this.courses = transformedCourses;
       //console.log(this.courses);
       return transformedCourses;
-    })
-    .catch((error: Response) => {
+    }),
+    catchError((error: Response) => {
       this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+      return Observable.throwError(error.json());
+    }));
   }
 
   getCoursesParent(){
@@ -48,7 +48,7 @@ export class CoreService {
     const url = `${"api/courses/public/all/parent"}`;
     headers.append('Content-Type', 'application/json');
     return this.http.get(url, {headers: headers})
-    .map((response: Response) => {
+    .pipe(map((response: Response) => {
       const courses = response.json().course;
       //console.log(courses);
       let transformedCourses: Course[] = [];
@@ -64,11 +64,11 @@ export class CoreService {
       this.courses = transformedCourses;
       //console.log(this.courses);
       return transformedCourses;
-    })
-    .catch((error: Response) => {
+    }),
+    catchError((error: Response) => {
       this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+      return Observable.throwError(error.json());
+    }));
   }
   
   canActivate()
@@ -111,6 +111,13 @@ export class CoreService {
     this.user = null;
     localStorage.clear();
     this.router.navigate(['/auth/login']);    
+  }
+
+  LogoutAdmin(){
+    this.authtoken = null;
+    this.user = null;
+    localStorage.clear();
+    this.router.navigate(['/admin/login']);   
   }
 
   

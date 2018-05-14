@@ -36,23 +36,18 @@
     <div *ngIf="!onRoute()" class="my-theme app">
       <mat-toolbar class="nav-bar mat-elevation-z10"  color="primary" >
         <mat-toolbar-row>
-              <button mat-button id="navbutton" routerLink= "/home" routerLinkActive="active" ><h2><strong>Teachers Time Administrator</strong></h2></button>
+              <button mat-button id="navbutton" routerLink= "/admin/dashboard" routerLinkActive="active" ><h2><strong>Teachers Time Administrator</strong></h2></button>
               <div fxShow="true" fxHide.lt-md="true">
                 <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-                <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active" > <i class="material-icons">home</i><span class="icon-text">Home</span> </button>
-                <button mat-button id="navbutton" routerLink= "/courses" routerLinkActive="active" > <i class="material-icons">import_contacts</i> <span class="icon-text">Courses</span></button>
-                <button mat-button id="navbutton" routerLink= "/us/contact" routerLinkActive="active" > <i class="material-icons">contact_mail</i><span class="icon-text">Contact</span></button>
+                <button mat-button id="navbutton"  routerLink= "/admin/dashboard" routerLinkActive="active" > <i class="material-icons">home</i><span class="icon-text">Admin Home</span> </button>
               </div>
             <span class="fill-remaining-space" fxShow="true" fxHide.lt-md="true" ></span>
             <span class="right-nav" fxShow="true" fxHide.lt-md="true">
-                <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/register" routerLinkActive="active" > <i class="material-icons">person_add</i> <span class="icon-text">Register</span></button>
-                <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/auth/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
+                <button *ngIf="!hideLogin()" mat-button id="navbutton" routerLink= "/admin/login" routerLinkActive="active" ><i class="material-icons">person</i> <span class="icon-text">Login</span></button>
                 <button *ngIf="hideLogin()" mat-icon-button [matMenuTriggerFor]="menu"> <i class="material-icons" id="account">account_circle</i></button>
                 <mat-menu #menu="matMenu" yPosition="below" [overlapTrigger]="false">
-                <button mat-menu-item routerLink= "/dashboard/enrolled"><mat-icon>import_contacts</mat-icon>My Courses</button>
-                <button mat-menu-item routerLink= "/dashboard/profile"><mat-icon>account_box</mat-icon>Profile</button>
-                <button *ngIf="checkTag()" mat-menu-item routerLink= "/dashboard/changepassword"><mat-icon>settings</mat-icon>Settings</button>
-                <button mat-menu-item (click)="OnLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
+                <button mat-menu-item routerLink= "/admin/dashboard"><mat-icon>account_box</mat-icon>Dashboard</button>
+                <button mat-menu-item (click)="OnAdminLogout()"><mat-icon>power_settings_new</mat-icon>Logout</button>
               </mat-menu>
             </span>
         </mat-toolbar-row>
@@ -60,7 +55,7 @@
       </div>
  <div>
   <mat-sidenav-container class="my-second-theme">
-     <mat-sidenav #sidenav class="mat-elevation-z6" mode="over" align="start"  ngStyle.xs="width:50vw;" align="width:start" fxHide.gt-md="true"ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
+     <mat-sidenav #sidenav class="mat-elevation-z6" mode="over" position="start"  ngStyle.xs="width:50vw;" position="width:start" fxHide.gt-md="true"ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
       <div class="sidenavbar text-white" fxLayout="column wrap"fxLayoutGap="20px">
        
         <div> <button mat-button id="navbutton"  (click)="sidenav.toggle()" routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>

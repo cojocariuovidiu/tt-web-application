@@ -5,14 +5,20 @@ import { AdminComponent } from './admin.component';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
 import { AdminService } from './services/admin.service';
 import { MaterialModule } from '../../material.module';
+import { AdminloginComponent } from './components/adminlogin/adminlogin.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FlexLayoutModule,
     AdminRoutingModule
   ],
-  declarations: [AdminComponent, AdmindashboardComponent],
+  declarations: [AdminComponent, AdmindashboardComponent, AdminloginComponent],
   providers:[
     AdminService
   ]

@@ -3,7 +3,6 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/user');
 const SocialUser = require('../models/socialuser');
 const Admin = require('../models/admin');
-const Uploader = require('../models/uploader');
 const config = require('../config/database');
 
 module.exports = function(passport){
@@ -46,19 +45,6 @@ module.exports = function(passport){
 
       if(admin){
         return done(null, admin);
-      } else {
-        return done(null, false);
-      }
-    });
-  }));
-  passport.use('jwt.uploader', new JwtStrategy(opts, (jwt_payload, done) => {
-    Uploader.getUploaderById(jwt_payload.data._id, (err, uploader) => {
-      if(err){
-        return done(err, false);
-      }
-
-      if(uploader){
-        return done(null, uploader);
       } else {
         return done(null, false);
       }

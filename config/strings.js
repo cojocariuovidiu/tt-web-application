@@ -43,6 +43,8 @@ module.exports.message = {
     emailVerifySuccess: 'Successfully Verified Email',
     emailVerifySendSuccess: 'A verification mail was sent to your email address',
     emailVerifySendFailed: 'Sending of verification mail Failed',
+    emailAddressFound: 'User Exists Under this Email',
+    emailAddressNotFound: 'User Not Found Under this Email',
     somethingWentWrong: 'Something Went Wrong',
     mobileNumberAvailable: 'Mobile Number is Available',
     profileEditSuccess: 'Profile was Changed Successfully',

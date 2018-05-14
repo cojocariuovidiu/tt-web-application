@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
+import { AdminloginComponent } from './components/adminlogin/adminlogin.component';
+import { AdminService } from './services/admin.service';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -10,12 +12,17 @@ const ADMIN_ROUTES: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/admin/dashboard',
+        redirectTo: '/admin/login',
         pathMatch: 'full'
       },
       {
         path: 'dashboard',
-        component: AdmindashboardComponent
+        component: AdmindashboardComponent,
+        canActivate: [AdminService]
+      },
+      {
+        path: 'login',
+        component: AdminloginComponent
       }
     ]
   }

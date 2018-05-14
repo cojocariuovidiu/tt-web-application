@@ -30,4 +30,77 @@ export class AdminService {
     });*/
   }
 
+  loginAdmin(logincred){
+    let headers = new Headers();
+    //const url = `${"http://localhost:8080/api/users/authenticate"}`;
+    const url = `${"/api/admins/authenticate/admin"}`;
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(url, logincred, {headers: headers})
+      .map((response: Response) => {
+        const data = response.json();
+        this.coreService.showMessage(data.msg);
+        return data;
+      })
+      .catch((error: Response) => {
+        this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+  }
+
+  checkAdminEmail(email){
+    let headers = new Headers();
+    //const url = `${"http://localhost:8080/api/users/check/mobile"}`;
+    const url = `${"/api/admins/check/email"}`;
+    const logincred = {
+      email: email
+    }
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(url, logincred, {headers: headers})
+      .map((response: Response) => response.json())
+      .catch((error: Response) => {
+        //this.errorService.handleError(error.json());
+        return Observable.throw(error.json());
+      });
+  }
+
+  storeUserData(token)
+  {
+    localStorage.setItem('id_token', token);
+    const usercred = {
+      tag: "admin",
+      verified: "true",
+      type: "admin"
+    }
+    localStorage.setItem('usercred', JSON.stringify(usercred));
+  }
+
+  canActivate()
+  {
+    if(this.checkLogin()){
+      return true;
+    }
+    else{
+      this.router.navigate(['/admin/login']);
+      return false;
+    }
+  }
+
+  getauthToken(){
+    const token = localStorage.getItem('id_token');
+    return token;
+  }
+  checkLogin()
+  {
+    const token = this.getauthToken();
+    if(token)
+    {
+      //console.log('true');
+      return true;
+    }
+    else
+    {
+      //console.log('false');  
+      return false;
+    }
+  }
 }

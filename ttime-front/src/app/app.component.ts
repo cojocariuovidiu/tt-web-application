@@ -88,8 +88,16 @@ export class AppComponent implements OnInit {
     this.coreService.Logout();
   }
 
+  OnAdminLogout() {
+    this.authtoken = null;
+    this.coreService.LogoutAdmin();
+  }
+
   onRoute(){
     if(this.router.url == "/admin/dashboard"){
+      return false;
+    }
+    else if(this.router.url == "/admin/login"){
       return false;
     }
     {

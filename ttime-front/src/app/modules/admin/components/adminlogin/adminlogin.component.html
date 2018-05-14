@@ -1,0 +1,34 @@
+<div class="my-theme flex-container" 
+fxLayout="column" >
+<mat-grid-list cols="1" rowHeight="40em">
+<mat-grid-tile>
+<mat-card class="login-card" fxFlex>
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title><h2 align="center">ADMIN LOGIN</h2></mat-card-title> 
+    </mat-card-header>
+    
+     <form fxLayout="column" fxLayoutAlign="start"  name="loginEmail" id="loginEmail" [formGroup]="loginForm" (ngSubmit)="sendLoginForm()"> 
+       <mat-form-field floatLabel="auto">
+    <input matInput placeholder="Your Email" formControlName="loginEmail" required>
+    <mat-icon matPrefix>smartphone</mat-icon>
+    <mat-error *ngIf="loginEmail.errors">
+      <mat-error *ngIf="loginEmail.errors.required">Mobile Number Required</mat-error>
+      <mat-error *ngIf="loginEmail.errors.pattern">Invalid Email Address</mat-error>
+      <mat-error *ngIf="loginEmail.errors.emailAddExists">No User under this Email Address</mat-error>
+    </mat-error>
+     </mat-form-field>
+  <mat-form-field >
+      <mat-icon matPrefix>lock</mat-icon>
+    <input matInput placeholder="Your Password" [type]="hide ? 'password' : 'text'" name="loginPassword" id="loginPassword" formControlName="loginPassword" required>
+      
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="loginPassword.errors && (loginPassword.errors.required || loginPassword.pristine)">Password Required</mat-error>
+    </mat-form-field>
+    <div fxLayout="column" fxLayoutAlign="center center">
+    <button [disabled]="!loginForm.valid" type="submit" mat-raised-button class="loginbtn" color="primary">Login <mat-icon class="send">send</mat-icon></button>
+    </div>
+</form>
+  </mat-card>
+</mat-grid-tile>
+</mat-grid-list>
+  </div>

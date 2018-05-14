@@ -1,0 +1,25 @@
+.login-card {
+    margin-top:2em; 
+    margin-bottom: 5em ; 
+    max-width: 30vmax;  
+    min-width: 80vmin ;
+    min-height: 300px;
+    max-height: 300px;
+    z-index: 10;
+    
+  }
+
+.loginbtn{
+  max-width: 40vw;
+  min-width: 10vw;
+  }
+  .send{
+    vertical-align: -30%;
+    padding-left: 0.5em;
+  }
+  mat-icon{
+    vertical-align: -20%;
+  }
+  .slabel{
+    padding-left: 10px;
+  }
