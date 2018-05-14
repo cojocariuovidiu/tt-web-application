@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
+import { Course } from '../../../../model/course.model';
 
 @Component({
   selector: 'app-admindashboard',
@@ -8,33 +9,39 @@ import { AdminService } from '../../services/admin.service';
 })
 export class AdmindashboardComponent implements OnInit {
 
+  isFileSelected = false;
+  isHide = true;
+  fileSelected = null;
   course: any;
+  newCourse: Course = new Course('','','','','','','','',[]);
+  fileName = "No File Selected";
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
   }
 
-  onFilesAdded($event){
-    this.readThis($event.target);
-    //console.log(course);
-  }
-
-  sendCourse(course){
-    //console.log(course);
-    this.course = course;
-    this.adminService.uploadCourse(course);
-  }
-
-  readThis(inputValue: any){
-    var file:File = inputValue.files[0]; 
-    var myReader = new FileReader();
-    myReader.onload = (event: any) => {
-      const course = myReader.result;
-      this.sendCourse(course);
+  onFilesAdded(event){
+    this.fileSelected = event.target.files[0];
+    this.fileName = this.fileSelected.name;
+    var fileReader = new FileReader();
+    fileReader.onload = (event: any) => {
+      this.course = fileReader.result;
+      const parsed = JSON.parse(fileReader.result);
+      const parsedCourse = new Course(parsed.title,
+        parsed.preview, 
+        parsed.details,
+        parsed.scope,
+        parsed.freevideo, null, parsed._id, parsed.price, parsed.sessions);
+      this.newCourse = parsedCourse;
     }
-    myReader.readAsText(file);
+    fileReader.readAsText(this.fileSelected);
+    this.isFileSelected = true;
+    this.isHide = false;
+    //console.log(this.course);
   }
 
-
-
+  onSendCourse(){
+    //console.log(this.course);
+    this.adminService.uploadCourse(this.course);
+  }
 }

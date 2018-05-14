@@ -1,7 +1,35 @@
-<div>
-  <!--<button mat-raised-button color="primary" (click)="fileInput.click()">Add</button>-->
-  <input type="file" #fileInput (change)="onFilesAdded($event)"/>
+<div class="inputFile">
+  <p>{{fileName}}</p><button class="upload-btn" mat-raised-button color="primary" (click)="fileInput.click()">Browse</button>
+  <input hidden type="file" #fileInput (change)="onFilesAdded($event)"/>
 </div>
-<div>
-  <p>{{course}}</p>
+<div class="inputFile2">
+  <div *ngIf="!isHide">
+    <p>Course Title: {{newCourse?.courseTitle}}</p>
+    <p>Course Detail: {{newCourse?.courseDetail}}</p>
+    <p>Course Preview: {{newCourse?.coursePreview}}</p>
+    <p>Course Type: {{newCourse?.courseScope}}</p>
+    <p>Course Price: {{newCourse?.coursePrice}}</p>
+    <p>Course Preview Video: {{newCourse?.courseFreeVideo}}</p>
+    <div class="session-div" *ngFor="let session of newCourse.courseSessions">
+      <p>Session ID: {{session.sessionID}}</p>
+      <p>Session No: {{session.sessionNo}}</p>
+      <p>Session Title: {{session.sessionTitle}}</p>
+      <div class="lecture-div" *ngFor="let lecture of session.lectures">
+        <p>Lecture ID: {{lecture.lectureID}}</p>
+        <p>Lecture Title: {{lecture.lectureTitle}}</p>
+        <p>Lecture Link: {{lecture.lectureLink}}</p>
+        <p>Lecture Details: {{lecture.lectureDetails}}</p>
+        <p>Lecture Price: {{lecture.lecturePrice}}</p>
+        <div class="question-div" *ngFor="let question of lecture.lectureQuestions">
+          <p>Question: {{question.questionlabel}}</p>
+          <p>Option: {{question.option1}}</p>
+          <p>Option: {{question.option2}}</p>
+          <p>Option: {{question.option3}}</p>
+          <p>Option: {{question.option4}}</p>
+          <p>Answer: {{question.answer}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button [disabled]="!isFileSelected" class="upload-btn" mat-raised-button color="primary" (click)="onSendCourse()">Upload</button>
 </div>
