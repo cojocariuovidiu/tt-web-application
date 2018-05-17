@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
    this.user = this.dashboardService.user;
   this.titleService.setTitle(this.title);
    const cols_map = new Map([
-     ['xs', 1],
+     ['xs', -1],
      ['sm', 1],
      ['md', 2],
      ['lg', 3],
