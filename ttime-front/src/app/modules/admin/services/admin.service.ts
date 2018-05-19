@@ -17,7 +17,7 @@ export class AdminService {
     const url = `${"/api/admins/add/new/course"}`;
     const body = course;
     console.log(body);
-    /*headers.append('Content-Type', 'application/json');
+    headers.append('Content-Type', 'application/json');
     return this.http.post(url, body, {headers: headers})
     .map((response: Response) => {
       const data = response.json();
@@ -27,7 +27,7 @@ export class AdminService {
     .catch((error: Response) => {
       this.errorService.handleError(error.json());
       return Observable.throw(error.json());
-    });*/
+    });
   }
 
   loginAdmin(logincred){

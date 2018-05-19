@@ -119,14 +119,14 @@ export class CourselistComponent implements OnInit{
   }
 
   getCourseDetail(id){
-    //console.log(id);
+    console.log(id);
     this.router.navigate(['/courses/index', id])
   }
 
   onEnrollCourse(courseid){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    //console.log(usercred.tag);
-    //console.log(courseid);
+    console.log(usercred.tag);
+    console.log(courseid);
     this.courseService.enrollCourse(usercred.tag, courseid).subscribe(data => {
       if(data.success){
         //console.log(data);

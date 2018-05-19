@@ -3,31 +3,31 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CourseSchema = new Schema({
-  title:{
+  courseTitle:{
     type: String,
     required: true
   },
-  details:{
+  courseDetail:{
     type: String,
     required: true
   },
-  preview:{
+  coursePreview:{
     type: String,
     required: true
   },
-  freevideo:{
+  courseFreeVideo:{
     type: String,
     required: true
   },
-  price:{
+  coursePrice:{
     type: String,
     default: 'Free'
   },
-  scope:{
+  courseScope:{
     type: String,
     required: true
   },
-  sessions:[
+  courseSessions:[
   {
     sessionID:{
       type: String,

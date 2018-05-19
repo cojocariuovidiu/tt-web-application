@@ -104,7 +104,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user.userID, null, null);
     //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){

@@ -139,8 +139,8 @@ export class LecturevideoComponent implements OnInit {
       lectureID: this.lectureID,
       sessionID: this.sessionID
     }
-    //console.log(this.user.userID, this.course.courseID, body);
-    this.dashboardService.checkScoringCourse(body, this.user.userID, this.course.courseID).subscribe(data => {
+    //console.log(this.user.userID, this.course._id, body);
+    this.dashboardService.checkScoringCourse(body, this.user.userID, this.course._id).subscribe(data => {
       if(data.success){
         this.userScore = data.score.score;
         this.isScore = false;
@@ -204,7 +204,7 @@ export class LecturevideoComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user.userID, null, null);
     //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
@@ -224,7 +224,7 @@ export class LecturevideoComponent implements OnInit {
   }
 
   getCourseComments(){
-    //console.log(this.course.courseID);
+    //console.log(this.course._id);
     this.dashboardService.getComment(this.paramIDCourse).subscribe((comments: Comment[]) => {
       this.comments = comments;
     });
@@ -272,7 +272,7 @@ export class LecturevideoComponent implements OnInit {
       lectureID: this.lectureID,
       sessionID: this.sessionID
     }
-    this.dashboardService.scoringCourse(body, this.user.userID, this.course.courseID).subscribe(data => {
+    this.dashboardService.scoringCourse(body, this.user.userID, this.course._id).subscribe(data => {
       if(data.success){
         this.userScore = data.score.score;
         this.isScore = false;
@@ -292,7 +292,7 @@ export class LecturevideoComponent implements OnInit {
   }
 
   onLecture(session, lecture, link){
-    this.router.navigate(['/dashboard/lecturevideo', this.course.courseID], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
+    this.router.navigate(['/dashboard/lecturevideo', this.course._id], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
     this.isScore = true;
     this.isLength = true;
     this.user = this.dashboardService.user;

@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { MessageComponent } from './components/message/message.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -14,6 +14,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ErrorService } from './services/error.service';
 import { GOOGLE_MAP_API_KEY } from './config/config';
 import { CoreService } from './services/core.service';
+import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { CoreService } from './services/core.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     HttpModule,
     MaterialModule,
     AgmCoreModule.forRoot({

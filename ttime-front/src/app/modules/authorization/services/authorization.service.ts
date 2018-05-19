@@ -1,69 +1,72 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
 import { User } from '../../../model/user.model';
-import 'rxjs/Rx';
+import { map, catchError} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
 import { Router } from '@angular/router';
 import { CoreService } from '../../../services/core.service';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { ServerResponse } from '../../../model/response.model';
 
 @Injectable()
 export class AuthorizationService {
 
-  constructor(private coreService: CoreService, private router: Router, private http: Http, private errorService: ErrorService) {
+  constructor(private httpClient: HttpClient, private coreService: CoreService, private router: Router, private errorService: ErrorService) {
 
   }
 
   registerUser(user: User){
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     //const url = `${"http://localhost:8080/api/users/register"}`;
     const url = `${"/api/users/register"}`;
-    const body = JSON.stringify(user);
-    //console.log(body);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
-        this.coreService.showMessage(data.msg);
+    headers.set('Content-Type', 'application/json');
+    return this.httpClient.post<ServerResponse>(url, user, {headers: headers})
+      .pipe(map(response => {
+        const data = response;
+        this.coreService.showMessage(response.msg);
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error);
+        return Observable.throw(error);
+      }));
   }
 
   loginUser(logincred){
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     //const url = `${"http://localhost:8080/api/users/authenticate"}`;
     const url = `${"/api/users/authenticate"}`;
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, logincred, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
-        this.coreService.showMessage(data.msg);
+    headers.set('Content-Type', 'application/json');
+    return this.httpClient.post<ServerResponse>(url, logincred, {headers: headers})
+      .pipe(map(response => {
+        const data = response;
+        this.coreService.showMessage(response.msg);
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
   }
 
   checkMobile(mobile){
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     //const url = `${"http://localhost:8080/api/users/check/mobile"}`;
     const url = `${"/api/users/check/mobile"}`;
     const logincred = {
       mobile: mobile
     }
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, logincred, {headers: headers})
-      .map((response: Response) => response.json())
-      .catch((error: Response) => {
-        //this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+    headers.set('Content-Type', 'application/json');
+    return this.httpClient.post<ServerResponse>(url, logincred, {headers: headers})
+      .pipe(map(response => {
+        const data = response;
+        //this.coreService.showMessage(response.msg);
+        return data;
+      }),
+      catchError(error => {
+        //this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
   }
 
   storeUserData(token, user)
@@ -78,23 +81,20 @@ export class AuthorizationService {
   }
 
   registerSocialUser(user){
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     const url = `${"api/users/register/social"}`;
-    headers.append('Content-Type', 'application/json');
-    const body = JSON.stringify(user);
+    headers.set('Content-Type', 'application/json');
+    //const body = JSON.stringify(user);
     //console.log(body);
-    return this.http.post(url, body, {headers: headers})
-    .map((response: Response) => {
-      const data = response.json();
-      this.coreService.showMessage(data.msg);
-      return data;
-    })
-    .catch((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+    return this.httpClient.post<ServerResponse>(url, user, {headers: headers})
+      .pipe(map(response => {
+        const data = response;
+        this.coreService.showMessage(response.msg);
+        return data;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
   }
-
-  
-
 }

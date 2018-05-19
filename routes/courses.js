@@ -13,7 +13,7 @@ const cfsign = require('aws-cloudfront-sign');
 const Score = require('../models/score');
 
 router.get('/public/all', (req, res, next) => {
-    Course.find({}).select('title details price scope preview freevideo _id')
+    Course.find({}).select('courseTitle courseDetail coursePrice courseScope coursePreview courseFreeVideo _id')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -25,7 +25,7 @@ router.get('/public/all', (req, res, next) => {
 
 
 router.get('/public/all/teacher', (req, res, next) => {
-    Course.find({scope: 'teacher'}).select('title details price scope preview freevideo')
+    Course.find({courseScope: 'teacher'}).select('courseTitle courseDetail coursePrice courseScope coursePreview courseFreeVideo _id')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -36,7 +36,7 @@ router.get('/public/all/teacher', (req, res, next) => {
 });
 
 router.get('/public/all/parent', (req, res, next) => {
-    Course.find({scope: 'parent'}).select('title details price scope preview freevideo')
+    Course.find({courseScope: 'parent'}).select('courseTitle courseDetail coursePrice courseScope coursePreview courseFreeVideo')
         .exec((err, course) => {
         if(err){
             res.status(500).json({success: false, error: err, msg: Strings.message.courseGetFailed});
@@ -54,7 +54,7 @@ router.get('/byId/:id', (req, res, next) => {
         }
         else
         {
-            res.status(200).json({success: true, course: course});
+            res.status(200).json({success: true, coursedetail: course});
         }
     });
 });

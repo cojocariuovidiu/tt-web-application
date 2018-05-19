@@ -37,7 +37,7 @@ export class CoursedetailComponent implements OnInit {
 
   ngOnInit() {
     this.setDisplay();
-    this.Title();
+    this.Title();   
     if(this.checkLogin()){
       this.getUser();
     }
@@ -62,7 +62,7 @@ export class CoursedetailComponent implements OnInit {
       //console.log(this.paramID);
       this.courseService.getCoursesDetail(this.paramID).subscribe((course: Course) => {
         this.course = course;
-       //console.log(course);
+        console.log(course);
       });
    });
   }
@@ -105,8 +105,8 @@ export class CoursedetailComponent implements OnInit {
 
   getUser(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.courseService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
+    this.courseService.getProfile(usercred.tag).subscribe((user: User) => {
+      this.user = user;
     });
   }
 
@@ -122,7 +122,7 @@ export class CoursedetailComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user.userID, null, null);
     //console.log(comment);
     this.courseService.addComment(comment).subscribe(data => {
       if(data.success){

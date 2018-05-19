@@ -25,6 +25,7 @@ router.post('/check/mobile', (req,res,next) => {
 
 //Register User
 router.post('/register', (req, res, next) => {
+  console.log(req.body.name);
   let newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -34,7 +35,7 @@ router.post('/register', (req, res, next) => {
     mobile: req.body.mobile,
     password: req.body.password
   });
-  //console.log(newUser);
+  console.log(newUser);
   User.getUserByMobile(req.body.mobile, (err, user) => {
     if(user){
       res.status(409).json({success: false, error: Strings.errors.duplicateUser, msg: Strings.message.userExists});

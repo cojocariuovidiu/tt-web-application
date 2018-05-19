@@ -111,9 +111,8 @@ export class LoginComponent implements OnInit {
 
   getQueryParams(){
     this.activatedRoute.queryParams
-     .filter(params => params.redirect)
      .subscribe(params => {
-       //console.log(params); // {order: "popular"}
+      //console.log(params); // {order: "popular"}
       this.redirectURL = params.redirect;
       //console.log("redirect",this.redirectURL);
     });

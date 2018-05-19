@@ -1,10 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
 import { Course } from '../model/course.model';
 import { map, catchError} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ErrorService } from './error.service';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ServerResponse } from '../model/response.model';
 
 
 @Injectable()
@@ -14,60 +15,37 @@ export class CoreService {
   authtoken: any;
   user: any;
   private courses: Course [] = [];
-  constructor(private router: Router, private http: Http, private errorService: ErrorService) { }
-  getCoursesTeacher() {
-    let headers = new Headers();
+  constructor(private httpClient: HttpClient, private router: Router, private errorService: ErrorService) { }
+
+  getCoursesTeacher(){
+    let headers = new HttpHeaders();
     const url = `${"api/courses/public/all/teacher"}`;
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(url, {headers: headers})
-    .pipe(map((response: Response) => {
-      const courses = response.json().course;
-      //console.log(courses);
-      let transformedCourses: Course[] = [];
-      for (let course of courses) {
-        transformedCourses.push(new Course(
-          course.title,
-          course.preview, 
-          course.details,
-          course.scope,
-          course.freevideo, null, course._id, course.price, null
-        ));
-      }
-      this.courses = transformedCourses;
-      //console.log(this.courses);
-      return transformedCourses;
+    headers.set('Content-Type', 'application/json');
+    return this.httpClient.get<ServerResponse>(url, {headers: headers})
+    .pipe(map(response => {
+      const courses: Course[] = response.course;
+      //console.log(response);
+      return courses;
     }),
-    catchError((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throwError(error.json());
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throwError(error);
     }));
   }
-
+  
   getCoursesParent(){
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     const url = `${"api/courses/public/all/parent"}`;
-    headers.append('Content-Type', 'application/json');
-    return this.http.get(url, {headers: headers})
-    .pipe(map((response: Response) => {
-      const courses = response.json().course;
+    headers.set('Content-Type', 'application/json');
+    return this.httpClient.get<ServerResponse>(url, {headers: headers})
+    .pipe(map(response => {
+      const courses: Course [] = response.course;
       //console.log(courses);
-      let transformedCourses: Course[] = [];
-      for (let course of courses) {
-        transformedCourses.push(new Course(
-          course.title,
-          course.preview, 
-          course.details,
-          course.scope,
-          course.freevideo, null, course._id, course.price, null
-        ));
-      }
-      this.courses = transformedCourses;
-      //console.log(this.courses);
-      return transformedCourses;
+      return courses;    
     }),
-    catchError((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throwError(error.json());
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throwError(error);
     }));
   }
   

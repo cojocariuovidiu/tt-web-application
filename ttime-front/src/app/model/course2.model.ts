@@ -1,12 +1,12 @@
-export class Course{
+export class Course2{
     _id?: string;
-    courseTitle: string;
-    coursePreview?: string;
-    courseImage?: string;
-    courseFreeVideo?: string;
-    courseDetail: string;
-    courseScope: string;
-    coursePrice?: string;
+    title: string;
+    preview?: string;
+    image?: string;
+    freevideo?: string;
+    details: string;
+    scope: string;
+    price?: string;
     courseSessions?: Array<{
         lectures: Array<{
             lectureDetails: string,
@@ -29,14 +29,14 @@ export class Course{
     }>;
     
             constructor(
-                courseTitle: string, 
-                coursePreview: string, 
-                courseDetail: string, 
-                courseScope: string, 
-                courseFreeVideo?: string, 
-                courseImage?: string, 
+                title: string, 
+                preview: string, 
+                details: string, 
+                scope: string, 
+                freevideo?: string, 
+                image?: string, 
                 _id?: string, 
-                coursePrice?: string, 
+                price?: string, 
                 courseSessions?: Array<{
                     lectures: Array<{
                         lectureDetails: string,
@@ -60,13 +60,13 @@ export class Course{
             )
     {
         this._id = _id;
-        this.courseTitle = courseTitle;
-        this.courseDetail = courseDetail;
-        this.coursePreview = coursePreview;
-        this.courseImage = courseImage;
-        this.courseScope = courseScope;
-        this.coursePrice = coursePrice;
+        this.title = title;
+        this.details = details;
+        this.preview = preview;
+        this.image = image;
+        this.scope = scope;
+        this.price = price;
         this.courseSessions = courseSessions;
-        this.courseFreeVideo = courseFreeVideo;
+        this.freevideo = freevideo;
     }
 }
