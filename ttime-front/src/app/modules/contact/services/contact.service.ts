@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import 'rxjs/Rx';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { map, catchError} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
 import { CoreService } from '../../../services/core.service';
+import { ServerResponse } from '../../../model/response.model';
 
 @Injectable()
 export class ContactService {
 
-  constructor(private coreService: CoreService, private http: Http, private errorService: ErrorService) { }
+  constructor(private coreService: CoreService, private httpClient: HttpClient, private errorService: ErrorService) { }
 
   contactUs(body){
-    let headers = new Headers();
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     const url = `${"api/users/contact/us"}`;
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, body, {headers: headers})
-    .map((response: Response) => {
-      const data = response.json();
+    return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+    .pipe(map(response => {
+      const data = response;
       this.onMessage(data.msg);
       return data;
-    })
-    .catch((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+    }),
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
 
   onMessage(msg){

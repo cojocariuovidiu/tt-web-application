@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import {Observable} from 'rxjs/Observable';
-import {ObservableMedia} from '@angular/flex-layout';
+import { Observable } from 'rxjs/Observable';
+import { ObservableMedia } from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormGroupDirective, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { DashboardService } from '../../services/dashboard.service';
 import { Course } from '../../../../model/course.model';
 import { Comment } from '../../../../model/comment.model';
@@ -17,6 +17,7 @@ import { User } from '../../../../model/user.model';
   styleUrls: ['./enrolleddetail.component.scss']
 })
 export class EnrolleddetailComponent implements OnInit {
+  @ViewChild(FormGroupDirective) commentFormDirective: FormGroupDirective;
 
   title: string = "Course Name - Teachers Time";
   paramID: string;
@@ -36,9 +37,9 @@ export class EnrolleddetailComponent implements OnInit {
 
   ngOnInit() {
     this.Title();
+    this.getUser();
     this.setDisplay();
     this.getDetail();
-    this.user = this.dashboardService.user;
     //console.log(this.user);
   }
 
@@ -94,6 +95,18 @@ export class EnrolleddetailComponent implements OnInit {
     });
     this.getCourseComments();
   }
+
+  getUser(){
+    if(this.dashboardService.user == undefined){
+      const usercred = JSON.parse(localStorage.getItem('usercred'));
+      this.dashboardService.getProfile(usercred.tag).subscribe((user: User) => {
+        this.user = user;
+      });
+    }
+    else{
+      this.user = this.dashboardService.user;
+    }
+  }
   
   createCommentForm(){
     this.commentForm = this.formBuilder.group({
@@ -104,7 +117,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user._id, null, null);
     //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
@@ -120,6 +133,7 @@ export class EnrolleddetailComponent implements OnInit {
   }
 
   resetCommentForm(){
+    this.commentFormDirective.resetForm();
     this.commentForm.reset();
   }
 
@@ -139,13 +153,6 @@ export class EnrolleddetailComponent implements OnInit {
       }
     })
   }
-
-  /*getUser(){
-    const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
-    });
-  }*/
 }
 
 

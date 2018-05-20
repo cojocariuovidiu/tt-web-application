@@ -198,7 +198,7 @@ router.post('/score/check/social/:courseid', passport.authenticate(Strings.strat
 
 router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStrategy, {session:false}), (req, res, next) => {
     User.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, course: data});
+        res.status(200).json({success: true, course: data.courses});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.getEnrolledListFailed});
@@ -207,7 +207,7 @@ router.get('/all/enrolled/:id', passport.authenticate(Strings.strategy.localStra
 
 router.get('/all/enrolled/social/:id', passport.authenticate(Strings.strategy.socialStrategy, {session:false}), (req, res, next) => {
     SocialUser.findOne({_id: req.params.id}).select('courses').populate('courses').then(data =>{
-        res.status(200).json({success: true, course:data});
+        res.status(200).json({success: true, course:data.courses});
     }).catch(err =>{
         console.log(err);
         res.status(500).json({success: false, error: err, msg: Strings.message.enrolledListGetFailed});

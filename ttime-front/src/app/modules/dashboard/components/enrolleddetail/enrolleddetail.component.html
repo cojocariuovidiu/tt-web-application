@@ -18,7 +18,7 @@
                 <strong>About this Course : </strong>{{course.courseDetail}}
                  
                 </p>
-                  <button mat-raised-button (click)="Video(course.courseID)" class="contact-btn" color="primary">Go to Video<mat-icon class="send">send</mat-icon></button>
+                  <button mat-raised-button (click)="Video(course._id)" class="contact-btn" color="primary">Go to Video<mat-icon class="send">send</mat-icon></button>
               
             </div>
                 </mat-card> 
@@ -107,7 +107,7 @@
                           
                         </textarea>
                       </mat-form-field>
-                      <button mat-raised-button type="submit" class="contact-btn" color="primary">Comment<mat-icon class="send">send</mat-icon></button>
+                      <button [disabled]="!commentForm.valid" mat-raised-button type="submit" class="contact-btn" color="primary">Comment<mat-icon class="send">send</mat-icon></button>
                 </form>
             </mat-card-content> 
           </mat-card>
@@ -124,7 +124,7 @@
      
          <mat-card *ngFor="let comment of comments"> 
            
-           <mat-card-header><mat-card-title style="font-size:1em "> {{comment.commentUser}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button *ngIf="user.userID == comment.commentUserID" (click)="onDelete(comment.commentID)" mat-mini-fab>Del</button></mat-card-actions> </mat-card-header>  
+           <mat-card-header><mat-card-title style="font-size:1em "> {{comment.commentUser}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button *ngIf="user._id == comment.commentUserID" (click)="onDelete(comment._id)" mat-mini-fab>Del</button></mat-card-actions> </mat-card-header>  
              <p class="text-black"> {{comment.commentBody}}</p>
          </mat-card>
        </mat-expansion-panel>

@@ -2,16 +2,17 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import 'rxjs/add/operator/filter';
-import {Observable} from 'rxjs/Observable';
-import {ObservableMedia} from '@angular/flex-layout';
+import { Observable } from 'rxjs/Observable';
+import { ObservableMedia } from '@angular/flex-layout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import '../../../../material.module';
 import { DashboardService } from '../../services/dashboard.service';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormGroupDirective, FormBuilder, Validators, AbstractControl, PatternValidator, EmailValidator } from '@angular/forms';
 import { Course } from '../../../../model/course.model';
 import { Comment } from '../../../../model/comment.model';
 import { User } from '../../../../model/user.model';
+import { Score } from '../../../../model/score.model';
 
 @Component({
   selector: 'app-lecturevideo',
@@ -21,6 +22,7 @@ import { User } from '../../../../model/user.model';
 export class LecturevideoComponent implements OnInit {
   @ViewChild('endQuestion') endQuestion: ElementRef;
   @ViewChild('stepper') stepper: ElementRef;
+  @ViewChild(FormGroupDirective) commentFormDirective: FormGroupDirective;
 
   videoLink: string;
   totalScore: number;
@@ -66,12 +68,10 @@ export class LecturevideoComponent implements OnInit {
    }
 
   ngOnInit() {
-    
-    //this.getUser();
     this.createCommentForm();
     this.isScore = true;
     this.isLength = true;
-    this.user = this.dashboardService.user;
+    this.getUser();
     this.getRouterParams();
     this.getQueryParams();
     this.getDetail();
@@ -81,7 +81,17 @@ export class LecturevideoComponent implements OnInit {
     this.createQuestionForm();
   }
 
-  
+  getUser(){
+    if(this.dashboardService.user == undefined){
+      const usercred = JSON.parse(localStorage.getItem('usercred'));
+      this.dashboardService.getProfile(usercred.tag).subscribe((user: User) => {
+        this.user = user;
+      });
+    }
+    else{
+      this.user = this.dashboardService.user;
+    }
+  }
 
   Title(){
     this.titleService.setTitle(this.title);
@@ -112,13 +122,11 @@ export class LecturevideoComponent implements OnInit {
     .filter(params => params.videoLink)
     .subscribe(params => {
       //console.log(params); // {order: "popular"}
-
       this.videoLink = params.videoLink;
       this.sessionID = parseInt(params.sessionID);
       this.lectureID = parseInt(params.lectureID); 
       //console.log(params);
       this.getVideo(params.videoLink);
-      
     });
   }
   getDetail(){
@@ -130,6 +138,7 @@ export class LecturevideoComponent implements OnInit {
         this.isLength = false;
       }
       this.checkScore();
+      //console.log(course);
     });
   }
 
@@ -140,9 +149,10 @@ export class LecturevideoComponent implements OnInit {
       sessionID: this.sessionID
     }
     //console.log(this.user.userID, this.course._id, body);
-    this.dashboardService.checkScoringCourse(body, this.user.userID, this.course._id).subscribe(data => {
-      if(data.success){
-        this.userScore = data.score.score;
+    this.dashboardService.checkScoringCourse(body, this.user._id, this.course._id).subscribe(response => {
+      //console.log(data);
+      if(response.success){
+        this.userScore = parseInt(response.score.score);
         this.isScore = false;
       }
     });
@@ -204,7 +214,7 @@ export class LecturevideoComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user._id, null, null);
     //console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
@@ -220,6 +230,7 @@ export class LecturevideoComponent implements OnInit {
   }
 
   resetCommentForm(){
+    this.commentFormDirective.resetForm();
     this.commentForm.reset();
   }
 
@@ -272,9 +283,10 @@ export class LecturevideoComponent implements OnInit {
       lectureID: this.lectureID,
       sessionID: this.sessionID
     }
-    this.dashboardService.scoringCourse(body, this.user.userID, this.course._id).subscribe(data => {
-      if(data.success){
-        this.userScore = data.score.score;
+    this.dashboardService.scoringCourse(body, this.user._id, this.course._id).subscribe(response => {
+      //console.log(data);
+      if(response.success){
+        this.userScore = parseInt(response.score.score);
         this.isScore = false;
       }
     });

@@ -49,32 +49,41 @@ export class ProfileComponent implements OnInit {
   }
 
  ngOnInit() {
-   this.user = this.dashboardService.user;
+  this.getUser();
   this.titleService.setTitle(this.title);
-   const cols_map = new Map([
-     ['xs', -1],
-     ['sm', 1],
-     ['md', 2],
-     ['lg', 3],
-     ['xl', 3]
-   ]);
-   let start_cols: number;
-   cols_map.forEach((cols, mqAlias) => {
-     if (this.observableMedia.isActive(mqAlias)) {
-       start_cols = cols;
-     }
-   });
-   this.cols = this.observableMedia.asObservable()
-     .map(change => {
-       return cols_map.get(change.mqAlias);
-     }).startWith(start_cols);
+  this.setDisplay();
+ }
+
+ setDisplay(){
+  const cols_map = new Map([
+    ['xs', -1],
+    ['sm', 1],
+    ['md', 2],
+    ['lg', 3],
+    ['xl', 3]
+  ]);
+    let start_cols: number;
+    cols_map.forEach((cols, mqAlias) => {
+      if (this.observableMedia.isActive(mqAlias)) {
+        start_cols = cols;
+      }
+    });
+    this.cols = this.observableMedia.asObservable()
+      .map(change => {
+        return cols_map.get(change.mqAlias);
+      }).startWith(start_cols);
  }
 
   getUser() {
-    const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
-    });
+    if(this.dashboardService.user == undefined){
+      const usercred = JSON.parse(localStorage.getItem('usercred'));
+      this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+        this.user = profile;
+      });
+    }
+    else{
+      this.user = this.dashboardService.user;
+    }
   }
 
   createProfileForm() {
@@ -109,7 +118,7 @@ export class ProfileComponent implements OnInit {
       this.InstituteName.value, this.InstituteType.value, this.Gender.value, this.Location.value);
     //console.log(this.user.userID);
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.editProfile(user, this.user.userID, usercred.tag).subscribe(data => {
+    this.dashboardService.editProfile(user, this.user._id, usercred.tag).subscribe(data => {
       if(data.success){
         //console.log(data);
         this.resetProfileForm();

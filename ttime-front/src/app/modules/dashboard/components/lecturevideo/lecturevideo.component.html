@@ -156,7 +156,7 @@
      
          <mat-card *ngFor="let comment of comments"> 
            
-           <mat-card-header><mat-card-title style="font-size:1em "> {{comment.commentUser}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button *ngIf="user.userID == comment.commentUserID" (click)="onDelete(comment.commentID)" mat-mini-fab>Del</button></mat-card-actions> </mat-card-header>  
+           <mat-card-header><mat-card-title style="font-size:1em "> {{comment.commentUser}}</mat-card-title>  <div fxFlex></div>  <mat-card-actions align="end"><button *ngIf="user._id == comment.commentUserID" (click)="onDelete(comment._id)" mat-mini-fab>Del</button></mat-card-actions> </mat-card-header>  
              <p class="text-black"> {{comment.commentBody}}</p>
          </mat-card>
        </mat-expansion-panel>

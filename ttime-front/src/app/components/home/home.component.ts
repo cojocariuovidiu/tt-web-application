@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
   showCoursesTeacher(){
     this.coreService.getCoursesTeacher().subscribe((courses: Course[]) => {
       this.coursesTeacher = courses;
-      console.log(courses[0]._id);
+      //console.log(courses[0]._id);
     });
   }
 

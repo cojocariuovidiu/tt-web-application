@@ -58,15 +58,15 @@ export class AuthorizationService {
     }
     headers.set('Content-Type', 'application/json');
     return this.httpClient.post<ServerResponse>(url, logincred, {headers: headers})
-      .pipe(map(response => {
-        const data = response;
-        //this.coreService.showMessage(response.msg);
-        return data;
-      }),
-      catchError(error => {
-        //this.errorService.handleError(error.error);
-        return Observable.throw(error);
-      }));
+    .pipe(map(response => {
+      const data = response;
+      //this.coreService.showMessage(response.msg);
+      return data;
+    }),
+    catchError(error => {
+      //this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
 
   storeUserData(token, user)

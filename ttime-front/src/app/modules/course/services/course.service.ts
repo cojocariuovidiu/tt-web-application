@@ -176,8 +176,8 @@ export class CourseService {
     const token = this.getauthToken();
     let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
     const url = `${"api/courses/comment/add/"}${comment.commentCourse}`
-    const body = JSON.stringify(comment);
-    return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+    //const body = JSON.stringify(comment);
+    return this.httpClient.post<ServerResponse>(url, comment, {headers: httpHeaders})
     .pipe(map(response => {
       const data = response;
       return data;

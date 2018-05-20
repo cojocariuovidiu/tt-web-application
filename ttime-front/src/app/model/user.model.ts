@@ -1,5 +1,5 @@
 export class User {
-     userID?: string;
+     _id?: string;
      socialID?: string;
      name: string;
      mobile?: string;
@@ -19,7 +19,7 @@ export class User {
       mobile?: string,
       password?: string,
       type?: string,
-      userID?: string,
+      _id?: string,
       socialID?: string,
       verified?: string,
       institutename?: string,
@@ -27,7 +27,7 @@ export class User {
      gender?: string,
      location?: string
     ) {
-      this.userID = userID;
+      this._id = _id;
       this.socialID = socialID;
       this.name = name;
       this.mobile = mobile;
