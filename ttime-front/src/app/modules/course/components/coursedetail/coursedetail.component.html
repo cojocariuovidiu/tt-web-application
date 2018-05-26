@@ -24,31 +24,28 @@
               </div>
                   </mat-card> 
                   </mat-grid-tile>  
-                  <mat-grid-tile  fxLayoutwrap  colspan="2" [rowspan]="rowspan | async" >
-                      <mat-card  class="coursemoredetails"   fxLayout="column"   fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap  >
-                          <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 1 auto"  ngStyle.lt-md="padding-left:20px; padding-right:20px;"> 
-                            <div fxFlex>
-                          <mat-list id="table" role="list">
-                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >alarm</mat-icon>Hours</mat-list-item>
-                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >book</mat-icon>Lectures</mat-list-item>
-                              <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >insert_drive_file</mat-icon> Articles</mat-list-item>
-                              <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star_border</mat-icon> Ratings </mat-list-item>
-                              
-                            </mat-list>
-                            
-                          </div>
-                          <div  fxFlex>
-                            <mat-list id="table" role="list">
-                                <mat-list-item role="listitem">2.08hrs/125min</mat-list-item>
-                                <mat-list-item role="listitem">18</mat-list-item>
-                                <mat-list-item role="listitem">3</mat-list-item>
-                                <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  </mat-list-item>
+                  <mat-grid-tile  fxLayoutwrap  colspan="2" [rowspan]="rowspan | async" style =" padding-right:20px; padding-left: 20px;" >
+                      <mat-card  class="coursemoredetails"  fxLayoutwrap   >
+                          <div fxLayout="row wrap" fxLayoutAlign="center start"> 
+                              <div fxflex.xs="1 1 20%" fxflex.sm="1 1 30%" fxflex.md="1 1 40%" fxflex.gt-md="1 1 50%">
+                            <mat-list id="table" role="list" >
+                                <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >alarm</mat-icon>Hours</mat-list-item>
+                                <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >book</mat-icon>Lectures</mat-list-item>
+                                <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >insert_drive_file</mat-icon> Articles</mat-list-item>
+                                <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star_border</mat-icon> Ratings </mat-list-item>
+                                
                               </mat-list>
+                              
                             </div>
-                         
-                        </div>
-                        <div style="padding-top: 10px; ">
-                            <mat-divider style="width: 100%; border: 2px #bdbdbd solid"></mat-divider>
+                            <div fxflex.xs="1 1 80%" fxflex.sm="1 1 70%" fxflex.md="1 1 60%" fxflex.gt-md="1 1 50%">
+                              <mat-list id="table" role="list">
+                                  <mat-list-item role="listitem">2.08hrs/125min</mat-list-item>
+                                  <mat-list-item role="listitem">18</mat-list-item>
+                                  <mat-list-item role="listitem">3</mat-list-item>
+                                  <mat-list-item role="listitem"><star-rating [starType]="'svg'"  [rating]="5"></star-rating> </mat-list-item>
+                                </mat-list>
+                              </div>
+                           
                           </div>
                             
                      </mat-card>

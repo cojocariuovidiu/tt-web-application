@@ -15,6 +15,7 @@ import { ChangepasswordComponent } from './components/changepassword/changepassw
 import { LecturevideoComponent } from './components/lecturevideo/lecturevideo.component';
 import { DashboardService } from './services/dashboard.service';
 import { MatchsettingspasswordDirective } from './components/changepassword/matchsettingspassword.directive';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { MatchsettingspasswordDirective } from './components/changepassword/matc
     FormsModule,
     MaterialModule,
     FlexLayoutModule,
+    StarRatingModule,
     DashboardRoutingModule
   ],
   declarations: [DashboardComponent, ProfileComponent, EnrolledComponent, EnrolleddetailComponent, ChangepasswordComponent, LecturevideoComponent, MatchsettingspasswordDirective],

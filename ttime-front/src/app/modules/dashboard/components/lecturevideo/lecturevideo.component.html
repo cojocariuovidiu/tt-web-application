@@ -9,28 +9,28 @@
      </video>
    
     </mat-grid-tile> 
-    <mat-grid-tile fxLayoutwrap [colspan]="colspan | async" rowspan="30"  style="background-color: white;" >
+    <!--<mat-grid-tile fxLayoutwrap [colspan]="colspan | async" rowspan="30"  style="background-color: white;" >
   
-           <mat-accordion style="min-width:100% ;min-height:100%;"  fxLayout="column" class="comments-card" fxFlex="1 1 auto" fxFlexFill>
-               <mat-expansion-panel  hideToggle="true"  (click)="syllabusiconclick()">
-                 <mat-expansion-panel-header>
+         <mat-accordion style="min-width:100% ;min-height:100%;" multi="true"  fxLayout="column" class="comments-card" fxFlex="1 1 auto" fxFlexFill>
+               <mat-expansion-panel  hideToggle="true" expanded="true">
+                 <mat-expansion-panel-header  (click)="syllabusiconclick()">
                    <mat-panel-title>
                        <mat-icon>{{syllabusicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
                      <strong>Course Map :</strong>
                    </mat-panel-title>
                  </mat-expansion-panel-header>
                   <mat-accordion style="min-width:100% ;min-height:100%;" multi="true" fxFlex>
-                     <mat-expansion-panel *ngFor="let session of course.courseSessions" expanded="true" hideToggle="true" (click)="sessioniconclick()"  >
-                         <mat-expansion-panel-header>
+                     <mat-expansion-panel *ngFor="let session of course.courseSessions" expanded="true" hideToggle="true"  >
+                         <mat-expansion-panel-header (click)="sessioniconclick()" >
                            <mat-panel-title>
                                <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
                              <h6><strong>{{session.sessionNo}} : {{session.sessionTitle}}</strong></h6>
                            </mat-panel-title>
                          </mat-expansion-panel-header>
                             <mat-list> 
-                                 <mat-list-item role="listitem" *ngFor="let lecture of session.lectures">
+                                 <mat-list-item role="listitem" *ngFor="let lecture of session.lectures" style="width: 100%;">
                                    
-                                   <a (click)="onLecture(session.sessionID, lecture.lectureID, lecture.lectureLink)" >{{lecture.lectureTitle}}</a>
+                                   <button mat-button (click)="onLecture(session.sessionID, lecture.lectureID, lecture.lectureLink)" style="width: 100%;">{{lecture.lectureTitle}}</button>
                                   
                                   </mat-list-item>
 
@@ -44,7 +44,7 @@
             
              </mat-accordion>
    
-    </mat-grid-tile> 
+    </mat-grid-tile> -->
     <mat-grid-tile colspan="10" rowspan="12"  fxLayoutwrap > 
             <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
                 <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Lecture Description:</h4></mat-card-title> </mat-card-header>    

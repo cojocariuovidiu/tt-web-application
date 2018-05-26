@@ -6,11 +6,12 @@
  
 <div [hidden]="loading" class="router-output ">
 <div *ngIf="onRoute()" class="my-theme app">
-    <mat-toolbar class="nav-bar mat-elevation-z10"  color="primary" >
+    <mat-toolbar class="nav-bar mat-elevation-z10"  color="warn" >
       <mat-toolbar-row>
               <div fxShow="true" fxHide.gt-sm="true">
                   <button mat-button id="navbutton" (click)="sidenav.toggle()"><i class="material-icons">view_headline</i></button>
               </div>
+            <button  mat-icon-button id="logobutton" routerLink= "/home" ><mat-icon svgIcon="ttime"></mat-icon></button>
             <button mat-button id="navbutton" routerLink= "/home" routerLinkActive="active" ><h2><strong>Teachers Time</strong></h2></button>
             <div fxShow="true" fxHide.lt-md="true">
               <!-- The following menu items will be hidden on both SM and XS screen sizes -->
@@ -34,7 +35,7 @@
     </mat-toolbar>
     </div>
     <div *ngIf="!onRoute()" class="my-theme app">
-      <mat-toolbar class="nav-bar mat-elevation-z10"  color="primary" >
+      <mat-toolbar class="nav-bar mat-elevation-z10"  color="warn" >
         <mat-toolbar-row>
               <button mat-button id="navbutton" routerLink= "/admin/dashboard" routerLinkActive="active" ><h2><strong>Teachers Time Administrator</strong></h2></button>
               <div fxShow="true" fxHide.lt-md="true">
@@ -54,8 +55,8 @@
       </mat-toolbar>
       </div>
  <div>
-  <mat-sidenav-container class="my-second-theme">
-     <mat-sidenav #sidenav class="mat-elevation-z6" mode="over" position="start"  ngStyle.xs="width:50vw;" position="width:start" fxHide.gt-md="true"ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
+  <mat-sidenav-container class="my-theme">
+     <mat-sidenav #sidenav [fixedInViewport]="true" class="mat-elevation-z6" mode="over" position="start"  ngStyle.xs="width:50vw;" position="width:start" fxHide.gt-md="true" ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
       <div class="sidenavbar text-white" fxLayout="column wrap"fxLayoutGap="20px">
        
         <div> <button mat-button id="navbutton"  (click)="sidenav.toggle()" routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>
@@ -78,13 +79,8 @@
       <div class="routing" style="margin-top: 63px;" ngStyle.lt-sm="margin-top: 0px;"><router-outlet></router-outlet></div>
       <div *ngIf="onRoute()" class="my-second-theme nav-bar mat-elevation-z10 text-white"  id="footer-id" color="primary" >
         <mat-grid-list  [cols]="cols | async" rowHeight="45px"   gutterSize="0px"   >
-            <mat-grid-tile rowspan="7" style="background: #1A237E;" fxLayoutwrap>
-              <div fxLayout="column wrap"  style="margin-top: 30px; padding-left: 30px; padding-right: 20px;">
-                <h5><strong>Teachers Time</strong></h5>
-                <p align="justify">Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</p>
-              </div>
-              </mat-grid-tile>
-            <mat-grid-tile rowspan="7" style="background:#1A237E;">
+           
+            <mat-grid-tile rowspan="6" style="background:#455A64;">
                 <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="15px" style="padding-left: 30px;">
                     <h5><strong>Useful Links</strong></h5> 
                     <a class="text-white" routerLink="/us/about" style="text-decoration: none;"> <mat-icon id="ab">info</mat-icon>About</a> 
@@ -94,16 +90,20 @@
                     
                  </div>
             </mat-grid-tile>
-            <mat-grid-tile rowspan="7" style="background:#1A237E;">
+            <mat-grid-tile rowspan="6" style="background:#455A64;">
                 <div fxLayout="column wrap"  fXLayoutAlign="start start" fxFlex fxLayoutGap="5px" style="padding-left: 30px ; padding-top:30px;">
                 <h5> <strong>Contact Us</strong> </h5> 
                 <p> <mat-icon id="ab">contact_phone</mat-icon> Rezina Garden, House 67/A, Road 9/A, Dhanmondi, Dhaka, Bangladesh 1209</p>
                 <p> <mat-icon id="ab">phone</mat-icon> +880 1777-800866 </p>
-                <p> <mat-icon id="ab">email</mat-icon> Privacy Policy</p>
+                <p> <mat-icon id="ab">email</mat-icon>  info@lohbd.org </p>
                 <p class="social-icons icon-circle icon-zoom list-inline"> <a><i class="fa fa-facebook"></i></a> <a><i class="fa fa-youtube"></i></a> <a><i class="fa fa-google-plus"></i></a> <a><i class="fa fa-instagram"></i></a><p>   
                 </div>
             </mat-grid-tile>
-     
+            <mat-grid-tile rowspan="1" [colspan]="cols | async" style="background: #455A64;;" fxLayoutwrap>
+              <div fxLayout="column wrap"  style="margin-top: 30px; padding-left: 30px; padding-right: 20px;">
+                <p align="justify">&copy; Copyright 2018 lightofhopebd.org</p>
+              </div>
+              </mat-grid-tile>
       </mat-grid-list>
       </div>
     </mat-sidenav-content>

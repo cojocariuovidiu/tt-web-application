@@ -7,7 +7,7 @@ import 'rxjs/add/operator/startWith';
 import { Course } from '../../model/course.model';
 import { CoreService } from '../../services/core.service';
 import { Router } from '@angular/router';
-
+import { RatingChangeEvent, HoverRatingChangeEvent, ClickEvent } from 'angular-star-rating';
 
 @Component({
   selector: 'app-home',
@@ -16,43 +16,53 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  title: string = "Home - Teachers Time";
+  title = 'Home - Teachers Time';
   cols: Observable<number>;
   rowspan: Observable<number>;
   introcols: Observable<number>;
+  rowspanclients: Observable<number>; // row span for clients images
+
   coursesTeacher: Course [] = [];
   coursesParent: Course [] = [];
+  onClickResult: ClickEvent;
+  onHoverRatingChangeResult: HoverRatingChangeEvent;
+  onRatingChangeResult: RatingChangeEvent;
+  // tslint:disable-next-line:no-inferrable-types
+  ratingnumber: string = '5';
+  gettype: any;
+  // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private coreService: CoreService, private titleService: Title, private observableMedia: ObservableMedia) { }
 
   ngOnInit() {
+
     this.redirectToDash();
     this.setDisplay();
     this.showCoursesParent();
     this.showCoursesTeacher();
-    
+
   }
 
-  redirectToDash(){
+  redirectToDash() {
     const isDash = this.coreService.checkLogin();
-    if(isDash){
+    if (isDash) {
       this.router.navigate(['/dashboard/enrolled']);
     }
   }
 
-  showCoursesTeacher(){
+  showCoursesTeacher() {
     this.coreService.getCoursesTeacher().subscribe((courses: Course[]) => {
       this.coursesTeacher = courses;
-      //console.log(courses);
+      // console.log(courses);
     });
   }
 
-  showCoursesParent(){
+  showCoursesParent() {
     this.coreService.getCoursesParent().subscribe((courses: Course[]) => {
       this.coursesParent = courses;
     });
   }
 
-  setDisplay(){
+  setDisplay() {
     this.titleService.setTitle(this.title);
     const cols_map = new Map([
       ['xs', 1],
@@ -69,15 +79,23 @@ export class HomeComponent implements OnInit {
       ['xl', 2]
     ]);
     const rowspan_map = new Map([
-      ['xs', 16],
-      ['sm', 16],
+      ['xs', 13],
+      ['sm', 13],
       ['md', 13],
       ['lg', 12],
       ['xl', 12]
     ]);
+    const rowspann_map = new Map([
+      ['xs', 23],
+      ['sm', 23],
+      ['md', 22],
+      ['lg', 7],
+      ['xl', 7]
+    ]);
     let start_cols: number;
     let intro_start_cols: number;
     let row_span: number;
+    let start_rowspan: number;
     cols_map.forEach((cols, mqAlias) => {
       if (this.observableMedia.isActive(mqAlias)) {
         start_cols = cols;
@@ -107,10 +125,33 @@ export class HomeComponent implements OnInit {
           .map(change => {
             return rowspan_map.get(change.mqAlias);
           }).startWith(row_span);
+          rowspann_map.forEach((rowspanclients, mqAlias) => {
+            if (this.observableMedia.isActive(mqAlias)) {
+              start_rowspan = rowspanclients;
+            }
+          });
+          this.rowspanclients = this.observableMedia.asObservable()
+            .map(change => {
+              return rowspann_map.get(change.mqAlias);
+            }).startWith(start_rowspan);
   }
 
-  getCourseDetail(id){
+  getCourseDetail(id) {
     this.router.navigate(['/courses/index', id]);
   }
+  onClick = ($event: ClickEvent) => {
+    console.log('onClick $event: ', $event.rating.valueOf());
+    this.gettype = $event.rating.valueOf();
+    console.log(typeof this.gettype);
+  }
 
+  onRatingChange = ($event: RatingChangeEvent) => {
+    console.log('onRatingUpdated $event: ', $event);
+    this.onRatingChangeResult = $event;
+  }
+
+  onHoverRatingChange = ($event: HoverRatingChangeEvent) => {
+    console.log('onHoverRatingChange $event: ', $event);
+    this.onHoverRatingChangeResult = $event;
+  }
 }

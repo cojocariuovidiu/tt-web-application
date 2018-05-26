@@ -3,6 +3,10 @@
 }
 mat-toolbar{
 	z-index: 10;
+	color: orange;
+}
+mat-toolbar .mat-button{
+	color: orange;
 }
 .app .nav-bar{
     position: fixed;
@@ -11,6 +15,14 @@ mat-toolbar{
 .app #navbutton{
     display: inline-flex;
 	vertical-align: middle;
+}
+.app #logobutton{
+	height: 100%;
+	width: 57.4px;
+}
+.app #logobutton mat-icon{
+	height: 90%;
+	width: 57.4px;
 }
 .routing{
 	min-height: 60vh;
@@ -86,7 +98,9 @@ mat-sidenav-container{
 	transform: scale(1.1); 
 }
 
- 
+.mat-button,.mat-raised-button,.mat-icon-button{
+	outline: none; 
+ }
 
 .social-icons .fa-facebook{background-color:rgb(12, 52, 145);}  
 
@@ -96,5 +110,3 @@ mat-sidenav-container{
 
 .social-icons .fa-youtube,.social-icons .fa-youtube-play,.social-icons .fa-youtube-square{background-color:#C52F30;}
 
-  
-  

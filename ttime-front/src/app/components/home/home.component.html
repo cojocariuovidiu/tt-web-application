@@ -1,13 +1,13 @@
 <div class=" my-theme flex-container" fxLayout="column wrap" fxLayoutGap="20px"  fxFill>
   <div>
-     <mat-grid-list class="hintro" [cols]="introcols | async" rowHeight="36em" gutterSize="0px"  >
+     <mat-grid-list class="hintro" [cols]="introcols | async" rowHeight="34em" gutterSize="0px"  >
          <mat-grid-tile class="intro" colspan="1" rowspan="1">
-           <div fxLayout="row wrap"  fxLayout.xs="column wrap" fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center" fxFlex>
+           <div fxLayout="row wrap"  fxLayout.lt-md="column wrap" fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center" fxFlex>
            <div class="tintro" fxLayout="row wrap" fxLayout.lt-md="column wrap" fxFlex  fxLayoutAlign="start center"  fxLayoutAlign.lt-md="start center"  fxFlex.lt-md  >  
                <h1>WELCOME TO TEACHERS TIME </h1> 
                <h6>Teachers Time is a platform to support new parents and school teachers so that they can unleash the potential of children. We aware, educate and help new parents on Early Childhood Development and develop professional skills of teachers. We support school managements to ensure overall school development through our services.</h6>
                <div fxLayout="row wrap" fxlayout.lt-sm="column wrap" fxLayoutAlign="start start" fxLayoutAlign.lt-md="center center" fxLayoutWrap >
-               <button mat-raised-button color="primary"routerLink= "/auth/login" routerLinkActive="active">Start Here</button>
+               <button mat-raised-button color="accent" routerLink= "/auth/login" routerLinkActive="active">Start Here</button>
                 
               </div>
              </div>
@@ -43,8 +43,18 @@
        </mat-card-header>
          <img matCardImage src="../../../assets/img/python.jpg">
          <mat-card-content  [style.height.px]="'250px'">
-           
-           <p  align="justify" class="text-white">
+            <div  fxLayoutAlign="start start" fxLayout="row wrap" fxLayoutGap="20px">
+                <div class="text-white">
+                  <h5>Rating</h5>
+                </div> 
+             <div  fxFlexAlign="center" class="text-white">
+             <star-rating [starType]="'svg'" [rating]="2.63"
+               
+             (starClickChange)="onClick($event)">
+               </star-rating>
+               </div>
+             </div>
+          <p  align="justify" class="text-white">
             {{course.courseDetail}}
            
          </p>
@@ -74,8 +84,19 @@
          </mat-card-header>
            <img matCardImage src="../../../assets/img/python.jpg">
            <mat-card-content  [style.height.px]="'250px'">
-             
+             <div  fxLayoutAlign="start start" fxLayout="row wrap" fxLayoutGap="10px">
+               <div class="text-white">
+                 <h5>Rating:</h5>
+               </div> 
+            <div  fxFlexAlign="center" class="text-white">
+            <star-rating [starType]="'svg'" [readOnly]="true" [rating]="ratingnumber" [rating]="ratingnumber"
+              
+            (starClickChange)="onClick($event)">
+              </star-rating>
+              </div>
+            </div>
              <p  align="justify" class="text-white">
+             
               {{course.courseDetail}}
              
            </p>
@@ -87,6 +108,20 @@
          </mat-card>
         
    </mat-grid-tile>
+   <mat-grid-tile [rowspan]="rowspanclients | async" [colspan]="cols | async" style="background: rgb(255, 255, 255);" fxLayoutwrap >
+      <mat-grid-tile-header>
+       <h3> Our Clients</h3>
+      </mat-grid-tile-header>
+    <div fxLayout="row wrap"  fxLayoutAlign="space-between start" fxLayout.lt-md="column wrap"  fxLayoutAlign.lt-md="start center" fxLayoutGap="30px">
+        <div> <img class="cf" src="../assets/clients/a2i-128.png" /></div> 
+        <div fxFlexAlign="center"> <img class="cf" src="../../../assets/clients/actionaid.png" /></div>
+        <div fxFlexAlign="center"> <img class="cf" src="../../../assets/clients/aloha-128.png" /></div>
+        <div  fxFlexAlign="center"> <img class="cf" src="../../../assets/clients/sisimpur-128.png" /></div> 
+        <div> <img class="cf" src="../../../assets/clients/sydney-128.png" /></div>
+        <div> <img  class="cf" src="../../../assets/clients/vnc-172.png" /></div>
+    </div>
+    
+    </mat-grid-tile>
   </mat-grid-list>
   </div>
 </div>

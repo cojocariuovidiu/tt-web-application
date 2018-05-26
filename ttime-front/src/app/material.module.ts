@@ -33,6 +33,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatRippleModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
+import {MatTreeModule} from '@angular/material/tree';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import {MatNativeDateModule} from '@angular/material';
     MatSortModule,
     MatTableModule,
     MatRippleModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTreeModule
   ],
   declarations: [],
   exports: [MatAutocompleteModule,
@@ -105,6 +107,7 @@ import {MatNativeDateModule} from '@angular/material';
     MatSortModule,
     MatTableModule,
     MatRippleModule,
+    MatTreeModule,
     MatNativeDateModule]
 })
 export class MaterialModule { }

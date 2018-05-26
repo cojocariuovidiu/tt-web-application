@@ -10,6 +10,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CourseFilterPipe } from './components/courselist/coursefilter.pipe';
 import { CourseService } from './services/course.service';
+import { StarRatingModule } from 'angular-star-rating';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { CourseService } from './services/course.service';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    StarRatingModule ,
     FlexLayoutModule,
     CourseRoutingModule
   ],

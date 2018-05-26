@@ -1,8 +1,14 @@
+$color-negative-rating: #ffff00 !default;
+$color-ok-rating: #ffff00 !default;
+$color-positive-rating: #ffff00 !default;
+$color-default-rating: #ffff00 !default;
 @import 'fontawesome';
 @import "~bootstrap/scss/bootstrap";
 @import '~font-awesome/scss/font-awesome';
 @import '~@angular/material/theming';
+@import '~css-star-rating/scss/star-rating';
 @import url('https://fonts.googleapis.com/css?family=Oxygen:300,400,700');
+
 
 // Plus imports for other components in your app.
 
@@ -26,18 +32,20 @@ $custom-typography: mat-typography-config(
 
 .my-theme{
     $my-theme-primary: mat-palette($mat-indigo);
-    $my-theme-accent:  mat-palette($mat-blue);
+    $my-theme-accent:  mat-palette($mat-orange,900);
 
 // The warn palette is optional (defaults to red).
-    $my-theme-warn:    mat-palette($mat-red);
+    $my-theme-warn:    mat-palette($mat-blue-gray,700);
     $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
     @include angular-material-theme($my-theme);
+   
+    
 }
 
 .my-second-theme {
   
     $my-second-theme-primary: mat-palette($mat-indigo,900);
-    $my-second-theme-accent:  mat-palette($mat-blue);
+    $my-second-theme-accent:  mat-palette($mat-grey);
 
 // The warn palette is optional (defaults to red).
    $my-second-theme-warn:    mat-palette($mat-red);

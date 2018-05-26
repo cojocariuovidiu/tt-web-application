@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ObservableMedia} from '@angular/flex-layout';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 import { Router, NavigationEnd, NavigationCancel, NavigationStart } from '@angular/router';
@@ -15,8 +17,13 @@ export class AppComponent implements OnInit {
   loading;
   authtoken: any;
   cols: Observable<number>;
-  constructor(private coreService: CoreService, private router: Router , private observableMedia: ObservableMedia) {
+  rowspanclients: Observable<number>; // row span for clients images
+  // tslint:disable-next-line:max-line-length
+  constructor(private coreService: CoreService, private router: Router , private observableMedia: ObservableMedia , iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     this.loading = true;
+    iconRegistry.addSvgIcon(
+      'ttime',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ttlogo2.svg'));
   }
   ngOnInit() {
     this.setDisplay();
@@ -41,8 +48,8 @@ export class AppComponent implements OnInit {
       ['xs', 1],
       ['sm', 1],
       ['md', 2],
-      ['lg', 3],
-      ['xl', 3]
+      ['lg', 2],
+      ['xl', 2]
     ]);
     let start_cols: number;
     cols_map.forEach((cols, mqAlias) => {
@@ -54,6 +61,8 @@ export class AppComponent implements OnInit {
       .map(change => {
         return cols_map.get(change.mqAlias);
       }).startWith(start_cols);
+
+      
   }
 
   hideLogin() {
@@ -94,10 +103,9 @@ export class AppComponent implements OnInit {
   }
 
   onRoute(){
-    if(this.router.url == "/admin/dashboard"){
+    if(this.router.url == '/admin/dashboard'){
       return false;
-    }
-    else if(this.router.url == "/admin/login"){
+    } else if(this.router.url == "/admin/login") {
       return false;
     }
     {

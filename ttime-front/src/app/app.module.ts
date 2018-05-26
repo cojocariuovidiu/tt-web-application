@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MessageComponent } from './components/message/message.component';
@@ -14,6 +15,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ErrorService } from './services/error.service';
 import { GOOGLE_MAP_API_KEY } from './config/config';
 import { CoreService } from './services/core.service';
+import { StarRatingModule } from 'angular-star-rating';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +27,9 @@ import { CoreService } from './services/core.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    HttpClientModule,
     MaterialModule,
+    StarRatingModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: GOOGLE_MAP_API_KEY
     }),

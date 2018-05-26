@@ -5,15 +5,11 @@
                    <h3>{{course.courseTitle}}</h3> 
               
               </div>
-          
-
-      
                 </mat-grid-tile>
   </mat-grid-list>
 <mat-grid-list class="courseintro2" cols="2" rowHeight="5em" gutterSize="0px"  >
-                <mat-grid-tile   colspan="2" 
-                [rowspan]="rowspan | async" fxLayoutwrap >
-                 <mat-card  class="coursedetails"  fxLayout="column" fxLayoutAlign="start stretch" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap>
+                <mat-grid-tile   colspan="2"  [rowspan]="rowspan | async" fxLayoutwrap >
+                 <mat-card  class="coursedetails"  fxLayout="column wrap" fxLayoutAlign="start stretch" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap>
                 <div><p align="justify">
                 <strong>About this Course : </strong>{{course.courseDetail}}
                  
@@ -24,10 +20,10 @@
                 </mat-card> 
                 </mat-grid-tile>  
                 <mat-grid-tile  fxLayoutwrap  colspan="2" [rowspan]="rowspan | async" >
-                    <mat-card  class="coursemoredetails"   fxLayout="column"   fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap  >
-                        <div fxLayout="row" fxLayoutAlign="center stretch" fxFlex="1 1 auto"  ngStyle.lt-md="padding-left:20px; padding-right:20px;"> 
-                          <div fxFlex="1 1 auto">
-                        <mat-list id="table" role="list">
+                    <mat-card  class="coursemoredetails" fxFlexFill  fxLayoutwrap  >
+                        <div fxLayout="row wrap" fxLayoutAlign="center start" fxFlex="1 1 100%"> 
+                          <div fxflex.xs="1 1 20%" fxflex.sm="1 1 30%" fxflex.md="1 1 40%" fxflex.gt-md="1 1 50%">
+                        <mat-list id="table" role="list" >
                             <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >alarm</mat-icon>Hours</mat-list-item>
                             <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >book</mat-icon>Lectures</mat-list-item>
                             <mat-list-item role="listitem"><mat-icon matListIcon color="warn" >insert_drive_file</mat-icon> Articles</mat-list-item>
@@ -36,27 +32,23 @@
                           </mat-list>
                           
                         </div>
-                        <div fxFlex="1 1 auto">
+                        <div fxflex.xs="1 1 80%" fxflex.sm="1 1 70%" fxflex.md="1 1 60%" fxflex.gt-md="1 1 50%">
                           <mat-list id="table" role="list">
                               <mat-list-item role="listitem">2.08hrs/125min</mat-list-item>
                               <mat-list-item role="listitem">18</mat-list-item>
                               <mat-list-item role="listitem">3</mat-list-item>
-                              <mat-list-item role="listitem"> <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  <mat-icon matListIcon color="warn">star</mat-icon>  </mat-list-item>
+                              <mat-list-item role="listitem"><star-rating [starType]="'svg'"  [rating]="5"></star-rating> </mat-list-item>
                             </mat-list>
                           </div>
                        
                       </div>
-                      <div style="padding-top: 10px; ">
-                          <mat-divider style="width: 100%; border: 2px white solid"></mat-divider>
-                        </div>
-                          
                    </mat-card>
    
                    </mat-grid-tile>         
 </mat-grid-list>
 <div class="course-structure" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutwrap fxFlexFill  [ngStyle.xs]="'padding-left:0;padding-right:0;'">
    <div style="width: 100%" fxFlex fxAlign="center">
-    <mat-accordion style="min-width:100vw ;min-height:100%;" fxFlex>
+    <mat-accordion style="min-width:100vw ;min-height:100%;" multi="true" fxFlex>
       <mat-expansion-panel  hideToggle="true" expanded="true" (click)="syllabusiconclick()">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -66,21 +58,21 @@
         </mat-expansion-panel-header>
     
          <mat-accordion style="min-width:100vw ;min-height:100%;" multi="true" fxFlex>
-            <mat-expansion-panel *ngFor="let session of course.courseSessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
+            <mat-expansion-panel *ngFor="let session of course.courseSessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" expanded="true" >
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                       <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
-                    <h4><strong>{{session.sessionWeek}} : {{session.sessionTitle}}</strong></h4>
+                    <h4><strong>{{session.sessionNo}} : {{session.sessionTitle}}</strong></h4>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
             
                 <mat-card > 
                   
                   <mat-card-header><mat-card-title><h5>{{session.sessionTitle}}</h5></mat-card-title>   </mat-card-header>  
-                   <mat-list> 
-                        <mat-list-item role="listitem" *ngFor="let lecture of session.lectures">{{lecture.lectureTitle}} : {{lecture.lectureDetails}}</mat-list-item>
+                   <mat-nav-list> 
+                        <mat-list-item  *ngFor="let lecture of session.lectures">{{lecture.lectureTitle}} : {{lecture.lectureDetails}}</mat-list-item>
                         
-                      </mat-list>
+                      </mat-nav-list>
                       
                 </mat-card>
               </mat-expansion-panel>
