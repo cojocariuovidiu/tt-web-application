@@ -35,34 +35,30 @@
      [rowspan]="rowspan | async"  style="background: black;">
 
    
-    <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill>
-        <mat-card-header>
+    <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlexFill >
+        <!-- <mat-card-header> fxFlexFill>
+            <mat-card-header>
           <mat-card-title>
           <h3 class="text-white">{{course.courseTitle}}</h3>
        </mat-card-title>
-       </mat-card-header>
+       </mat-card-header>-->
          <img matCardImage src="../../../assets/img/python.jpg">
          <mat-card-content  [style.height.px]="'250px'">
             <div  fxLayoutAlign="start start" fxLayout="row wrap" fxLayoutGap="20px">
                 <div class="text-white">
-                  <h5>Rating</h5>
+                  <h5>{{course.courseTitle}}</h5>
                 </div> 
              <div  fxFlexAlign="center" class="text-white">
              <star-rating [starType]="'svg'" [rating]="2.63"
-               
-             (starClickChange)="onClick($event)">
-               </star-rating>
+             [readOnly]="true"> </star-rating>  <!--(starClickChange)="onClick($event)"-->
                </div>
              </div>
-          <p  align="justify" class="text-white">
+          <p  align="justify" class="text-white" [ngStyle.lt-md]="'font-size:smaller'">
             {{course.courseDetail}}
            
          </p>
-         <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+         <button (click)="getCourseDetail(course._id)" align="justify" mat-raised-button color="accent" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
          </mat-card-content>
-       <mat-card-footer>
-
-       </mat-card-footer>
        </mat-card>
       
  </mat-grid-tile>
@@ -73,38 +69,33 @@
     <mat-grid-list  [cols]="cols | async" rowHeight="40px"   gutterSize="10px"  >
        <mat-grid-tile
       *ngFor="let course of coursesParent" fxLayoutwrap
-       [rowspan]="rowspan | async"  style="background: black;">
+       [rowspan]="rowspan | async"  style="background: black;" >
   
      
-      <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card" fxFlex="1 1 auto" fxFlexFill>
-          <mat-card-header>
+      <mat-card  fxLayoutAlign="start start" fxLayout="column" class="course-card"  fxFlexFill >
+         <!-- <mat-card-header>
             <mat-card-title>
             <h3 class="text-white">{{course.courseTitle}}</h3>
          </mat-card-title>
-         </mat-card-header>
+         </mat-card-header>-->
            <img matCardImage src="../../../assets/img/python.jpg">
            <mat-card-content  [style.height.px]="'250px'">
              <div  fxLayoutAlign="start start" fxLayout="row wrap" fxLayoutGap="10px">
                <div class="text-white">
-                 <h5>Rating:</h5>
+                 <h5>{{course.courseTitle}}</h5>
                </div> 
             <div  fxFlexAlign="center" class="text-white">
-            <star-rating [starType]="'svg'" [readOnly]="true" [rating]="ratingnumber" [rating]="ratingnumber"
-              
-            (starClickChange)="onClick($event)">
-              </star-rating>
+            <star-rating [starType]="'svg'" [readOnly]="true" [rating]="ratingnumber" [rating]="ratingnumber"> 
+              </star-rating>  <!--(starClickChange)="onClick($event)"-->
               </div>
             </div>
-             <p  align="justify" class="text-white">
+             <p  align="justify" class="text-white" [ngStyle.lt-md]="'font-size:smaller'">
              
               {{course.courseDetail}}
              
            </p>
-           <button (click)="getCourseDetail(course.courseID)" align="justify" mat-raised-button color="primary" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
+           <button (click)="getCourseDetail(course._id)" align="justify" mat-raised-button color="accent" class="course-btn">Learn More <mat-icon class="send">info</mat-icon></button>
            </mat-card-content>
-         <mat-card-footer>
-  
-         </mat-card-footer>
          </mat-card>
         
    </mat-grid-tile>

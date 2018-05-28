@@ -86,10 +86,9 @@ export class EnrolledComponent implements OnInit {
 
   getUser(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
-      this.getEnrolled(profile.userID);
-      this.hideCourse();
+    this.dashboardService.getProfile(usercred.tag).subscribe((user: User) => {
+      this.user = user;
+      this.getEnrolled(user._id);
     });
   }
 
@@ -97,6 +96,7 @@ export class EnrolledComponent implements OnInit {
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     this.dashboardService.getEnrolledCourses(id, usercred.tag).subscribe((courses: Course[]) => {
       this.courses = courses;
+      this.hideCourse();
     })
   }
 

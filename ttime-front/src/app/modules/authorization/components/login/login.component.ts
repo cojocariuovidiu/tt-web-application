@@ -6,6 +6,7 @@ import { existingMobileNumberValidator } from './validatelogin';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../../../model/user.model';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-login',
@@ -96,7 +97,7 @@ export class LoginComponent implements OnInit {
           if(data.success){
             this.authorizationService.storeUserData(data.token, data.user);
             if(this.redirectURL === "invalid"){
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/dashboard/enrolled']);
             }
             else{
               this.router.navigate([this.redirectURL]);
@@ -111,11 +112,10 @@ export class LoginComponent implements OnInit {
 
   getQueryParams(){
     this.activatedRoute.queryParams
-     .filter(params => params.redirect)
-     .subscribe(params => {
-       //console.log(params); // {order: "popular"}
-      this.redirectURL = params.redirect;
-      //console.log("redirect",this.redirectURL);
-    });
+      .filter(params => params.redirect)
+      .subscribe(params => {
+        //console.log(params); // {order: "popular"}
+        this.redirectURL = params.redirect;
+      });
   }
 }

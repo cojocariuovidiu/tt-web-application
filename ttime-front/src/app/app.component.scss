@@ -11,7 +11,14 @@ mat-toolbar .mat-button{
 .app .nav-bar{
     position: fixed;
     
+
 }
+.app #sidenavbutton{
+	padding: 0;
+	margin: 0;
+	width: 44px;
+}
+
 .app #navbutton{
     display: inline-flex;
 	vertical-align: middle;

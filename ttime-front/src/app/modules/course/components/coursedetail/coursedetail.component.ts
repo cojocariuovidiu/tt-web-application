@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CourseService } from '../../services/course.service';
 import { Observable } from 'rxjs/Observable';
 import { ObservableMedia} from '@angular/flex-layout';
@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Comment } from '../../../../model/comment.model';
 import { User } from '../../../../model/user.model';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormGroupDirective, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { CoreService } from '../../../../services/core.service';
 
 @Component({
@@ -18,6 +18,7 @@ import { CoreService } from '../../../../services/core.service';
   styleUrls: ['./coursedetail.component.scss']
 })
 export class CoursedetailComponent implements OnInit {
+  @ViewChild(FormGroupDirective) commentFormDirective: FormGroupDirective;
 
   routerParams: any;
   paramID: string;
@@ -37,7 +38,7 @@ export class CoursedetailComponent implements OnInit {
 
   ngOnInit() {
     this.setDisplay();
-    this.Title();
+    this.Title();   
     if(this.checkLogin()){
       this.getUser();
     }
@@ -62,7 +63,7 @@ export class CoursedetailComponent implements OnInit {
       //console.log(this.paramID);
       this.courseService.getCoursesDetail(this.paramID).subscribe((course: Course) => {
         this.course = course;
-       //console.log(course);
+        // console.log(course);
       });
    });
   }
@@ -105,8 +106,8 @@ export class CoursedetailComponent implements OnInit {
 
   getUser(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.courseService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
+    this.courseService.getProfile(usercred.tag).subscribe((user: User) => {
+      this.user = user;
     });
   }
 
@@ -122,7 +123,7 @@ export class CoursedetailComponent implements OnInit {
   }
 
   sendCommentForm(){
-    const comment = new Comment(this.CommentBody.value, this.course.courseID, this.user.name, this.user.userID, null, null);
+    const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user._id, null, null);
     //console.log(comment);
     this.courseService.addComment(comment).subscribe(data => {
       if(data.success){
@@ -138,6 +139,7 @@ export class CoursedetailComponent implements OnInit {
   }
 
   resetCommentForm(){
+    this.commentFormDirective.resetForm();
     this.commentForm.reset();
   }
 

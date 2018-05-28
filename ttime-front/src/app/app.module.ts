@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { MessageComponent } from './components/message/message.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { HttpModule } from '@angular/http';
 import { MaterialModule} from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -16,6 +15,7 @@ import { ErrorService } from './services/error.service';
 import { GOOGLE_MAP_API_KEY } from './config/config';
 import { CoreService } from './services/core.service';
 import { StarRatingModule } from 'angular-star-rating';
+import { HttpModule } from '@angular/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +26,7 @@ import { StarRatingModule } from 'angular-star-rating';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     HttpModule,
     HttpClientModule,
     MaterialModule,

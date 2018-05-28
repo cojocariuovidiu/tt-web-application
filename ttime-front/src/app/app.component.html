@@ -8,11 +8,10 @@
 <div *ngIf="onRoute()" class="my-theme app">
     <mat-toolbar class="nav-bar mat-elevation-z10"  color="warn" >
       <mat-toolbar-row>
-              <div fxShow="true" fxHide.gt-sm="true">
-                  <button mat-button id="navbutton" (click)="sidenav.toggle()"><i class="material-icons">view_headline</i></button>
-              </div>
+
+            <button fxShow="true" fxHide.gt-sm="true" id="sidenavbutton" mat-icon-button (click)="sidenav.toggle()" [ngStyle.lt-md]="'max-width:44px; width:44px;'"><i class="material-icons">view_headline</i></button>
             <button  mat-icon-button id="logobutton" routerLink= "/home" ><mat-icon svgIcon="ttime"></mat-icon></button>
-            <button mat-button id="navbutton" routerLink= "/home" routerLinkActive="active" ><h2><strong>Teachers Time</strong></h2></button>
+            <button mat-button id="navbutton" routerLink= "/home" routerLinkActive="active" ><h2 [ngStyle.lt-md]="'font-size:20px;'"><strong>Teachers Time</strong></h2></button>
             <div fxShow="true" fxHide.lt-md="true">
               <!-- The following menu items will be hidden on both SM and XS screen sizes -->
               <button mat-button id="navbutton"  routerLink= "/home" routerLinkActive="active" > <i class="material-icons">home</i><span class="icon-text">Home</span> </button>
@@ -56,7 +55,7 @@
       </div>
  <div>
   <mat-sidenav-container class="my-theme">
-     <mat-sidenav #sidenav [fixedInViewport]="true" class="mat-elevation-z6" mode="over" position="start"  ngStyle.xs="width:50vw;" position="width:start" fxHide.gt-md="true" ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #1A237E;">
+     <mat-sidenav #sidenav [fixedInViewport]="true" class="mat-elevation-z6" mode="over" position="start"  ngStyle.xs="width:50vw;" position="width:start" fxHide.gt-md="true" ngStyle.md="80vw;" ngStyle.sm="width:80vw;" ngStyle.xs="width:80vw;" style="padding-top:64px; background: #455A64;">
       <div class="sidenavbar text-white" fxLayout="column wrap"fxLayoutGap="20px">
        
         <div> <button mat-button id="navbutton"  (click)="sidenav.toggle()" routerLink= "/home" routerLinkActive="active"  > <i class="material-icons">home</i><span class="icon-text">Home</span> </button></div>

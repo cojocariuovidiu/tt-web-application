@@ -1,13 +1,14 @@
 import { Injectable, EventEmitter, Output } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
 import { User } from '../../../model/user.model';
-import 'rxjs/Rx';
+import { map, catchError} from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../../../services/error.service';
 import { Router } from '@angular/router';
 import { Course } from '../../../model/course.model';
 import { Comment } from '../../../model/comment.model';
 import { CoreService } from '../../../services/core.service';
+import { ServerResponse } from '../../../model/response.model';
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class DashboardService {
   course: Course;
   public user: User;
   comments: Comment [] = [];
-  constructor(private coreService: CoreService, private router: Router, private http: Http, private errorService: ErrorService) { }
+  constructor(private coreService: CoreService, private router: Router, private httpClient: HttpClient, private errorService: ErrorService) { }
 
   getauthToken(){
     const token = localStorage.getItem('id_token');
@@ -25,153 +26,116 @@ export class DashboardService {
   }
   getProfile(tag){
     if(tag == "local"){
-      let headers = new Headers();
-      const url = `${"api/users/profile"}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url, {headers: headers})
-      .map((response: Response) => {
-        const user = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/users/profile"}`;
+      return this.httpClient.get<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const user: User = response.user;
         //console.log(user.user);
-        let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
-          ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location
-        );
-        this.user = profile;
+        this.user = user;
         //console.log(this.user);
-        return profile;
-      })
-      .catch((error: Response) => {
+        return user;
+      }),
+      catchError(error => {
         if(error.status == 401){
           this.router.navigate(['/auth/login']);
         }
         else{
-          this.errorService.handleError(error.json());
-          return Observable.throw(error.json());
+          this.errorService.handleError(error.error);
+          return Observable.throw(error);
         }
-      });
+      }));
     }
     else{
-      let headers = new Headers();
-      const url = `${"api/users/profile/social"}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url, {headers: headers})
-      .map((response: Response) => {
-        const user = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/users/profile/social"}`;
+      return this.httpClient.get<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const user: User = response.user;
         //console.log(user.user);
-        let profile = new User (user.user.name, user.user.email, user.user.tag, user.user.mobile, null, user.user.type, user.user._id, null, user.user.verified
-          ,user.user.institutename, user.user.institutetype, user.user.gender, user.user.location);
-        //console.log(profile);
-        this.user = profile;
+        this.user = user;
         //console.log(this.user);
-        return profile;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+        return user;
+      }),
+      catchError(error => {
+        if(error.status == 401){
+          this.router.navigate(['/auth/login']);
+        }
+        else{
+          this.errorService.handleError(error.error);
+          return Observable.throw(error);
+        }
+      }));
     }
   }
 
   getEnrolledCourses(id, tag){
     if(tag == "local"){
-      let headers = new Headers();
-      const url = `${"api/courses/all/enrolled/"}${id}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url, {headers: headers})
-      .map((response: Response) => {
-        const courses = response.json().course.courses;
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/all/enrolled/"}${id}`;
+      return this.httpClient.get<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const courses: Course[] = response.course;
         //console.log(courses);
-        let transformedCourses: Course[] = [];
-        for (let course of courses) {
-          transformedCourses.push(new Course(
-            course.title,
-            course.preview, 
-            course.details,
-            course.scope,
-            course.freevideo, null, course._id, course.price, course.sessions
-          ));
-        }
-        this.courses = transformedCourses;
-        return transformedCourses;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+        return courses;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
     else{
-      let headers = new Headers();
-      const url = `${"api/courses/all/enrolled/social/"}${id}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url, {headers: headers})
-      .map((response: Response) => {
-        const courses = response.json().course.courses;
-        //console.log(courses);
-        let transformedCourses: Course[] = [];
-        for (let course of courses) {
-          transformedCourses.push(new Course(
-            course.title,
-            course.preview, 
-            course.details,
-            course.scope,
-            course.freevideo, null, course._id, course.price, course.sessions
-          ));
-        }
-        this.courses = transformedCourses;
-        //console.log(this.courses);
-        return transformedCourses;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/all/enrolled/social/"}${id}`;
+      return this.httpClient.get<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const courses: Course[] = response.course;
+        return courses;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
   }
 
   getImage(imageLink){
-    let headers = new Headers();
-      const url = `${"api/courses/object/image/url"}`;
-      const token = this.getauthToken();
-      const body = {
-        imageLink: imageLink
-      }
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body ,{headers: headers})
-      .map((response: Response) => {
-        return response.json();
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+    const token = this.getauthToken();
+    let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+    const url = `${"api/courses/object/image/url"}`;
+    const body = {
+      imageLink: imageLink
+    }
+    return this.httpClient.post<ServerResponse>(url, body ,{headers: httpHeaders})
+    .pipe(map(response => {
+      return response;
+    }),
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
 
   getSignedURL(videoLink){
-    let headers = new Headers();
-    const url = `${"api/courses/object/video/url"}`;
     const token = this.getauthToken();
+    let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+    const url = `${"api/courses/object/video/url"}`;
     const body = {
       videoLink: videoLink
     }
     //console.log(body);
-    headers.append('Authorization', token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, body ,{headers: headers})
-    .map((response: Response) => {
-      return response.json();
-    })
-    .catch((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+    return this.httpClient.post<ServerResponse>(url, body ,{headers: httpHeaders})
+    .pipe(map(response => {
+      return response;
+    }),
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
   /*getSignedURL(videoLink, tag){
     if(tag == "local"){
@@ -212,43 +176,28 @@ export class DashboardService {
     }
 }*/
   getEnrolledDetail(id){
-    let headers = new Headers();
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
       const url = `${"api/courses/byId/"}${id}`;
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url, {headers: headers})
-      .map((response: Response) => {
-        const course = response.json().course;
+      return this.httpClient.get<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const course = response.coursedetail;
         //console.log(course);
-        let transformedCourse: Course;
-        
-          transformedCourse = new Course(
-            course.title,
-            course.preview, 
-            course.details,
-            course.scope,
-            course.freevideo, null, course._id, course.price, course.sessions
-          );
-        
-        this.course = transformedCourse;
-        //console.log(this.course);
-        return transformedCourse;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+        return course;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
     
     addComment(comment){
-      let headers = new Headers();
-      const url = `${"api/courses/comment/add/"}${comment.commentCourse}`
-      const body = JSON.stringify(comment);
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/comment/add/"}${comment.commentCourse}`
+      //const body = JSON.stringify(comment);
+      return this.httpClient.post<ServerResponse>(url, comment, {headers: httpHeaders})
+      .map(response => {
+        const data = response;
         return data;
       })
       .catch((error: Response) => {
@@ -259,212 +208,178 @@ export class DashboardService {
     }
 
     getComment(id){
-      let headers = new Headers();
-      const url = `${"api/courses/comment/"}${id}`
-      headers.append('Content-Type', 'application/json');
-      return this.http.get(url,{headers: headers})
-      .map((response: Response) => {
-        const comments = response.json().comment;
+      let httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+      const url = `${"api/courses/comment/"}${id}`;
+      return this.httpClient.get<ServerResponse>(url,{headers: httpHeaders})
+      .pipe(map(response => {
+        const comments: Comment[] = response.comment;
         //console.log(comments);
-        let transformedComments: Comment[] = [];
-        for (let comment of comments) {
-          transformedComments.push(new Comment(
-            comment.commentBody,
-            comment.commentCourse, 
-            comment.commentUser,
-            comment.commentUserID, 
-            comment.commentDate,
-            comment._id
-          ));
-        }
-        this.comments = transformedComments;
-        return transformedComments;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+        return comments;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
   
     deleteComment(id){
-      let headers = new Headers();
-      const url = `${"api/courses/comment/delete/"}${id}`
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.delete(url, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/comment/delete/"}${id}`;
+      return this.httpClient.delete<ServerResponse>(url, {headers: httpHeaders})
+      .pipe(map(response => {
+        const data = response;
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
 
   editProfile(user, id, tag){
     if(tag == "local"){
-      let headers = new Headers();
-      const url = `${"api/users/profile/edit/"}${id}`
-      const body = JSON.stringify(user);
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.patch(url, body ,{headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/users/profile/edit/"}${id}`
+      //const body = JSON.stringify(user);
+      return this.httpClient.patch<ServerResponse>(url, user ,{headers: httpHeaders})
+      .pipe(map(response => {
+        const data = response;
         this.coreService.showMessage(data.msg);
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.errror);
+        return Observable.throw(error);
+      }));
     }
     else{
-      let headers = new Headers();
-      const url = `${"api/users/profile/social/edit/"}${id}`
-      const body = JSON.stringify(user);
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.patch(url, body ,{headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/users/profile/social/edit/"}${id}`
+      return this.httpClient.patch<ServerResponse>(url, user ,{headers: httpHeaders})
+      .pipe(map(response => {
+        const data = response;
         this.coreService.showMessage(data.msg);
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.errror);
+        return Observable.throw(error);
+      }));
     }
   }
   
   checkMobile(mobile){
-    let headers = new Headers();
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
     //const url = `${"http://localhost:8080/api/users/check/mobile"}`;
     const url = `${"/api/users/check/mobile"}`;
     const logincred = {
       mobile: mobile
     }
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(url, logincred, {headers: headers})
-      .map((response: Response) => response.json())
-      .catch((error: Response) => {
-        //this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+    return this.httpClient.post<ServerResponse>(url, logincred, {headers: httpHeaders})
+    .pipe(map(response => {
+      const data = response;
+      //this.coreService.showMessage(response.msg);
+      return data;
+    }),
+    catchError(error => {
+      //this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
 
   changePassword(id, body){
-    let headers = new Headers();
-    const url = `${"api/users/change/password/"}${id}`
     const token = this.getauthToken();
-    headers.append('Authorization', token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.patch(url, body ,{headers: headers})
-    .map((response: Response) => {
-      const data = response.json();
+    let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+    const url = `${"api/users/change/password/"}${id}`
+    return this.httpClient.patch<ServerResponse>(url, body ,{headers: httpHeaders})
+    .pipe(map(response => {
+      const data = response;
       this.coreService.showMessage(data.msg);
       return data;
-    })
-    .catch((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+    }),
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
 
   changeMobile(id, body){
-    let headers = new Headers();
-    const url = `${"api/users/change/mobile/"}${id}`
     const token = this.getauthToken();
-    headers.append('Authorization', token);
-    headers.append('Content-Type', 'application/json');
-    return this.http.patch(url, body ,{headers: headers})
-    .map((response: Response) => {
-      const data = response.json();
+    let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+    const url = `${"api/users/change/mobile/"}${id}`;
+    return this.httpClient.patch<ServerResponse>(url, body, {headers: httpHeaders})
+    .pipe(map(response => {
+      const data = response;
       this.coreService.showMessage(data.msg);
       return data;
-    })
-    .catch((error: Response) => {
-      this.errorService.handleError(error.json());
-      return Observable.throw(error.json());
-    });
+    }),
+    catchError(error => {
+      this.errorService.handleError(error.error);
+      return Observable.throw(error);
+    }));
   }
-
-  
 
   scoringCourse(body, userID, courseID){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     if(usercred.tag === "local"){
-      let headers = new Headers();
-      const url = `${"api/courses/score/"}${courseID}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
-        return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/score/"}${courseID}`;
+      return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+      .pipe(map(response => {
+        return response;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
     else{
-      let headers = new Headers();
-      const url = `${"api/courses/score/social/"}${courseID}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/score/social/"}${courseID}`;
+      return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+      .pipe(map(response => {
+        const data = response;
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
   }
 
   checkScoringCourse(body, userID, courseID){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
     if(usercred.tag === "local"){
-      let headers = new Headers();
-      const url = `${"api/courses/score/check/"}${courseID}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
-        return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/score/check/"}${courseID}`;
+      return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+      .pipe(map(response => {
+        return response;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
     else{
-      let headers = new Headers();
-      const url = `${"api/courses/score/check/social/"}${courseID}`;
       const token = this.getauthToken();
-      headers.append('Authorization', token);
-      headers.append('Content-Type', 'application/json');
-      return this.http.post(url, body, {headers: headers})
-      .map((response: Response) => {
-        const data = response.json();
-        return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      let httpHeaders = new HttpHeaders().set('Authorization', token).set('Content-Type', 'application/json');
+      const url = `${"api/courses/score/check/social/"}${courseID}`;
+      return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
+      .pipe(map(response => {
+        return response;
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
     }
   }
 

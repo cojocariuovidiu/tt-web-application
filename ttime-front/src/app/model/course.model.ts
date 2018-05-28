@@ -1,5 +1,5 @@
 export class Course{
-    courseID?: string;
+    _id?: string;
     courseTitle: string;
     coursePreview?: string;
     courseImage?: string;
@@ -35,7 +35,7 @@ export class Course{
                 courseScope: string, 
                 courseFreeVideo?: string, 
                 courseImage?: string, 
-                courseID?: string, 
+                _id?: string, 
                 coursePrice?: string, 
                 courseSessions?: Array<{
                     lectures: Array<{
@@ -59,7 +59,7 @@ export class Course{
                 }>
             )
     {
-        this.courseID = courseID;
+        this._id = _id;
         this.courseTitle = courseTitle;
         this.courseDetail = courseDetail;
         this.coursePreview = coursePreview;

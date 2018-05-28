@@ -33,7 +33,6 @@ export function getAuthServiceConfigs() {
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
     ReactiveFormsModule,
     FormsModule,
     MaterialModule,

@@ -4,7 +4,7 @@
                  <div>                    <h1>{{course.courseTitle}}</h1> 
 
                   <div fxLayout="column" fxLayoutAlign="center center"  fxFlex="1 1 auto" fxFlexFill>
-                      <button (click)="onEnrollCourse(course.courseID, course.courseScope)" mat-raised-button color="primary" style="width: 80%;">Enroll Here</button>
+                      <button (click)="onEnrollCourse(course._id, course.courseScope)" mat-raised-button color="primary" style="width: 80%;">Enroll Here</button>
                     </div>
                 
                 </div>
@@ -15,9 +15,9 @@
   <mat-grid-list class="courseintro2" cols="2" rowHeight="5em" gutterSize="0px"  >
                   <mat-grid-tile   colspan="2" 
                   [rowspan]="rowspan | async" fxLayoutwrap >
-                   <mat-card  class="coursedetails"  fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto" fxFlexFill  fxLayoutwrap>
-                  <div><p align="justify">
-                  <strong>About this Course : </strong> {{course.courseDetail}}
+                   <mat-card  class="coursedetails"  fxLayoutwrap>
+                  <div fxFlexAlign="center"><p align="justify">
+                  <strong>About this Course : </strong> {{course.courseDetail}}{{course.courseDetail}}{{course.courseDetail}}
                     
                   </p>
                   <mat-divider style="width: 100%; border: 2px #bdbdbd solid"></mat-divider>
@@ -64,17 +64,17 @@
           </mat-expansion-panel-header>
       
            <mat-accordion style="min-width:100vw ;min-height:100%;" multi="true" fxFlex>
-              <mat-expansion-panel *ngFor="let session of course.courseSessions" hideToggle="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
+              <mat-expansion-panel *ngFor="let session of course.courseSessions" hideToggle="true" expanded ="true" (click)="sessioniconclick()" style="padding-bottom: 30px;" >
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>{{sessionicon  ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
-                      <h4><strong>{{session.sessionWeek}} : {{session.sessionTitle}}</strong></h4>
+                      <h4><strong>{{session.sessionNo}} : {{session.sessionTitle}}</strong></h4>
                     </mat-panel-title>
                   </mat-expansion-panel-header>
               
                   <mat-card > 
                     
-                    <mat-card-header><mat-card-title><h5>{{session.sessionWeek}}</h5></mat-card-title>   </mat-card-header>  
+                    <mat-card-header><mat-card-title><h5>{{session.sessionNo}}</h5></mat-card-title>   </mat-card-header>  
                      <mat-list> 
                           <mat-list-item role="listitem" *ngFor="let lecture of session.lectures">{{lecture.lectureTitle}} : {{lecture.lectureDetails}}</mat-list-item>
                           

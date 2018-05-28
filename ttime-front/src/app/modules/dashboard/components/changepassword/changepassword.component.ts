@@ -66,7 +66,7 @@ export class ChangepasswordComponent implements OnInit {
       password: this.Password.value,
       mobile: this.Mobile.value
     }
-    this.dashboardService.changeMobile(this.user.userID, body).subscribe(data => {
+    this.dashboardService.changeMobile(this.user._id, body).subscribe(data => {
       if(data.success){
         //console.log(data);
         this.dashboardService.Logout();
@@ -86,7 +86,7 @@ export class ChangepasswordComponent implements OnInit {
       password: this.CurrentPassword.value,
       newpassword: this.NewPassword.value
     }
-    this.dashboardService.changePassword(this.user.userID, body).subscribe(data => {
+    this.dashboardService.changePassword(this.user._id, body).subscribe(data => {
       if(data.success){
         //console.log(data);
         this.dashboardService.Logout();

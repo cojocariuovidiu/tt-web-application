@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit {
     this.coreService.getCoursesTeacher().subscribe((courses: Course[]) => {
       this.coursesTeacher = courses;
       // console.log(courses);
+
+      // console.log(courses[0]._id);
     });
   }
 
@@ -79,11 +81,11 @@ export class HomeComponent implements OnInit {
       ['xl', 2]
     ]);
     const rowspan_map = new Map([
-      ['xs', 13],
-      ['sm', 13],
-      ['md', 13],
-      ['lg', 12],
-      ['xl', 12]
+      ['xs', 9],
+      ['sm', 10],
+      ['md', 11],
+      ['lg', 11],
+      ['xl', 11]
     ]);
     const rowspann_map = new Map([
       ['xs', 23],
