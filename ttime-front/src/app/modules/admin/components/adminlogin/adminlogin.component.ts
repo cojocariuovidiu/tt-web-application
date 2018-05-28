@@ -36,7 +36,7 @@ export class AdminloginComponent implements OnInit {
   }
 
   sendLoginForm(){
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     const logincred = {
       email: this.loginEmail.value,
       password: this.loginPassword.value

@@ -13,11 +13,13 @@ export class AdmindashboardComponent implements OnInit {
   isHide = true;
   fileSelected = null;
   course: any;
+  courseList: Course[] = [];
   newCourse: Course = new Course('','','','','','','','',[]);
   fileName = "No File Selected";
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
+
   }
 
   onFilesAdded(event){
@@ -27,11 +29,11 @@ export class AdmindashboardComponent implements OnInit {
     fileReader.onload = (event: any) => {
       this.course = fileReader.result;
       const parsed = JSON.parse(fileReader.result);
-      const parsedCourse = new Course(parsed.title,
-        parsed.preview, 
-        parsed.details,
-        parsed.scope,
-        parsed.freevideo, null, parsed._id, parsed.price, parsed.sessions);
+      const parsedCourse = new Course(parsed.courseTitle,
+        parsed.coursePreview, 
+        parsed.courseDetail,
+        parsed.courseScope,
+        parsed.courseFreeVideo, null, parsed._id, parsed.cousePrice, parsed.courseSessions);
       this.newCourse = parsedCourse;
     }
     fileReader.readAsText(this.fileSelected);
@@ -40,8 +42,19 @@ export class AdmindashboardComponent implements OnInit {
     //console.log(this.course);
   }
 
+  getCourse(){
+    //this.c//TODO
+  }
   onSendCourse(){
     //console.log(this.course);
-    this.adminService.uploadCourse(this.course);
+    console.log(this.newCourse);
+    this.adminService.uploadCourse(this.newCourse).subscribe(data => {
+      if(data.success){
+        console.log("Success");
+      }
+      else{
+        console.log("Error");
+      }
+    });
   }
 }

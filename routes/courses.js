@@ -301,7 +301,7 @@ router.get('/comment/:id', (req, res, next) => {
 router.post('/object/video/url', passport.authenticate([Strings.strategy.localStrategy, Strings.strategy.socialStrategy], {session: false}), (req, res, next) => {
     var link = req.body.videoLink;
     var expired = new Date();
-    var time = expired.getTime() + (60 * 1000);
+    var time = expired.getTime() + (10 * 60 * 1000);
     var signingParams = {
         keypairId: config.CLOUDFRONT_PUBLICACCESSID,
         privateKeyString: config.PRIVATEKEY_CLOUDFRONT,

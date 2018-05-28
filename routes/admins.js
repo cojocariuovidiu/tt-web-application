@@ -102,13 +102,13 @@ router.post('/authenticate/admin', (req, res, next) => {
 //Post Courses Admin
 router.post('/add/new/course', (req, res, next) => {
     let newCourse = new Course({
-        title: req.body.title,
-        details: req.body.details,
-        preview: req.body.preview,
-        freevideo: req.body.price,
-        price: req.body.price,
-        scope: req.body.scope,
-        sessions: req.body.sessions
+        courseTitle: req.body.courseTitle,
+        courseDetail: req.body.courseDetail,
+        coursePreview: req.body.coursePreview,
+        courseFreeVideo: req.body.courseFreeVideo,
+        coursePrice: req.body.coursePrice,
+        courseScope: req.body.courseScope,
+        courseSessions: req.body.courseSessions
     });
     Course.addCourse(newCourse, (err, course) => {
         if(err){
