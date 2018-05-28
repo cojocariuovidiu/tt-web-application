@@ -61,6 +61,7 @@ export class DashboardService {
       }),
       catchError(error => {
         if(error.status == 401){
+          this.Logout();
           this.router.navigate(['/auth/login']);
         }
         else{
@@ -196,14 +197,14 @@ export class DashboardService {
       const url = `${"api/courses/comment/add/"}${comment.commentCourse}`
       //const body = JSON.stringify(comment);
       return this.httpClient.post<ServerResponse>(url, comment, {headers: httpHeaders})
-      .map(response => {
+      .pipe(map(response => {
         const data = response;
         return data;
-      })
-      .catch((error: Response) => {
-        this.errorService.handleError(error.json());
-        return Observable.throw(error.json());
-      });
+      }),
+      catchError(error => {
+        this.errorService.handleError(error.error);
+        return Observable.throw(error);
+      }));
       
     }
 

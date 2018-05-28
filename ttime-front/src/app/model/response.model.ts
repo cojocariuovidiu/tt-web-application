@@ -8,6 +8,7 @@ export class ServerResponse{
     coursedetail?: Course;
     success?: boolean;
     msg?: string;
+    email?: string; 
     error?: string;
     user?: User;
     token?: string;
@@ -16,7 +17,7 @@ export class ServerResponse{
     comment?: Comment[];
     score?: Score;
     commentdetail?: Comment;
-    constructor(token?: string, mobile?: string, score?: Score, signedUrl?: string, user?: User,  comment?: Comment[], commentdetail?: Comment, coursedetail?: Course,course?:Course[], success?:boolean, msg?:string, error?: string){
+    constructor(token?: string, mobile?: string, email?:string, score?: Score, signedUrl?: string, user?: User,  comment?: Comment[], commentdetail?: Comment, coursedetail?: Course,course?:Course[], success?:boolean, msg?:string, error?: string){
         this.course = course;
         this.success = success;
         this.msg = msg;
@@ -29,6 +30,7 @@ export class ServerResponse{
         this.commentdetail = commentdetail;
         this.signedUrl = signedUrl;
         this.score = score;
+        this.email = email;
     }
 
     

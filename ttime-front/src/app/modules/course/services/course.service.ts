@@ -28,7 +28,7 @@ export class CourseService {
     }),
     catchError(error => {
       this.errorService.handleError(error.error);
-      return Observable.throwError(error);
+      return Observable.throw(error);
     }));
   }
 
@@ -43,7 +43,7 @@ export class CourseService {
     }),
     catchError(error => {
       this.errorService.handleError(error.error);
-      return Observable.throwError(error);
+      return Observable.throw(error);
     }));
   }
 
@@ -92,7 +92,7 @@ export class CourseService {
     }),
     catchError(error => {
       this.errorService.handleError(error.error);
-      return Observable.throwError(error);
+      return Observable.throw(error);
     }));
   }
 

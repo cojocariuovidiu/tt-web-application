@@ -18,9 +18,8 @@ export class CoreService {
   constructor(private httpClient: HttpClient, private router: Router, private errorService: ErrorService) { }
 
   getCoursesTeacher(){
-    let headers = new HttpHeaders();
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     const url = `${"api/courses/public/all/teacher"}`;
-    headers.set('Content-Type', 'application/json');
     return this.httpClient.get<ServerResponse>(url, {headers: headers})
     .pipe(map(response => {
       const courses: Course[] = response.course;
@@ -29,14 +28,13 @@ export class CoreService {
     }),
     catchError(error => {
       this.errorService.handleError(error.error);
-      return Observable.throwError(error);
+      return Observable.throw(error);
     }));
   }
   
   getCoursesParent(){
-    let headers = new HttpHeaders();
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     const url = `${"api/courses/public/all/parent"}`;
-    headers.set('Content-Type', 'application/json');
     return this.httpClient.get<ServerResponse>(url, {headers: headers})
     .pipe(map(response => {
       const courses: Course [] = response.course;
@@ -45,7 +43,7 @@ export class CoreService {
     }),
     catchError(error => {
       this.errorService.handleError(error.error);
-      return Observable.throwError(error);
+      return Observable.throw(error);
     }));
   }
   
