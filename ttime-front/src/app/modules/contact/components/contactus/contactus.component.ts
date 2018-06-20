@@ -17,6 +17,7 @@ export class ContactusComponent implements OnInit {
 
   title: string = 'We are Here:';
   namePattern: string = '[a-z]*.{3,}';
+  // tslint:disable-next-line:max-line-length
   emailPattern: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   lat: number = 23.745531;
   lng: number = 90.370628;

@@ -109,7 +109,7 @@ router.get('/score/:courseid', passport.authenticate(Strings.strategy.socialStra
 //Scoring Local
 router.post('/score/:courseid', passport.authenticate(Strings.strategy.localStrategy, {session: false}), (req, res, next) => {
     let newScore = new Score({
-        score: req.body.lectureScore,
+        score: req.body.score,
         lectureID: req.body.lectureID,
         sessionID: req.body.sessionID,
         courseID: req.params.courseid,

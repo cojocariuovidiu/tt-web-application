@@ -39,6 +39,7 @@ export class DashboardService {
       }),
       catchError(error => {
         if(error.status == 401){
+          this.Logout();
           this.router.navigate(['/auth/login']);
         }
         else{

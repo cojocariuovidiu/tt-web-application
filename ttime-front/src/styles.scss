@@ -16,13 +16,14 @@ $color-default-rating: #ffff00 !default;
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
-@import '~@angular/material/theming';
-$custom-typography: mat-typography-config(
-  $font-family: 'Oxygen, sans-serif',
-  $headline: mat-typography-level(32px, 48px, 700),
-  $body-1: mat-typography-level(16px, 24px, 300)
-);
-@include mat-core($custom-typography);
+// Note: must define fontsize when implementing custom typography
+//@import '~@angular/material/theming';
+//$custom-typography: mat-typography-config(
+ // $font-family: 'Oxygen, sans-serif',
+ // $headline: mat-typography-level(32px, 48px, 700),
+ // $body-1: mat-typography-level(16px, 24px, 300)
+//);
+//@include mat-core($custom-typography);
 
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.;

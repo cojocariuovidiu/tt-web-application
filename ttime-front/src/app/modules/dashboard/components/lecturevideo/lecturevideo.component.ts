@@ -23,6 +23,7 @@ export class LecturevideoComponent implements OnInit {
   @ViewChild('endQuestion') endQuestion: ElementRef;
   @ViewChild('stepper') stepper: ElementRef;
   @ViewChild(FormGroupDirective) commentFormDirective: FormGroupDirective;
+  @ViewChild(FormGroupDirective) QuestionFormDirective: FormGroupDirective;
 
   videoLink: string;
   totalScore: number;
@@ -158,7 +159,7 @@ export class LecturevideoComponent implements OnInit {
     });
   }
 
-  setDisplay(){
+  setDisplay() {
     const cols_map = new Map([
       ['xs', 11],
       ['sm', 11],
@@ -215,10 +216,10 @@ export class LecturevideoComponent implements OnInit {
 
   sendCommentForm(){
     const comment = new Comment(this.CommentBody.value, this.course._id, this.user.name, this.user._id, null, null);
-    //console.log(comment);
+    // console.log(comment);
     this.dashboardService.addComment(comment).subscribe(data => {
       if(data.success){
-        //console.log(data.data);
+        // console.log(data.data);
         this.resetCommentForm();
         this.getCourseComments();
       }
@@ -234,18 +235,18 @@ export class LecturevideoComponent implements OnInit {
     this.commentForm.reset();
   }
 
-  getCourseComments(){
-    //console.log(this.course._id);
+  getCourseComments() {
+    // console.log(this.course._id);
     this.dashboardService.getComment(this.paramIDCourse).subscribe((comments: Comment[]) => {
       this.comments = comments;
     });
   }
 
   onDelete(id){
-    //console.log(id);
+    // console.log(id);
     this.dashboardService.deleteComment(id).subscribe(data => {
       if(data.success){
-        //console.log(data.data);
+        // console.log(data.data);
         this.getCourseComments();
       }
     })
@@ -259,22 +260,23 @@ export class LecturevideoComponent implements OnInit {
   }
 
   sendQuestionForm(realAns){
-    //console.log("Question Form",this.Option.value);
-    //console.log(this.Answer.value);
-    //console.log(Answer.nativeElement.value);
-    //console.log("real answer", realAns);
+    // console.log("Question Form",this.Option.value);
+    // console.log(this.Answer.value);
+    // console.log(Answer.nativeElement.value);
+    // console.log("real answer", realAns);
     const ans = this.Option.value;
     if(ans !== realAns){
       this.totalScore = this.totalScore - 1;
     }
     this.questionLength = this.questionLength - 1;
-    if(this.questionLength === 0){
+    if(this.questionLength === 0) {
       let endDiv: HTMLElement = this.endQuestion.nativeElement as HTMLElement;
       endDiv.click();
     }
+    this.QuestionFormDirective.resetForm();
   }
 
-  onQuestionEnd(stepper){
+  onQuestionEnd(stepper) {
     this.userScore = this.totalScore;
     this.totalScore = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
     this.questionLength = this.course.courseSessions[this.sessionID].lectures[this.lectureID].lectureQuestions.length;
@@ -284,26 +286,26 @@ export class LecturevideoComponent implements OnInit {
       sessionID: this.sessionID
     }
     this.dashboardService.scoringCourse(body, this.user._id, this.course._id).subscribe(response => {
-      //console.log(data);
-      if(response.success){
+      // console.log(data);
+      if(response.success) {
         this.userScore = parseInt(response.score.score);
         this.isScore = false;
       }
     });
-    //console.log("Your Score: ",this.userScore);
+    // console.log("Your Score: ",this.userScore);
     stepper.reset();
   }
 
-  get Option(){
+  get Option() {
     return this.QuestionForm.get('Option') as FormControl;
   }
-  
 
-  resetQuestionForm(){
+
+  resetQuestionForm() {
     this.QuestionForm.reset();
   }
 
-  onLecture(session, lecture, link){
+  onLecture(session, lecture, link) {
     this.router.navigate(['/dashboard/lecturevideo', this.course._id], { queryParams: { videoLink: link, 'sessionID': session, 'lectureID': lecture }});
     this.isScore = true;
     this.isLength = true;

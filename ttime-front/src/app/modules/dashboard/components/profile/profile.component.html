@@ -2,7 +2,7 @@
      <div class="my-theme" fxLayout="column" fxLayoutwrap fxLayoutAlign="end end">
       <div style="padding: 2em;"><button mat-raised-button color="primary"  (click)="onView()">{{show ? 'View Profile' : 'Edit Profile'}}</button></div>
      </div>
-    <div *ngIf="show; else showProfile" >
+    <div *ngIf="!show; else showProfile" >
         <mat-grid-list cols="1" rowHeight="40em" fxLayout="column" fxLayoutwrap >
             <mat-grid-tile ngStyle.lt-md="padding-top:15em;" fxLayoutwrap>
           <mat-card class="reg-card" fxFlex fxFlexFill>

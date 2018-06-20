@@ -1,7 +1,7 @@
 <div class="flex-container" style=" background-color: #bdbdbd"  >
     <mat-grid-list   [cols]="cols | async" rowHeight="40px"    gutterSize="2px"  >
    
-    <mat-grid-tile colspan="10" rowspan="10" fxLayoutwrap style="margin: 0; padding-left: 8%;">
+    <mat-grid-tile [colspan]="cols | async" rowspan="10" fxLayoutwrap style="margin: 0; padding-left: 8%;">
      <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="360" [src]="signedUrl" [poster]="imagethumb" data-setup="{}">
 
        <!-- Tracks need an ending tag thanks to IE9 -->
@@ -45,7 +45,7 @@
              </mat-accordion>
    
     </mat-grid-tile> -->
-    <mat-grid-tile colspan="10" rowspan="12"  fxLayoutwrap > 
+    <mat-grid-tile [colspan]="cols | async" rowspan="12"  fxLayoutwrap > 
             <mat-card fxLayoutAlign="start start" fxLayout="column" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
                 <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Lecture Description:</h4></mat-card-title> </mat-card-header>    
                 <mat-card-content>     
@@ -54,7 +54,7 @@
               </mat-card>
                 
        </mat-grid-tile>
-       <mat-grid-tile colspan="10" rowspan="6"  fxLayoutwrap > 
+       <mat-grid-tile [colspan]="cols | async" rowspan="6"  fxLayoutwrap > 
           <mat-card  fxLayout="column" fxLayoutAlign="start start"  class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;">  
               <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h5 class="text-black">Articles Description:</h5></mat-card-title> </mat-card-header>    
               <mat-card-content>  <a href="#">Article Link</a>
@@ -62,13 +62,13 @@
             </mat-card>
               
      </mat-grid-tile>
-       <mat-grid-tile colspan="10" rowspan="12"  fxLayoutwrap  > 
+       <mat-grid-tile [colspan]="cols | async" rowspan="12"  fxLayoutwrap  > 
         
           <mat-card *ngIf="isLength; else elseBlock2" fxLayout="column"  fxLayoutAlign="start stretch" class="lecture-description" fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" [ngStyle.xs]="'padding-left: 0;'">  
               <mat-card-header style="background-color: #e0e0e0 "> <mat-card-title ><h4 class="text-black">Quiz</h4></mat-card-title> </mat-card-header>    
               <mat-card-content *ngIf="isScore; else elseBlock">    
                   
-                <mat-horizontal-stepper #stepper>
+                <mat-horizontal-stepper #stepper [linear]="true">
                   <mat-step *ngFor="let question of course?.courseSessions[sessionID]?.lectures[lectureID]?.lectureQuestions">
                     <form [formGroup]="QuestionForm" (ngSubmit)="sendQuestionForm(question.answer)">
                     <mat-radio-group class="radio-group" name="Option" id="Option" formControlName="Option">
@@ -87,7 +87,7 @@
                       </mat-radio-button>
                     </mat-radio-group>
                     <div>
-                      <button mat-button matStepperNext type="submit">Next</button>
+                      <button [disabled]="!QuestionForm.valid" mat-button matStepperNext type="submit">Next</button>
                     </div>
                   </form>
                   <div #endQuestion (click)="onQuestionEnd(stepper)">
@@ -125,8 +125,7 @@
      </mat-grid-tile>
    
    </mat-grid-list>
-
-
+   
   <div class="review-structure my-second-theme" fxLayout="column"  fxLayoutAlign="start start" fxLayoutwrap   [ngStyle.xs]="'padding-left:0px;padding-right:0px;'">
     <div  fxFlex="1 1 auto" fxFlexFill>
         <mat-card class="comments-card" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutwrap fxFlex="1 1 auto" fxFlexFill style="padding-left: 8%;" >  

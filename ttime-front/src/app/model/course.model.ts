@@ -27,16 +27,16 @@ export class Course{
         sessionNo: string,
         sessionTitle: string
     }>;
-    
+
             constructor(
                 courseTitle: string, 
                 coursePreview: string, 
                 courseDetail: string, 
                 courseScope: string, 
-                courseFreeVideo?: string, 
-                courseImage?: string, 
-                _id?: string, 
-                coursePrice?: string, 
+                courseFreeVideo?: string,
+                courseImage?: string,
+                _id?: string,
+                coursePrice?: string,
                 courseSessions?: Array<{
                     lectures: Array<{
                         lectureDetails: string,
