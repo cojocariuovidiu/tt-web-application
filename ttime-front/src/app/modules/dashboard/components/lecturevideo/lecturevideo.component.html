@@ -87,7 +87,7 @@
                       </mat-radio-button>
                     </mat-radio-group>
                     <div>
-                      <button mat-button matStepperNext type="submit">Next</button>
+                      <button [disabled]="!QuestionForm.valid" mat-button matStepperNext type="submit">Next</button>
                     </div>
                   </form>
                   <div #endQuestion (click)="onQuestionEnd(stepper)">
