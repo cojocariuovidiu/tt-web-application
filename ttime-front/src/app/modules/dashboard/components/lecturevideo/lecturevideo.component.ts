@@ -151,7 +151,7 @@ export class LecturevideoComponent implements OnInit {
     }
     //console.log(this.user.userID, this.course._id, body);
     this.dashboardService.checkScoringCourse(body, this.user._id, this.course._id).subscribe(response => {
-      //console.log(data);
+      console.log(response);
       if(response.success){
         this.userScore = parseInt(response.score.score);
         this.isScore = false;
@@ -286,13 +286,13 @@ export class LecturevideoComponent implements OnInit {
       sessionID: this.sessionID
     }
     this.dashboardService.scoringCourse(body, this.user._id, this.course._id).subscribe(response => {
-      // console.log(data);
-      if(response.success) {
+      //console.log(response);
+      if(response.success){
         this.userScore = parseInt(response.score.score);
         this.isScore = false;
       }
     });
-    // console.log("Your Score: ",this.userScore);
+    //console.log("Your Score: ",this.userScore);
     stepper.reset();
   }
 

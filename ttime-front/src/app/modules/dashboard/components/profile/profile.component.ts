@@ -172,9 +172,10 @@ export class ProfileComponent implements OnInit {
 
   onView(){
     const usercred = JSON.parse(localStorage.getItem('usercred'));
-    this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
-      this.user = profile;
+      this.dashboardService.getProfile(usercred.tag).subscribe((profile: User) => {
+        this.user = profile;
     });
+    //console.log(this.user);
     this.show = !this.show;
   }
 

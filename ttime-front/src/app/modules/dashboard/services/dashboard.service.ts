@@ -332,6 +332,7 @@ export class DashboardService {
       const url = `${"api/courses/score/"}${courseID}`;
       return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
       .pipe(map(response => {
+        console.log(response);
         return response;
       }),
       catchError(error => {
@@ -346,6 +347,7 @@ export class DashboardService {
       return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
       .pipe(map(response => {
         const data = response;
+        console.log(data);
         return data;
       }),
       catchError(error => {
@@ -363,6 +365,7 @@ export class DashboardService {
       const url = `${"api/courses/score/check/"}${courseID}`;
       return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
       .pipe(map(response => {
+        console.log(response);
         return response;
       }),
       catchError(error => {
@@ -376,6 +379,7 @@ export class DashboardService {
       const url = `${"api/courses/score/check/social/"}${courseID}`;
       return this.httpClient.post<ServerResponse>(url, body, {headers: httpHeaders})
       .pipe(map(response => {
+        console.log(response);
         return response;
       }),
       catchError(error => {
